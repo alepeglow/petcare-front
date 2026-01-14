@@ -1,0 +1,80 @@
+<mat-sidenav-container class="shell-container">
+
+  <!-- SIDEBAR -->
+  <mat-sidenav class="shell-sidenav" mode="side" opened>
+    <div class="brand">
+      <mat-icon class="brand-icon">pets</mat-icon>
+      <span class="brand-name">PetCare</span>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-nav-list class="nav">
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+
+      <a mat-list-item routerLink="/pets" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>pets</mat-icon>
+        <span matListItemTitle>Pets</span>
+      </a>
+
+      <a mat-list-item routerLink="/adocoes" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>favorite</mat-icon>
+        <span matListItemTitle>Adoções</span>
+      </a>
+
+      <a mat-list-item routerLink="/adotantes" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle>Adotantes</span>
+      </a>
+
+      <a mat-list-item routerLink="/agendamentos" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>event</mat-icon>
+        <span matListItemTitle>Agendamentos</span>
+      </a>
+    </mat-nav-list>
+
+    <div class="sidenav-footer">
+      <small>API + Angular Material</small>
+    </div>
+  </mat-sidenav>
+
+  <!-- CONTEÚDO -->
+  <mat-sidenav-content class="shell-content">
+
+    <!-- TOPBAR -->
+    <mat-toolbar class="shell-toolbar" color="primary">
+      <span class="page-title">PetCare</span>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button aria-label="Notificações">
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="Menu do usuário">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item disabled>
+          <mat-icon>person</mat-icon>
+          <span>Usuário</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Configurações</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- ÁREA DAS PÁGINAS -->
+    <main class="page-wrapper">
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
