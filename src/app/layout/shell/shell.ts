@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ElementRef, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,9 +40,16 @@ type NavItem = {
 
   ],
   templateUrl: './shell.html',
-  styleUrl: './shell.scss',
+  styleUrls: ['./shell.scss'],
 })
 export class Shell {
+  @ViewChild('pageScroll') pageScroll!: ElementRef<HTMLElement>;
+
+  onDrawerChange() {
+    // Quando a sidebar for aberta ou fechada, rola a página para o topo
+    queueMicrotask(() => {});
+    this.pageScroll.nativeElement.scrollTop = 0;
+  }
   navItems: NavItem[] = [
     { label: 'Home', icon: 'home', path: '/dashboard' },
     { label: 'Pets', icon: 'pets', path: '/pets' },

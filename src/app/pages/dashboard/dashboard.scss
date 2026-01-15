@@ -55,6 +55,7 @@
   white-space: nowrap;
 }
 
+/* metrics */
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -104,10 +105,7 @@
   font-weight: 800;
 }
 
-/* =========================
-   PETS (ajustado pro design)
-   ========================= */
-
+/* ✅ pets */
 .pets-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -115,57 +113,48 @@
 }
 
 .pet {
-  position: relative;
   border-radius: 18px;
   overflow: hidden;
-  background: #fff;
-
+  position: relative;
   transition: transform 180ms ease, box-shadow 180ms ease;
-  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.08);
 }
 
 .pet:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.10);
 }
 
-/* imagem do topo */
+.pet__media {
+  position: relative;
+  background: #fff; /* ✅ sem lilás */
+  height: 190px;
+  overflow: hidden;
+}
+
 .pet__img {
   width: 100%;
-  height: 190px;              /* aumenta um pouco a área da foto */
-  display: block;
-
-  object-fit: contain;        /* <- NÃO corta mais */
-  object-position: center bottom;
-
-  padding: 14px 14px 8px;    /* “respiro” igual no design */
-  background: transparent;
-  transition: transform 180ms ease;
+  height: 100%;
+  object-fit: contain;  /* pra não cortar */
+  transform: scale(1);
+  transition: transform 220ms ease;
+  padding: 14px;        /* respiro pra imagem não “colar” */
 }
 
 .pet:hover .pet__img {
-  transform: scale(1.18);
+  transform: scale(1.08); /* ✅ zoom no hover */
 }
 
-
-/* status (Disponível) em cima da imagem */
 .pet__status {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 2;
-
+  top: 12px;
+  left: 12px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-
+  gap: 6px;
   padding: 8px 10px;
   border-radius: 999px;
-
   background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.12);
-  backdrop-filter: blur(6px);
-
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.10);
   font-size: 12px;
   font-weight: 700;
 }
@@ -176,33 +165,20 @@
   height: 18px;
 }
 
-/* coração/favoritar */
 .pet__fav {
   position: absolute;
   top: 12px;
   right: 12px;
-  z-index: 2;
-
   background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.12);
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.10);
 }
 
-.pet__fav:hover {
-  transform: scale(1.04);
-}
-
-/* corpo do card */
 .pet__body {
-  position: relative;
-  z-index: 1;
   padding: 14px 16px 16px;
-  background: #fff;
 }
 
 .pet__title {
   font-weight: 900;
-  font-size: 18px;
-  margin-top: 2px;
 }
 
 .pet__meta {
@@ -211,14 +187,13 @@
   margin-top: 2px;
 }
 
-/* linha com idade/sexo/porte */
 .pet__info {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   margin-top: 10px;
-  color: rgba(17, 24, 39, 0.82);
   font-size: 12px;
+  opacity: 0.9;
 }
 
 .pet__info span {
@@ -231,28 +206,15 @@
   font-size: 18px;
   width: 18px;
   height: 18px;
+  opacity: 0.9;
 }
 
-/* botão “Adotar …” */
 .pet__adopt {
-  width: 100%;
-  margin-top: 14px;
-  border-radius: 14px;
-  font-weight: 700;
-  justify-content: flex-start;
-  gap: 8px;
+  margin-top: 10px;
+  font-weight: 800;
 }
 
-.pet__adopt mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-}
-
-/* =========================
-   COMO FUNCIONA + CTA
-   ========================= */
-
+/* how */
 .how {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -262,10 +224,6 @@
 .how__card {
   border-radius: 16px;
   padding: 16px;
-}
-
-.how__card mat-icon {
-  opacity: 0.9;
 }
 
 .how__card h3 {
@@ -280,6 +238,7 @@
   opacity: 0.75;
 }
 
+/* cta */
 .cta {
   border-radius: 20px;
   padding: 22px;
@@ -304,10 +263,7 @@
   border-radius: 12px;
 }
 
-/* =========================
-   RESPONSIVO
-   ========================= */
-
+/* responsive */
 @media (max-width: 1100px) {
   .metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));

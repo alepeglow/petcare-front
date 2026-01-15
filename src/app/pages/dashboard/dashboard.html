@@ -5,17 +5,16 @@
       <div class="hero__text">
         <h1>Encontre um novo melhor amigo</h1>
         <p>
-          Conheça pets disponíveis para adoção e acompanhe o histórico com carinho e organização.
+          Conheça pets disponíveis para adoção e acompanhe o histórico com carinho e
+          organização.
         </p>
 
         <div class="hero__actions">
-          <!-- ✅ Vai para /pets -->
           <button mat-flat-button color="primary" routerLink="/pets">
             <mat-icon>pets</mat-icon>
             Buscar pets
           </button>
 
-          <!-- ✅ Preparado para rota futura -->
           <button mat-stroked-button class="btn-light" routerLink="/pets/novo">
             <mat-icon>add</mat-icon>
             Cadastrar pet
@@ -68,27 +67,26 @@
   <!-- Featured Pets -->
   <div class="section-head">
     <h2>Pets em destaque</h2>
-
-    <!-- ✅ Vai para /pets -->
     <button mat-button routerLink="/pets">
       Ver todos
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>
 
-  <!-- ✅ SUBSTITUÍDO: Cards de pets igual ao bloco que você mandou -->
   <div class="pets-grid">
     <mat-card class="pet">
-      <img class="pet__img" src="images/pets/dog-1.png" alt="Thor" />
+      <div class="pet__media">
+        <img class="pet__img" src="/assets/images/pets/dog-1.png" alt="Thor" />
 
-      <div class="pet__status">
-        <mat-icon>check_circle</mat-icon>
-        <span>Disponível</span>
+        <div class="pet__status">
+          <mat-icon>check_circle</mat-icon>
+          <span>Disponível</span>
+        </div>
+
+        <button class="pet__fav" mat-icon-button aria-label="Favoritar">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
       </div>
-
-      <button class="pet__fav" mat-icon-button aria-label="Favoritar">
-        <mat-icon>favorite_border</mat-icon>
-      </button>
 
       <div class="pet__body">
         <div class="pet__title">Thor</div>
@@ -108,16 +106,18 @@
     </mat-card>
 
     <mat-card class="pet">
-      <img class="pet__img" src="images/pets/cat-1.png" alt="Luna" />
+      <div class="pet__media">
+        <img class="pet__img" src="/assets/images/pets/cat-1.png" alt="Luna" />
 
-      <div class="pet__status">
-        <mat-icon>check_circle</mat-icon>
-        <span>Disponível</span>
+        <div class="pet__status">
+          <mat-icon>check_circle</mat-icon>
+          <span>Disponível</span>
+        </div>
+
+        <button class="pet__fav" mat-icon-button aria-label="Favoritar">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
       </div>
-
-      <button class="pet__fav" mat-icon-button aria-label="Favoritar">
-        <mat-icon>favorite_border</mat-icon>
-      </button>
 
       <div class="pet__body">
         <div class="pet__title">Luna</div>
@@ -137,16 +137,18 @@
     </mat-card>
 
     <mat-card class="pet">
-      <img class="pet__img" src="images/pets/dog-2.png" alt="Max" />
+      <div class="pet__media">
+        <img class="pet__img" src="/assets/images/pets/dog-2.png" alt="Max" />
 
-      <div class="pet__status">
-        <mat-icon>check_circle</mat-icon>
-        <span>Disponível</span>
+        <div class="pet__status">
+          <mat-icon>check_circle</mat-icon>
+          <span>Disponível</span>
+        </div>
+
+        <button class="pet__fav" mat-icon-button aria-label="Favoritar">
+          <mat-icon>favorite_border</mat-icon>
+        </button>
       </div>
-
-      <button class="pet__fav" mat-icon-button aria-label="Favoritar">
-        <mat-icon>favorite_border</mat-icon>
-      </button>
 
       <div class="pet__body">
         <div class="pet__title">Max</div>
@@ -198,7 +200,6 @@
       <div class="cta__sub">Comece vendo os pets disponíveis agora mesmo.</div>
     </div>
 
-    <!-- ✅ Vai para /pets -->
     <button mat-flat-button color="primary" class="cta__btn" routerLink="/pets">
       <mat-icon>pets</mat-icon>
       Ir para Pets

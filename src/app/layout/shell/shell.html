@@ -1,6 +1,6 @@
 <mat-sidenav-container class="shell">
   <!-- Sidebar -->
-  <mat-sidenav #drawer class="sidenav" mode="side" opened>
+  <mat-sidenav #drawer class="sidenav" mode="side" opened (openedChange)="onDrawerChange()">
     <div class="brand">
       <div class="brand__logo">🐾</div>
       <div class="brand__text">
@@ -26,53 +26,56 @@
     </mat-nav-list>
 
     <div class="sidebar-footer">
-    
+      <div class="hint">
+        
+      </div>
     </div>
   </mat-sidenav>
 
   <!-- Content -->
-  <mat-sidenav-content class="content">
-    <!-- Toolbar FIXA -->
-    <mat-toolbar class="toolbar">
-      <button mat-icon-button (click)="drawer.toggle()" class="toolbar__menu">
-        <mat-icon>menu</mat-icon>
-      </button>
+  <mat-sidenav-content>
+    <div class="pc-content">
+      <mat-toolbar class="toolbar">
+        <button mat-icon-button (click)="drawer.toggle()" class="toolbar__menu">
+          <mat-icon>menu</mat-icon>
+        </button>
 
-      <span class="toolbar__title">PetCare</span>
+        <span class="toolbar__title">PetCare</span>
 
-      <!-- Busca -->
-      <mat-form-field class="toolbar__search" appearance="outline">
-        <mat-icon matPrefix>search</mat-icon>
-        <input matInput placeholder="Buscar pets, tutores..." />
-      </mat-form-field>
+        <!-- Busca -->
+        <mat-form-field class="toolbar__search" appearance="outline">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput placeholder="Buscar pets, tutores..." />
+        </mat-form-field>
 
-      <span class="spacer"></span>
+        <span class="spacer"></span>
 
-      <!-- Notificações -->
-      <button
-        mat-icon-button
-        matBadge="1"
-        matBadgeColor="warn"
-        matBadgeSize="small"
-        aria-label="Notificações"
-      >
-        <mat-icon>notifications</mat-icon>
-      </button>
+        <!-- Notificações -->
+        <button
+          mat-icon-button
+          matBadge="1"
+          matBadgeColor="warn"
+          matBadgeSize="small"
+          aria-label="Notificações"
+        >
+          <mat-icon>notifications</mat-icon>
+        </button>
 
-      <!-- Configurações -->
-      <button mat-icon-button aria-label="Configurações">
-        <mat-icon>settings</mat-icon>
-      </button>
+        <!-- Configurações -->
+        <button mat-icon-button aria-label="Configurações">
+          <mat-icon>settings</mat-icon>
+        </button>
 
-      <!-- CTA -->
-      <button mat-button>
-        <mat-icon>favorite</mat-icon>
-        Adote 💜
-      </button>
-    </mat-toolbar>
+        <!-- CTA -->
+        <button mat-button>
+          <mat-icon>favorite</mat-icon>
+          Adote 💜
+        </button>
+      </mat-toolbar>
 
-    <main class="page">
-      <router-outlet></router-outlet>
-    </main>
+      <div class="pc-page" #pageScroll>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

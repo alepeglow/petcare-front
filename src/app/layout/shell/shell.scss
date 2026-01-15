@@ -2,7 +2,7 @@
   height: 100vh;
 }
 
-/* =============== SIDEBAR =============== */
+/* SIDEBAR */
 .sidenav {
   width: 280px;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
@@ -27,7 +27,7 @@
 }
 
 .brand__title {
-  font-weight: 800;
+  font-weight: 900;
   font-size: 16px;
   line-height: 1.1;
 }
@@ -65,20 +65,19 @@ a.active {
   font-size: 12px;
 }
 
-/* =============== CONTENT =============== */
-.content {
-  background: #fafafa;
+/* CONTENT WRAPPER (NOSSO) */
+.pc-content {
   height: 100vh;
-  overflow: auto; /* agora quem rola é o content */
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Toolbar FIXA no topo */
+/* Toolbar branca */
 .toolbar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 280px;   /* igual largura do sidenav */
-  right: 0;
-  z-index: 1000;
+  z-index: 10;
 
   background: #fff !important;
   color: #111827 !important;
@@ -98,89 +97,72 @@ a.active {
   flex: 1 1 auto;
 }
 
-/* Conteúdo centralizado + espaço pra toolbar fixa */
-.page {
-  padding: 92px 20px 20px; /* 92px = altura da toolbar + respiro */
+/* Área que rola */
+.pc-page {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 20px;
   max-width: 1180px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* =============== SEARCH (PILL) =============== */
+/* SEARCH PILL */
 .toolbar__search {
   width: min(620px, 52vw);
   margin-left: 28px;
 }
 
-::ng-deep .toolbar__search .mat-mdc-form-field-subscript-wrapper {
+:host ::ng-deep .toolbar__search .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
 
-.toolbar__search ::ng-deep .mat-mdc-text-field-wrapper {
+:host ::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
   border-radius: 999px;
   background: #fff;
-  overflow: visible;
 }
 
-.toolbar__search ::ng-deep .mdc-notched-outline {
+:host ::ng-deep .toolbar__search .mdc-notched-outline__leading,
+:host ::ng-deep .toolbar__search .mdc-notched-outline__notch,
+:host ::ng-deep .toolbar__search .mdc-notched-outline__trailing {
   border-radius: 999px;
-}
-
-.toolbar__search ::ng-deep .mdc-notched-outline__leading,
-.toolbar__search ::ng-deep .mdc-notched-outline__notch,
-.toolbar__search ::ng-deep .mdc-notched-outline__trailing {
   border-color: rgba(17, 24, 39, 0.12);
 }
 
-.toolbar__search ::ng-deep .mdc-notched-outline__leading {
-  border-top-left-radius: 999px;
-  border-bottom-left-radius: 999px;
-}
-
-.toolbar__search ::ng-deep .mdc-notched-outline__trailing {
-  border-top-right-radius: 999px;
-  border-bottom-right-radius: 999px;
-}
-
-.toolbar__search ::ng-deep .mat-mdc-form-field-flex {
-  height: 56px;
+:host ::ng-deep .toolbar__search .mat-mdc-form-field-flex {
   align-items: center;
 }
 
-.toolbar__search ::ng-deep .mat-mdc-form-field-icon-prefix {
-  padding-left: 14px;
-  padding-right: 8px;
-  opacity: 0.75;
+:host ::ng-deep .toolbar__search .mat-mdc-form-field-infix {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.toolbar__search ::ng-deep .mat-mdc-form-field-infix {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__leading,
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__notch,
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__trailing {
+/* foco roxo */
+:host ::ng-deep .toolbar__search.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep .toolbar__search.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep .toolbar__search.mat-focused .mdc-notched-outline__trailing {
   border-color: rgba(98, 0, 238, 0.65);
 }
 
-.toolbar__search.mat-focused ::ng-deep .mat-mdc-text-field-wrapper {
+:host ::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
   box-shadow: 0 0 0 4px rgba(98, 0, 238, 0.12);
 }
 
-/* =============== RESPONSIVO =============== */
-@media (max-width: 900px) {
-  .toolbar__search {
-    width: min(520px, 48vw);
-    margin-left: 16px;
-  }
-}
-
 @media (max-width: 760px) {
-  .toolbar {
-    left: 0; /* no mobile a toolbar ocupa tela toda */
-  }
   .toolbar__search {
     display: none;
   }
 }
+
+:host ::ng-deep .mat-drawer-container {
+  height: 100%;
+}
+
+:host ::ng-deep .mat-drawer-content {
+  height: 100%;
+  overflow: hidden; /* o scroll vai ficar só na tua .pc-page */
+}
+
+
