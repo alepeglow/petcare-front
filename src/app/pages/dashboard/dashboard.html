@@ -1,1 +1,207 @@
-<p>dashboard works!</p>
+<section class="dashboard">
+  <!-- Hero -->
+  <mat-card class="hero">
+    <div class="hero__content">
+      <div class="hero__text">
+        <h1>Encontre um novo melhor amigo</h1>
+        <p>
+          Conheça pets disponíveis para adoção e acompanhe o histórico com carinho e organização.
+        </p>
+
+        <div class="hero__actions">
+          <!-- ✅ Vai para /pets -->
+          <button mat-flat-button color="primary" routerLink="/pets">
+            <mat-icon>pets</mat-icon>
+            Buscar pets
+          </button>
+
+          <!-- ✅ Preparado para rota futura -->
+          <button mat-stroked-button class="btn-light" routerLink="/pets/novo">
+            <mat-icon>add</mat-icon>
+            Cadastrar pet
+          </button>
+        </div>
+      </div>
+
+      <div class="hero__badge">
+        <mat-icon>favorite</mat-icon>
+        <span>Adoção responsável</span>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Metrics -->
+  <div class="metrics">
+    <mat-card class="metric">
+      <div class="metric__icon"><mat-icon>pets</mat-icon></div>
+      <div>
+        <div class="metric__value">248</div>
+        <div class="metric__label">Pets cadastrados</div>
+      </div>
+    </mat-card>
+
+    <mat-card class="metric">
+      <div class="metric__icon"><mat-icon>check_circle</mat-icon></div>
+      <div>
+        <div class="metric__value">176</div>
+        <div class="metric__label">Adoções concluídas</div>
+      </div>
+    </mat-card>
+
+    <mat-card class="metric">
+      <div class="metric__icon"><mat-icon>person</mat-icon></div>
+      <div>
+        <div class="metric__value">89</div>
+        <div class="metric__label">Tutores</div>
+      </div>
+    </mat-card>
+
+    <mat-card class="metric">
+      <div class="metric__icon"><mat-icon>medical_services</mat-icon></div>
+      <div>
+        <div class="metric__value">412</div>
+        <div class="metric__label">Cuidados registrados</div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Featured Pets -->
+  <div class="section-head">
+    <h2>Pets em destaque</h2>
+
+    <!-- ✅ Vai para /pets -->
+    <button mat-button routerLink="/pets">
+      Ver todos
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <!-- ✅ SUBSTITUÍDO: Cards de pets igual ao bloco que você mandou -->
+  <div class="pets-grid">
+    <mat-card class="pet">
+      <img class="pet__img" src="images/pets/dog-1.png" alt="Thor" />
+
+      <div class="pet__status">
+        <mat-icon>check_circle</mat-icon>
+        <span>Disponível</span>
+      </div>
+
+      <button class="pet__fav" mat-icon-button aria-label="Favoritar">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+
+      <div class="pet__body">
+        <div class="pet__title">Thor</div>
+        <div class="pet__meta">Golden Retriever</div>
+
+        <div class="pet__info">
+          <span><mat-icon>cake</mat-icon> 2 anos</span>
+          <span><mat-icon>male</mat-icon> Macho</span>
+          <span><mat-icon>pets</mat-icon> Porte M</span>
+        </div>
+
+        <button mat-button class="pet__adopt">
+          <mat-icon>favorite</mat-icon>
+          Adotar Thor
+        </button>
+      </div>
+    </mat-card>
+
+    <mat-card class="pet">
+      <img class="pet__img" src="images/pets/cat-1.png" alt="Luna" />
+
+      <div class="pet__status">
+        <mat-icon>check_circle</mat-icon>
+        <span>Disponível</span>
+      </div>
+
+      <button class="pet__fav" mat-icon-button aria-label="Favoritar">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+
+      <div class="pet__body">
+        <div class="pet__title">Luna</div>
+        <div class="pet__meta">Gato Persa</div>
+
+        <div class="pet__info">
+          <span><mat-icon>cake</mat-icon> 1 ano</span>
+          <span><mat-icon>female</mat-icon> Fêmea</span>
+          <span><mat-icon>pets</mat-icon> Porte P</span>
+        </div>
+
+        <button mat-button class="pet__adopt">
+          <mat-icon>favorite</mat-icon>
+          Adotar Luna
+        </button>
+      </div>
+    </mat-card>
+
+    <mat-card class="pet">
+      <img class="pet__img" src="images/pets/dog-2.png" alt="Max" />
+
+      <div class="pet__status">
+        <mat-icon>check_circle</mat-icon>
+        <span>Disponível</span>
+      </div>
+
+      <button class="pet__fav" mat-icon-button aria-label="Favoritar">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+
+      <div class="pet__body">
+        <div class="pet__title">Max</div>
+        <div class="pet__meta">Beagle</div>
+
+        <div class="pet__info">
+          <span><mat-icon>cake</mat-icon> 6 meses</span>
+          <span><mat-icon>male</mat-icon> Macho</span>
+          <span><mat-icon>pets</mat-icon> Porte P</span>
+        </div>
+
+        <button mat-button class="pet__adopt">
+          <mat-icon>favorite</mat-icon>
+          Adotar Max
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- How it works -->
+  <div class="section-head">
+    <h2>Como funciona</h2>
+  </div>
+
+  <div class="how">
+    <mat-card class="how__card">
+      <mat-icon>search</mat-icon>
+      <h3>Escolha</h3>
+      <p>Encontre um pet usando filtros por espécie e status.</p>
+    </mat-card>
+
+    <mat-card class="how__card">
+      <mat-icon>favorite</mat-icon>
+      <h3>Adoção</h3>
+      <p>Adote com um clique e acompanhe histórico e regras.</p>
+    </mat-card>
+
+    <mat-card class="how__card">
+      <mat-icon>medical_services</mat-icon>
+      <h3>Cuidados</h3>
+      <p>Registre vacinas, consultas e cuidados do dia a dia.</p>
+    </mat-card>
+  </div>
+
+  <!-- CTA -->
+  <mat-card class="cta">
+    <div class="cta__left">
+      <div class="cta__title">Pronto para adotar com responsabilidade?</div>
+      <div class="cta__sub">Comece vendo os pets disponíveis agora mesmo.</div>
+    </div>
+
+    <!-- ✅ Vai para /pets -->
+    <button mat-flat-button color="primary" class="cta__btn" routerLink="/pets">
+      <mat-icon>pets</mat-icon>
+      Ir para Pets
+    </button>
+  </mat-card>
+</section>

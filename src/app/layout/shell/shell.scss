@@ -2,9 +2,11 @@
   height: 100vh;
 }
 
+/* =============== SIDEBAR =============== */
 .sidenav {
   width: 280px;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 .brand {
@@ -21,11 +23,11 @@
   display: grid;
   place-items: center;
   font-size: 22px;
-  background: rgba(98, 0, 238, 0.10); // roxinho suave
+  background: rgba(98, 0, 238, 0.10);
 }
 
 .brand__title {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 16px;
   line-height: 1.1;
 }
@@ -36,13 +38,15 @@
 }
 
 .nav {
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 a.active {
-  background: rgba(98, 0, 238, 0.10);
-  border-radius: 12px;
-  margin: 4px 8px;
+  background: rgba(98, 0, 238, 0.14);
+  border-radius: 16px;
+  margin: 10px 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .sidebar-footer {
@@ -61,14 +65,24 @@ a.active {
   font-size: 12px;
 }
 
+/* =============== CONTENT =============== */
 .content {
   background: #fafafa;
+  height: 100vh;
+  overflow: auto; /* agora quem rola é o content */
 }
 
+/* Toolbar FIXA no topo */
 .toolbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 2;
+  left: 280px;   /* igual largura do sidenav */
+  right: 0;
+  z-index: 1000;
+
+  background: #fff !important;
+  color: #111827 !important;
+  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.06);
 }
 
 .toolbar__menu {
@@ -76,14 +90,97 @@ a.active {
 }
 
 .toolbar__title {
-  font-weight: 700;
+  font-weight: 900;
+  letter-spacing: -0.02em;
 }
 
 .spacer {
   flex: 1 1 auto;
 }
 
+/* Conteúdo centralizado + espaço pra toolbar fixa */
 .page {
-  padding: 20px;
-  max-width: 1200px;
+  padding: 92px 20px 20px; /* 92px = altura da toolbar + respiro */
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* =============== SEARCH (PILL) =============== */
+.toolbar__search {
+  width: min(620px, 52vw);
+  margin-left: 28px;
+}
+
+::ng-deep .toolbar__search .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.toolbar__search ::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: 999px;
+  background: #fff;
+  overflow: visible;
+}
+
+.toolbar__search ::ng-deep .mdc-notched-outline {
+  border-radius: 999px;
+}
+
+.toolbar__search ::ng-deep .mdc-notched-outline__leading,
+.toolbar__search ::ng-deep .mdc-notched-outline__notch,
+.toolbar__search ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(17, 24, 39, 0.12);
+}
+
+.toolbar__search ::ng-deep .mdc-notched-outline__leading {
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.toolbar__search ::ng-deep .mdc-notched-outline__trailing {
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+
+.toolbar__search ::ng-deep .mat-mdc-form-field-flex {
+  height: 56px;
+  align-items: center;
+}
+
+.toolbar__search ::ng-deep .mat-mdc-form-field-icon-prefix {
+  padding-left: 14px;
+  padding-right: 8px;
+  opacity: 0.75;
+}
+
+.toolbar__search ::ng-deep .mat-mdc-form-field-infix {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__leading,
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__notch,
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(98, 0, 238, 0.65);
+}
+
+.toolbar__search.mat-focused ::ng-deep .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 4px rgba(98, 0, 238, 0.12);
+}
+
+/* =============== RESPONSIVO =============== */
+@media (max-width: 900px) {
+  .toolbar__search {
+    width: min(520px, 48vw);
+    margin-left: 16px;
+  }
+}
+
+@media (max-width: 760px) {
+  .toolbar {
+    left: 0; /* no mobile a toolbar ocupa tela toda */
+  }
+  .toolbar__search {
+    display: none;
+  }
 }

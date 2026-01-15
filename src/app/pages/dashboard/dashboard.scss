@@ -1,0 +1,330 @@
+.dashboard {
+  display: grid;
+  gap: 22px;
+}
+
+.hero {
+  border-radius: 20px;
+  padding: 22px;
+  background: linear-gradient(90deg, rgba(98, 0, 238, 0.95), rgba(168, 85, 247, 0.95));
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero__content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
+}
+
+.hero__text h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.hero__text p {
+  margin: 10px 0 0;
+  opacity: 0.92;
+  max-width: 560px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-light {
+  border-color: rgba(255, 255, 255, 0.75);
+  color: #fff;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(6px);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric {
+  border-radius: 18px;
+  padding: 16px;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.metric__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(98, 0, 238, 0.08);
+}
+
+.metric__value {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.metric__label {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* =========================
+   PETS (ajustado pro design)
+   ========================= */
+
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pet {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.08);
+}
+
+.pet:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.14);
+}
+
+/* imagem do topo */
+.pet__img {
+  width: 100%;
+  height: 190px;              /* aumenta um pouco a área da foto */
+  display: block;
+
+  object-fit: contain;        /* <- NÃO corta mais */
+  object-position: center bottom;
+
+  padding: 14px 14px 8px;    /* “respiro” igual no design */
+  background: transparent;
+  transition: transform 180ms ease;
+}
+
+.pet:hover .pet__img {
+  transform: scale(1.18);
+}
+
+
+/* status (Disponível) em cima da imagem */
+.pet__status {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 10px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.12);
+  backdrop-filter: blur(6px);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pet__status mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* coração/favoritar */
+.pet__fav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.12);
+}
+
+.pet__fav:hover {
+  transform: scale(1.04);
+}
+
+/* corpo do card */
+.pet__body {
+  position: relative;
+  z-index: 1;
+  padding: 14px 16px 16px;
+  background: #fff;
+}
+
+.pet__title {
+  font-weight: 900;
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.pet__meta {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+/* linha com idade/sexo/porte */
+.pet__info {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  color: rgba(17, 24, 39, 0.82);
+  font-size: 12px;
+}
+
+.pet__info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pet__info mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* botão “Adotar …” */
+.pet__adopt {
+  width: 100%;
+  margin-top: 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.pet__adopt mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================
+   COMO FUNCIONA + CTA
+   ========================= */
+
+.how {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.how__card {
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.how__card mat-icon {
+  opacity: 0.9;
+}
+
+.how__card h3 {
+  margin: 10px 0 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.how__card p {
+  margin: 8px 0 0;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.cta {
+  border-radius: 20px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: rgba(98, 0, 238, 0.08);
+}
+
+.cta__title {
+  font-weight: 800;
+}
+
+.cta__sub {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.cta__btn {
+  border-radius: 12px;
+}
+
+/* =========================
+   RESPONSIVO
+   ========================= */
+
+@media (max-width: 1100px) {
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pets-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .hero__content {
+    grid-template-columns: 1fr;
+  }
+  .pets-grid {
+    grid-template-columns: 1fr;
+  }
+  .how {
+    grid-template-columns: 1fr;
+  }
+}

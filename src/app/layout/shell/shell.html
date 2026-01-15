@@ -26,24 +26,45 @@
     </mat-nav-list>
 
     <div class="sidebar-footer">
-      <div class="hint">
-        <mat-icon>info</mat-icon>
-        <span>Angular + Material</span>
-      </div>
+    
     </div>
   </mat-sidenav>
 
   <!-- Content -->
   <mat-sidenav-content class="content">
-    <mat-toolbar class="toolbar" color="primary">
+    <!-- Toolbar FIXA -->
+    <mat-toolbar class="toolbar">
       <button mat-icon-button (click)="drawer.toggle()" class="toolbar__menu">
         <mat-icon>menu</mat-icon>
       </button>
 
       <span class="toolbar__title">PetCare</span>
 
+      <!-- Busca -->
+      <mat-form-field class="toolbar__search" appearance="outline">
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput placeholder="Buscar pets, tutores..." />
+      </mat-form-field>
+
       <span class="spacer"></span>
 
+      <!-- Notificações -->
+      <button
+        mat-icon-button
+        matBadge="1"
+        matBadgeColor="warn"
+        matBadgeSize="small"
+        aria-label="Notificações"
+      >
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <!-- Configurações -->
+      <button mat-icon-button aria-label="Configurações">
+        <mat-icon>settings</mat-icon>
+      </button>
+
+      <!-- CTA -->
       <button mat-button>
         <mat-icon>favorite</mat-icon>
         Adote 💜
