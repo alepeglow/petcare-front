@@ -1,85 +1,57 @@
-<mat-sidenav-container class="shell-container">
-  <!-- MENU LATERAL -->
-  <mat-sidenav #drawer class="shell-sidenav" mode="side" opened>
+<mat-sidenav-container class="shell">
+  <!-- Sidebar -->
+  <mat-sidenav #drawer class="sidenav" mode="side" opened>
     <div class="brand">
-      <div class="brand-icon">🐾</div>
-      <div class="brand-text">
-        <div class="brand-title">PetCare</div>
-        <div class="brand-subtitle">Adoção com carinho</div>
+      <div class="brand__logo">🐾</div>
+      <div class="brand__text">
+        <div class="brand__title">PetCare</div>
+        <div class="brand__subtitle">Adoção com carinho</div>
       </div>
     </div>
 
     <mat-divider></mat-divider>
 
     <mat-nav-list class="nav">
-      <a mat-list-item routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <mat-icon matListItemIcon>dashboard</mat-icon>
-        <span matListItemTitle>Dashboard</span>
-        <span matListItemLine>Visão geral</span>
-      </a>
-
-      <a mat-list-item routerLink="/pets" routerLinkActive="active">
-        <mat-icon matListItemIcon>pets</mat-icon>
-        <span matListItemTitle>Pets</span>
-        <span matListItemLine>Listagem, filtros</span>
-      </a>
-
-      <a mat-list-item routerLink="/tutores" routerLinkActive="active">
-        <mat-icon matListItemIcon>person</mat-icon>
-        <span matListItemTitle>Tutores</span>
-        <span matListItemLine>Cadastro e gestão</span>
-      </a>
-
-      <a mat-list-item routerLink="/adocoes" routerLinkActive="active">
-        <mat-icon matListItemIcon>favorite</mat-icon>
-        <span matListItemTitle>Adoções</span>
-        <span matListItemLine>Histórico</span>
-      </a>
-
-      <a mat-list-item routerLink="/cuidados" routerLinkActive="active">
-        <mat-icon matListItemIcon>medical_services</mat-icon>
-        <span matListItemTitle>Cuidados</span>
-        <span matListItemLine>Vacina, banho, etc.</span>
-      </a>
+      @for (item of navItems; track item.path) {
+        <a
+          mat-list-item
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/dashboard' }"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
     </mat-nav-list>
 
-    <div class="sidenav-footer">
-      <mat-divider></mat-divider>
+    <div class="sidebar-footer">
       <div class="hint">
         <mat-icon>info</mat-icon>
-        <span>Use o menu para navegar.</span>
+        <span>Angular + Material</span>
       </div>
     </div>
   </mat-sidenav>
 
-  <!-- CONTEÚDO -->
-  <mat-sidenav-content class="shell-content">
-    <mat-toolbar class="shell-toolbar" color="primary">
-      <button mat-icon-button (click)="drawer.toggle()" aria-label="Abrir/fechar menu">
+  <!-- Content -->
+  <mat-sidenav-content class="content">
+    <mat-toolbar class="toolbar" color="primary">
+      <button mat-icon-button (click)="drawer.toggle()" class="toolbar__menu">
         <mat-icon>menu</mat-icon>
       </button>
 
-      <span class="toolbar-title">PetCare</span>
-      <span class="toolbar-spacer"></span>
+      <span class="toolbar__title">PetCare</span>
 
-      <!-- Atalhos no topo (opcional) -->
-      <button mat-button routerLink="/pets">
-        <mat-icon>pets</mat-icon>
-        Pets
-      </button>
+      <span class="spacer"></span>
 
-      <button mat-button routerLink="/tutores">
-        <mat-icon>person</mat-icon>
-        Tutores
+      <button mat-button>
+        <mat-icon>favorite</mat-icon>
+        Adote 💜
       </button>
     </mat-toolbar>
 
-    <main class="shell-main">
+    <main class="page">
       <router-outlet></router-outlet>
     </main>
-
-    <footer class="shell-footer">
-      <span>PetCare • Angular + Spring Boot • {{ year }}</span>
-    </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

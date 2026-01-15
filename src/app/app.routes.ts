@@ -1,18 +1,16 @@
 import { Routes } from '@angular/router';
-import { ShellComponent } from './layout/shell/shell';
-import { DashboardComponent } from './pages/dashboard/dashboard';
-import { PetsComponent } from './pages/pets/pets';
+import { Shell } from './layout/shell/shell';
+import { Dashboard } from './pages/dashboard/dashboard';
+import { Pets } from './pages/pets/pets';
 
 export const routes: Routes = [
   {
     path: '',
-    component: ShellComponent,
+    component: Shell,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'pets', component: PetsComponent },
-      // depois: adocoes, adotantes, agendamentos...
+      { path: 'dashboard', component: Dashboard },
+      { path: 'pets', component: Pets },
     ],
   },
 ];
-

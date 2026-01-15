@@ -8,13 +8,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 
+type NavItem = {
+  label: string;
+  icon: string;
+  path: string;
+};
+
 @Component({
   selector: 'app-shell',
-  standalone: true,
   imports: [
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
+
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
@@ -26,5 +32,12 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './shell.scss',
 })
 export class Shell {
-  year = new Date().getFullYear();
+  navItems: NavItem[] = [
+    { label: 'Dashboard', icon: 'dashboard', path: '/dashboard' },
+    { label: 'Pets', icon: 'pets', path: '/pets' },
+    // depois você pode ativar:
+    // { label: 'Tutores', icon: 'people', path: '/tutores' },
+    // { label: 'Adoções', icon: 'favorite', path: '/adocoes' },
+    // { label: 'Cuidados', icon: 'medical_services', path: '/cuidados' },
+  ];
 }
