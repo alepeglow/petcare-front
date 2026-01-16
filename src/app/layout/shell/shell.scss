@@ -269,3 +269,15 @@ a.active {
   border-radius: inherit !important;
 }
 
+/* FORÇA o Ajuda a ficar no fluxo do scroll do .pc-page */
+:host ::ng-deep .pc-page .help-row,
+:host ::ng-deep .pc-page .help-row .help-fab,
+:host ::ng-deep .pc-page .help-row .help-fab.mat-mdc-button-base {
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+}
