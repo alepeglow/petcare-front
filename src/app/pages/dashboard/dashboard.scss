@@ -155,38 +155,129 @@
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+  gap: 42px;
+
+  background: #f6f3ff;       /* lilás bem suave como no mock */
+  border-radius: 24px;
+  padding: 44px 46px;
 }
 
+/* cada KPI (não é card) */
 .metric {
-  border-radius: 18px;
-  padding: 16px;
   display: grid;
-  justify-items: center;
-  text-align: center;
-  gap: 8px;
+  gap: 12px;
+  align-content: start;
+  justify-items: start;
+  text-align: left;
+
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+
+.metric__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .metric__icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
   display: grid;
   place-items: center;
-  background: rgba(98, 0, 238, 0.08);
 }
 
-.metric__value {
+.metric__trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #16a34a; /* verdinho */
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.metric__trend mat-icon {
   font-size: 18px;
-  font-weight: 800;
-  line-height: 1;
+  width: 18px;
+  height: 18px;
 }
 
 .metric__label {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(17, 24, 39, 0.70);
+  margin-top: 8px;
 }
+
+.metric__value {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #0f172a;
+}
+
+/* ===== cores (pastel) por tipo ===== */
+.metric--pets .metric__icon {
+  background: rgba(98, 0, 238, 0.10);
+}
+.metric--pets .metric__icon mat-icon {
+  color: rgba(98, 0, 238, 0.95);
+}
+
+.metric--available .metric__icon {
+  background: rgba(45, 212, 191, 0.14);
+}
+.metric--available .metric__icon mat-icon {
+  color: rgba(45, 212, 191, 1);
+}
+
+.metric--adopted .metric__icon {
+  background: rgba(251, 113, 133, 0.14);
+}
+.metric--adopted .metric__icon mat-icon {
+  color: rgba(251, 113, 133, 1);
+}
+
+.metric--tutores .metric__icon {
+  background: rgba(249, 115, 22, 0.14);
+}
+.metric--tutores .metric__icon mat-icon {
+  color: rgba(249, 115, 22, 1);
+}
+
+/* extra: cuidados */
+.metric--care .metric__icon {
+  background: rgba(99, 102, 241, 0.12);
+}
+.metric--care .metric__icon mat-icon {
+  color: rgba(99, 102, 241, 1);
+}
+
+/* responsivo */
+@media (max-width: 1100px) {
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    padding: 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  .metrics {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px;
+  }
+
+  .metric__value {
+    font-size: 46px;
+  }
+}
+
 
 .section-head {
   display: flex;
@@ -201,182 +292,703 @@
   font-weight: 800;
 }
 
-/* ✅ pets */
+/* ================= PETS (FINAL): 1 cor lilás contínua + glow + sem zoom ================= */
+
 .pets-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
-.pet {
+.pets-grid .pet {
+  position: relative;
   border-radius: 18px;
   overflow: hidden;
-  position: relative;
+
+  /* ✅ UMA cor contínua (card inteiro) */
+  background: #f6f3ff;
+  border: 1px solid rgba(98, 0, 238, 0.10);
+  box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
+
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-.pet:hover {
+.pets-grid .pet:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.10);
+  box-shadow: 0 16px 34px rgba(17, 24, 39, 0.12);
 }
 
-.pet__media {
+/* ✅ Glow lilás (halo) atrás da foto, mas mantendo o fundo do card igual */
+.pets-grid .pet::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  width: 85%;
+  height: 240px;
+  background: radial-gradient(
+    closest-side,
+    rgba(168, 85, 247, 0.22),
+    rgba(168, 85, 247, 0.10),
+    rgba(168, 85, 247, 0.00)
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ✅ Imagem: sem fundo, sem zoom, sem cortar */
+.pets-grid .pet__img {
   position: relative;
-  background: #fff; /* ✅ sem lilás */
-  height: 190px;
-  overflow: hidden;
-}
+  z-index: 1;
 
-.pet__img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;  /* pra não cortar */
-  transform: scale(1);
-  transition: transform 220ms ease;
-  padding: 14px;        /* respiro pra imagem não “colar” */
+  height: 290px;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: transparent !important;
+  padding: 22px 22px 10px;
+
+  transform: none !important; /* mata zoom antigo */
+  transition: none !important;
 }
 
-.pet:hover .pet__img {
-  transform: scale(1.08); /* ✅ zoom no hover */
+/* ✅ Hover não mexe na imagem (não corta) */
+.pets-grid .pet:hover .pet__img {
+  transform: none !important;
 }
 
-.pet__status {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.10);
-  font-size: 12px;
-  font-weight: 700;
+/* ✅ Corpo do card: transparente pra manter 1 cor só */
+.pets-grid .pet__body {
+  position: relative;
+  z-index: 1;
+
+  background: transparent !important;
+  padding: 16px 18px 18px;
 }
 
-.pet__status mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+/* Status / Fav por cima do glow */
+.pets-grid .pet__status,
+.pets-grid .pet__fav {
+  z-index: 2;
 }
 
-.pet__fav {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.10);
+/* Se existir um wrapper de mídia em algum card, garante que não pinte fundo */
+.pets-grid .pet__media {
+  background: transparent !important;
 }
 
-.pet__body {
-  padding: 14px 16px 16px;
-}
-
-.pet__title {
-  font-weight: 900;
-}
-
-.pet__meta {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 2px;
-}
-
-.pet__info {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  font-size: 12px;
-  opacity: 0.9;
-}
-
-.pet__info span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.pet__info mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  opacity: 0.9;
-}
-
-.pet__adopt {
-  margin-top: 10px;
-  font-weight: 800;
-}
-
-/* how */
-.how {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.how__card {
-  border-radius: 16px;
-  padding: 16px;
-}
-
-.how__card h3 {
-  margin: 10px 0 0;
-  font-size: 14px;
-  font-weight: 800;
-}
-
-.how__card p {
-  margin: 8px 0 0;
-  font-size: 12px;
-  opacity: 0.75;
-}
-
-/* cta */
-.cta {
-  border-radius: 20px;
-  padding: 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  background: rgba(98, 0, 238, 0.08);
-}
-
-.cta__title {
-  font-weight: 800;
-}
-
-.cta__sub {
-  font-size: 12px;
-  opacity: 0.75;
-  margin-top: 4px;
-}
-
-.cta__btn {
-  border-radius: 12px;
-}
-
-/* responsive */
+/* Responsivo */
 @media (max-width: 1100px) {
-  .metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .pets-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 760px) {
-  .hero__content {
-    grid-template-columns: 1fr;
-  }
   .pets-grid {
     grid-template-columns: 1fr;
   }
-  .how {
-    grid-template-columns: 1fr;
+}
+
+/* ================= PET BODY (volta o estilo de baixo) ================= */
+
+.pets-grid .pet__body {
+  padding: 16px 18px 18px;
+  display: grid;
+  gap: 6px;
+}
+
+.pets-grid .pet__title {
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1.15;
+  margin: 0;
+  color: #0f172a;
+}
+
+.pets-grid .pet__meta {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.62);
+}
+
+.pets-grid .pet__info {
+  margin-top: 10px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.82);
+}
+
+.pets-grid .pet__info span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pets-grid .pet__info mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: rgba(98, 0, 238, 0.95);
+}
+
+.pets-grid .pet__adopt {
+  margin-top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 900;
+  color: rgba(98, 0, 238, 1);
+}
+
+.pets-grid .pet__adopt mat-icon {
+  color: rgba(168, 85, 247, 1);
+}
+
+/* (Opcional) deixa o coração/fav mais “botão” */
+.pets-grid .pet__fav {
+  border-radius: 999px !important;
+}
+
+/* ===== PATCH: status + fav por cima da FOTO ===== */
+.pets-grid .pet {
+  position: relative;
+}
+
+.pets-grid .pet__media {
+  position: relative;     /* <- âncora dos badges */
+}
+
+/* badge "Disponível" */
+.pets-grid .pet__status {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+}
+
+/* botão coração */
+.pets-grid .pet__fav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+}
+
+/* ===== PATCH: zoom suave só na imagem (sem cortar) ===== */
+.pets-grid .pet__img {
+  transition: transform 220ms ease, filter 220ms ease !important;
+  transform: scale(1) !important;
+  transform-origin: center;
+}
+
+.pets-grid .pet:hover .pet__img {
+  transform: scale(1.05) !important;  /* ajusta pra 1.03 se ainda achar muito */
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.section-head__text h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: rgba(98, 0, 238, 1); /* roxo */
+}
+
+.section-head__text p {
+  margin: 6px 0 0;
+  opacity: 0.75;
+  font-size: 18px;
+  color: rgba(17, 24, 39, 0.68);
+}
+
+/* força o botão do Material a ficar roxo */
+.section-head__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  font-weight: 800;
+  font-size: 13px;
+
+  color: rgba(98, 0, 238, 1) !important; /* roxo */
+}
+
+.section-head__link mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: rgba(98, 0, 238, 1) !important; /* roxo */
+}
+
+.section-head__link:hover {
+  text-decoration: underline;
+}
+
+.dashboard .section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* permite título + subtítulo em coluna */
+  gap: 12px;
+}
+
+.dashboard .section-head__text h2 {
+  margin: 0 0 12px !important; /* distância do h2 pro p */
+  font-size: 30px;           /* tamanho do título */
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.dashboard .section-head__text p {
+  margin: 0 !important;
+  font-size: 18px;
+  opacity: 0.75;
+}
+
+.dashboard .section-head__link {
+  color: rgba(98, 0, 238, 1) !important; /* roxo */
+  font-weight: 800;
+}
+
+.dashboard .section-head__link mat-icon {
+  color: inherit !important;
+}
+
+/* “Disponível” centralizado com o ícone */
+.pets-grid .pet__status{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  height: 32px;          /* altura fixa do chip */
+  padding: 0 10px;       /* sem padding vertical pra não “derrubar” o texto */
+  line-height: 1;        /* evita o texto ir pra baixo */
+}
+
+.pets-grid .pet__status span{
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.pets-grid .pet__status mat-icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+/* ================= COMO FUNCIONA (VERSAO HOW2 - sem conflito) ================= */
+.how2 {
+  margin-top: 28px;
+  background: #f6f3ff;
+  border-radius: 24px;
+  padding: 46px;
+}
+
+.how2__head {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.how2__title {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.how2__subtitle {
+  margin: 10px 0 0;
+  font-size: 22px;
+  color: rgba(17, 24, 39, 0.72);
+}
+
+.how2__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px;
+  align-items: start;
+}
+
+.how2__item {
+  position: relative;
+  text-align: center;
+  padding: 12px 10px;
+}
+
+.how2__step {
+  position: absolute;
+  top: -6px;
+  right: 26px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+
+  background: linear-gradient(135deg, rgba(45, 212, 191, 1), rgba(34, 211, 238, 1));
+  box-shadow: 0 12px 22px rgba(17, 24, 39, 0.14);
+}
+
+.how2__icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 34px;
+  margin: 24px auto 18px;
+
+  display: grid;
+  place-items: center;
+
+  box-shadow: 0 18px 32px rgba(17, 24, 39, 0.16);
+}
+
+.how2__icon mat-icon {
+  font-size: 52px;
+  width: 52px;
+  height: 52px;
+  color: #fff;
+}
+
+.how2__icon--purple {
+  background: linear-gradient(135deg, rgba(98, 0, 238, 1), rgba(120, 60, 255, 1));
+}
+
+.how2__icon--mix {
+  background: linear-gradient(135deg, rgba(251, 113, 133, 0.9), rgba(45, 212, 191, 0.95));
+}
+
+.how2__icon--pink {
+  background: linear-gradient(135deg, rgba(98, 0, 238, 1), rgba(251, 113, 133, 0.95));
+}
+
+.how2__h3 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.how2__p {
+  margin: 16px auto 0;
+  max-width: 360px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(17, 24, 39, 0.70);
+}
+
+/* responsivo */
+@media (max-width: 1100px) {
+  .how2 {
+    padding: 36px 28px;
   }
+  .how2__title {
+    font-size: 36px;
+  }
+  .how2__subtitle {
+    font-size: 18px;
+  }
+  .how2__grid {
+    gap: 34px;
+  }
+}
+
+@media (max-width: 900px) {
+  .how2__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .how2__step {
+    right: 18px;
+  }
+}
+
+/* ================= HOW2 (Como funciona) ================= */
+
+.how2 {
+  margin-top: 26px;
+  background: #f6f3ff;          /* lilás suave do mock */
+  border-radius: 24px;
+  padding: 44px 46px;
+}
+
+.how2__head {
+  text-align: center;
+  display: grid;
+  gap: 10px;                    /* distância entre h2 e subtítulo */
+  margin-bottom: 34px;          /* distância do header para os cards */
+}
+
+.how2__title {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #0f172a;
+}
+
+.how2__subtitle {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.4;
+  color: rgba(15, 23, 42, 0.65);
+}
+
+.how2__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 46px;                    /* espaço entre as 3 colunas */
+  align-items: start;
+}
+
+.how2__item {
+  position: relative;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 14px;                    /* respiro geral dentro do item */
+  padding: 14px 8px 6px;
+}
+
+.how2__step {
+  position: absolute;
+  top: 6px;
+  right: 18px;
+
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(45, 212, 191, 0.95);
+  color: #fff;
+  font-weight: 900;
+  font-size: 20px;
+
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.12);
+}
+
+.how2__icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 28px;
+
+  display: grid;
+  place-items: center;
+
+  box-shadow: 0 18px 28px rgba(17, 24, 39, 0.12);
+}
+
+.how2__icon mat-icon {
+  color: #fff;
+  font-size: 44px;
+  width: 44px;
+  height: 44px;
+}
+
+.how2__icon--purple {
+  background: linear-gradient(135deg, rgba(98, 0, 238, 1), rgba(124, 58, 237, 1));
+}
+
+.how2__icon--mix {
+  background: linear-gradient(135deg, rgba(251, 113, 133, 1), rgba(45, 212, 191, 1));
+}
+
+.how2__icon--pink {
+  background: linear-gradient(135deg, rgba(98, 0, 238, 1), rgba(251, 113, 133, 1));
+}
+
+.how2__h3 {
+  margin: 18px 0 6px;          /* distância do ícone pro título + título pro texto */
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.12;
+  color: #0f172a;
+}
+
+.how2__p {
+  margin: 0;
+  max-width: 340px;
+  font-size: 16px;
+  line-height: 1.9;            /* aqui é onde “descola” o texto */
+  color: rgba(15, 23, 42, 0.70);
+}
+
+/* Responsivo */
+@media (max-width: 1100px) {
+  .how2 {
+    padding: 34px 26px;
+  }
+
+  .how2__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .how2__title {
+    font-size: 36px;
+  }
+
+  .how2__subtitle {
+    font-size: 18px;
+  }
+
+  .how2__h3 {
+    font-size: 24px;
+  }
+}
+
+/* ================= CTA HISTÓRICO ================= */
+.history-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+
+  padding: 52px 56px;
+  border-radius: 26px;
+  min-height: 210px;
+  background: linear-gradient(135deg, rgba(98, 0, 238, 1), rgba(168, 85, 247, 1));
+  box-shadow: 0 18px 34px rgba(17, 24, 39, 0.18);
+}
+
+.history-cta__icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  flex: 0 0 auto;
+}
+
+.history-cta__icon mat-icon {
+  color: #fff;
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
+}
+
+.history-cta__text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.history-cta__title {
+  margin: 0;
+  color: #fff;
+  font-weight: 900;
+  font-size: 30px;
+  letter-spacing: -0.02em;
+}
+
+.history-cta__desc {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 18px;
+  line-height: 1.45;
+  max-width: 720px;
+}
+
+.history-cta__btn {
+  background: #fff !important;
+  color: rgba(98, 0, 238, 1) !important;
+
+  border-radius: 22px !important;
+  padding: 28px 44px !important;
+  font-weight: 900 !important;
+  font-size: 20px !important;
+  line-height: 1.05 !important;
+
+  min-width: 220px;
+  min-height: 128px;
+  box-shadow: 0 14px 26px rgba(17, 24, 39, 0.18) !important;
+}
+
+@media (max-width: 900px) {
+  .history-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px;
+  }
+
+  .history-cta__btn {
+    width: 100%;
+    min-width: unset;
+    text-align: center;
+  }
+}
+
+/* ✅ faz o wrapper ocupar a linha inteira e ir pra direita */
+.help-row{
+  width: 100% !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  padding: 0 24px 24px !important;
+  margin-top: 18px !important;
+
+  /* se estiver dentro de um GRID, isso força a ocupar a linha inteira */
+  grid-column: 1 / -1 !important;
+}
+
+/* ✅ botão Ajuda (Material às vezes sobrescreve font-size) */
+.help-fab.mat-mdc-button,
+.help-fab{
+  height: 54px !important;
+  min-width: 160px !important;
+  padding: 0 22px !important;
+  border-radius: 18px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+
+  font-size: 20px !important;   /* força fonte maior */
+  font-weight: 400 !important;
+  line-height: 1 !important;
+
+  background: rgba(98, 0, 238, 1) !important;
+  color: #fff !important;
+
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18) !important;
+}
+
+.help-fab mat-icon{
+  color: #fff !important;
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
