@@ -45,7 +45,7 @@ type NavItem = {
 export class Shell {
   @ViewChild('pageScroll') pageScroll!: ElementRef<HTMLElement>;
 
-  onDrawerChange() {
+  onDrawerChange(opened: boolean) {
     // Quando a sidebar for aberta ou fechada, rola a página para o topo
     queueMicrotask(() => {});
     this.pageScroll.nativeElement.scrollTop = 0;

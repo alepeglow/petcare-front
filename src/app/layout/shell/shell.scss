@@ -1,12 +1,20 @@
-.shell {
+:host {
+  display: block;
   height: 100vh;
 }
 
-/* SIDEBAR */
+/* Container do sidenav precisa ocupar toda a altura do host */
+.shell {
+  height: 100%;
+  display: flex;
+}
+
+/* ================= SIDEBAR ================= */
 .sidenav {
   width: 280px;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
   position: relative;
+  overflow-x: hidden;
 }
 
 .brand {
@@ -65,23 +73,55 @@ a.active {
   font-size: 12px;
 }
 
-/* CONTENT WRAPPER (NOSSO) */
-.pc-content {
-  height: 100vh;
-  background: #fafafa;
+/* ================= CONTENT ================= */
+::ng-deep .shell mat-sidenav-content {
+  height: 100%;
   display: flex;
   flex-direction: column;
+  background: #fafafa;
 }
 
-/* Toolbar branca */
+.pc-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .toolbar {
-  position: sticky;
-  top: 0;
+  flex: 0 0 auto;
+  position: relative;
   z-index: 10;
 
   background: #fff !important;
   color: #111827 !important;
   box-shadow: 0 1px 0 rgba(17, 24, 39, 0.06);
+}
+
+::ng-deep .toolbar.mat-mdc-toolbar {
+  background: #fff !important;
+  background-color: #fff !important;
+  --mat-toolbar-container-background-color: #fff !important;
+
+  &::before,
+  &::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  .mat-mdc-toolbar-row {
+    background: transparent !important;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+
+    &::before,
+    &::after {
+      display: none !important;
+      content: none !important;
+    }
+  }
 }
 
 .toolbar__menu {
@@ -91,63 +131,121 @@ a.active {
 .toolbar__title {
   font-weight: 900;
   letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
 }
 
 .spacer {
   flex: 1 1 auto;
 }
 
-/* Área que rola */
 .pc-page {
   flex: 1 1 auto;
-  min-height: 0;
   overflow: auto;
   padding: 20px;
+  min-height: 0;
+
   max-width: 1180px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* SEARCH PILL */
+/* ================= SEARCH (PILL) ================= */
 .toolbar__search {
   width: min(620px, 52vw);
   margin-left: 28px;
 }
 
-:host ::ng-deep .toolbar__search .mat-mdc-form-field-subscript-wrapper {
+/* tira subscript (hint/erro) */
+::ng-deep .toolbar__search .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
 
-:host ::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
-  border-radius: 999px;
-  background: #fff;
+/* pill + fundo branco */
+::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
+  border-radius: 999px !important;
+  background: #fff !important;
 }
 
-:host ::ng-deep .toolbar__search .mdc-notched-outline__leading,
-:host ::ng-deep .toolbar__search .mdc-notched-outline__notch,
-:host ::ng-deep .toolbar__search .mdc-notched-outline__trailing {
-  border-radius: 999px;
-  border-color: rgba(17, 24, 39, 0.12);
+/* altura e respiro interno (empurra tudo pra dentro) */
+::ng-deep .toolbar__search .mat-mdc-form-field-flex {
+  height: 56px !important;
+  align-items: center !important;
+  padding-left: 18px !important;
 }
 
-:host ::ng-deep .toolbar__search .mat-mdc-form-field-flex {
-  align-items: center;
+/* ícone prefix mais “pra dentro” e com espaço pro texto */
+::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
+  margin: 0 !important;
+  padding: 0 12px 0 0 !important;
 }
 
-:host ::ng-deep .toolbar__search .mat-mdc-form-field-infix {
-  padding-top: 10px;
-  padding-bottom: 10px;
+/* borda normal: garante cor/espessura iguais nos 3 pedaços */
+::ng-deep .toolbar__search .mdc-notched-outline,
+::ng-deep .toolbar__search .mdc-notched-outline__leading,
+::ng-deep .toolbar__search .mdc-notched-outline__notch,
+::ng-deep .toolbar__search .mdc-notched-outline__trailing {
+  border-radius: 999px !important;
 }
 
-/* foco roxo */
-:host ::ng-deep .toolbar__search.mat-focused .mdc-notched-outline__leading,
-:host ::ng-deep .toolbar__search.mat-focused .mdc-notched-outline__notch,
-:host ::ng-deep .toolbar__search.mat-focused .mdc-notched-outline__trailing {
-  border-color: rgba(98, 0, 238, 0.65);
+::ng-deep .toolbar__search .mdc-notched-outline__leading,
+::ng-deep .toolbar__search .mdc-notched-outline__notch,
+::ng-deep .toolbar__search .mdc-notched-outline__trailing {
+  border-color: rgba(17, 24, 39, 0.12) !important;
+  border-width: 1px !important;
 }
 
-:host ::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
-  box-shadow: 0 0 0 4px rgba(98, 0, 238, 0.12);
+/* foco: borda lilás SOMENTE no outline do campo */
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__leading,
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__notch,
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(168, 85, 247, 1) !important;
+  border-width: 2px !important;
+}
+
+/* ===== OPÇÃO 1: foco lilás só no contorno (sem glow) ===== */
+
+/* garante pílula perfeita sempre */
+.toolbar__search ::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: 999px !important;
+  overflow: hidden !important;
+}
+
+/* borda normal (cinza suave) */
+.toolbar__search ::ng-deep .mdc-notched-outline__leading,
+.toolbar__search ::ng-deep .mdc-notched-outline__notch,
+.toolbar__search ::ng-deep .mdc-notched-outline__trailing {
+  border-radius: 999px !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+  border-width: 1px !important;
+}
+
+/* remove a "emenda" do notch que deixa a borda falhada */
+.toolbar__search ::ng-deep .mdc-notched-outline__notch {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+/* FOCUS: só muda a borda do outline (sem box-shadow) */
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__leading,
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__notch,
+.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(168, 85, 247, 1) !important;
+  border-width: 2px !important;
+}
+
+/* GARANTE: nunca aplicar glow no foco */
+.toolbar__search.mat-focused ::ng-deep .mat-mdc-text-field-wrapper {
+  box-shadow: none !important;
+}
+
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 900px) {
+  .toolbar__search {
+    width: min(520px, 48vw);
+    margin-left: 16px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -155,14 +253,87 @@ a.active {
     display: none;
   }
 }
+/* =========================================
+   FIX FINAL - BORDA PERFEITA NO SEARCH PILL
+   (cole NO FINAL do shell.scss)
+========================================= */
 
-:host ::ng-deep .mat-drawer-container {
-  height: 100%;
+/* 1) pill base */
+::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
+  border-radius: 999px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+
+  /* borda “real” fica aqui */
+  border: 1px solid rgba(17, 24, 39, 0.12) !important;
+  box-shadow: none !important;
 }
 
-:host ::ng-deep .mat-drawer-content {
-  height: 100%;
-  overflow: hidden; /* o scroll vai ficar só na tua .pc-page */
+/* 2) desliga o outline do MDC (pra não ter emenda/risquinho) */
+::ng-deep .toolbar__search .mdc-notched-outline__leading,
+::ng-deep .toolbar__search .mdc-notched-outline__notch,
+::ng-deep .toolbar__search .mdc-notched-outline__trailing {
+  border-color: transparent !important;
 }
 
+/* 3) foco: borda roxa + glow só no pill */
+::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
+  border-color: rgba(168, 85, 247, 1) !important;
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12) !important;
+}
 
+/* 4) espaçamento interno / ícone mais pra dentro */
+::ng-deep .toolbar__search .mat-mdc-form-field-flex {
+  height: 56px !important;
+  align-items: center !important;
+  padding-left: 8px !important;
+}
+
+::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
+  padding-left: 14px !important;  /* empurra o ícone pra dentro */
+  padding-right: 10px !important; /* respiro depois do ícone */
+  margin: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix::before,
+::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* ===== FIX: remove borda dupla do mat-form-field (fica só 1) ===== */
+
+/* desliga COMPLETAMENTE o outline do MDC (ele é a borda duplicada) */
+::ng-deep .toolbar__search .mdc-notched-outline {
+  display: none !important;
+}
+
+/* borda única no pill */
+::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
+  border-radius: 999px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+
+  border: 1px solid rgba(17, 24, 39, 0.12) !important;
+  box-shadow: none !important;
+}
+
+/* foco: borda roxa + glow */
+::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
+  border-color: rgba(168, 85, 247, 1) !important;
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12) !important;
+}
+
+/* espaçamento/altura + ícone mais pra dentro */
+::ng-deep .toolbar__search .mat-mdc-form-field-flex {
+  height: 56px !important;
+  align-items: center !important;
+  padding-left: 12px !important;
+}
+
+::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
+  padding-left: 14px !important;
+  padding-right: 10px !important;
+}

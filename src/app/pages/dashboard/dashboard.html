@@ -1,33 +1,37 @@
 <section class="dashboard">
-  <!-- Hero -->
-  <mat-card class="hero">
-    <div class="hero__content">
-      <div class="hero__text">
-        <h1>Encontre um novo melhor amigo</h1>
-        <p>
-          Conheça pets disponíveis para adoção e acompanhe o histórico com carinho e
-          organização.
-        </p>
+  <!-- Hero (versão grande) -->
+<mat-card class="hero hero--xl">
+  <!-- pill/top tag -->
+  <div class="hero__pill">
+    <span class="hero__dot"></span>
+    <span>Sistema de Adoção Responsável</span>
+  </div>
 
-        <div class="hero__actions">
-          <button mat-flat-button color="primary" routerLink="/pets">
-            <mat-icon>pets</mat-icon>
-            Buscar pets
-          </button>
+  <div class="hero__content">
+    <div class="hero__text">
+      <h1>
+        Encontre um novo melhor amigo <span class="hero__emoji">💜</span>
+      </h1>
 
-          <button mat-stroked-button class="btn-light" routerLink="/pets/novo">
-            <mat-icon>add</mat-icon>
-            Cadastrar pet
-          </button>
-        </div>
-      </div>
+      <p>
+        Conectamos pets que precisam de um lar com pessoas que querem dar todo
+        amor e carinho. Adote com responsabilidade e mude uma vida!
+      </p>
 
-      <div class="hero__badge">
-        <mat-icon>favorite</mat-icon>
-        <span>Adoção responsável</span>
+      <div class="hero__actions hero__actions--xl">
+        <button mat-flat-button color="primary" class="hero__btn hero__btn--light" routerLink="/pets">
+          Ver pets disponíveis
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+
+        <button mat-stroked-button class="hero__btn hero__btn--ghost" routerLink="/pets/novo">
+          Saiba mais
+        </button>
       </div>
     </div>
-  </mat-card>
+  </div>
+</mat-card>
+
 
   <!-- Metrics -->
   <div class="metrics">
