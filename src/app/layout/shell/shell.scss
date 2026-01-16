@@ -85,9 +85,10 @@ a.active {
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden; /* scroll fica no .pc-page */
 }
 
+/* Toolbar branca */
 .toolbar {
   flex: 0 0 auto;
   position: relative;
@@ -98,6 +99,7 @@ a.active {
   box-shadow: 0 1px 0 rgba(17, 24, 39, 0.06);
 }
 
+/* remove qualquer fundo/efeito do toolbar do Material */
 ::ng-deep .toolbar.mat-mdc-toolbar {
   background: #fff !important;
   background-color: #fff !important;
@@ -111,6 +113,7 @@ a.active {
 
   .mat-mdc-toolbar-row {
     background: transparent !important;
+    background-color: transparent !important;
     padding: 0 16px;
     display: flex;
     align-items: center;
@@ -139,6 +142,7 @@ a.active {
   flex: 1 1 auto;
 }
 
+/* área que scrolla */
 .pc-page {
   flex: 1 1 auto;
   overflow: auto;
@@ -161,140 +165,37 @@ a.active {
   display: none;
 }
 
-/* pill + fundo branco */
-::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
-  border-radius: 999px !important;
-  background: #fff !important;
+/* ✅ SOLUÇÃO “BORDER ÚNICA” (sem risco de emenda/risquinho) */
+::ng-deep .toolbar__search .mdc-notched-outline {
+  display: none !important; /* desliga a borda duplicada do MDC */
 }
 
-/* altura e respiro interno (empurra tudo pra dentro) */
-::ng-deep .toolbar__search .mat-mdc-form-field-flex {
-  height: 56px !important;
-  align-items: center !important;
-  padding-left: 18px !important;
-}
-
-/* ícone prefix mais “pra dentro” e com espaço pro texto */
-::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
-  margin: 0 !important;
-  padding: 0 12px 0 0 !important;
-}
-
-/* borda normal: garante cor/espessura iguais nos 3 pedaços */
-::ng-deep .toolbar__search .mdc-notched-outline,
-::ng-deep .toolbar__search .mdc-notched-outline__leading,
-::ng-deep .toolbar__search .mdc-notched-outline__notch,
-::ng-deep .toolbar__search .mdc-notched-outline__trailing {
-  border-radius: 999px !important;
-}
-
-::ng-deep .toolbar__search .mdc-notched-outline__leading,
-::ng-deep .toolbar__search .mdc-notched-outline__notch,
-::ng-deep .toolbar__search .mdc-notched-outline__trailing {
-  border-color: rgba(17, 24, 39, 0.12) !important;
-  border-width: 1px !important;
-}
-
-/* foco: borda lilás SOMENTE no outline do campo */
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__leading,
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__notch,
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__trailing {
-  border-color: rgba(168, 85, 247, 1) !important;
-  border-width: 2px !important;
-}
-
-/* ===== OPÇÃO 1: foco lilás só no contorno (sem glow) ===== */
-
-/* garante pílula perfeita sempre */
-.toolbar__search ::ng-deep .mat-mdc-text-field-wrapper {
-  border-radius: 999px !important;
-  overflow: hidden !important;
-}
-
-/* borda normal (cinza suave) */
-.toolbar__search ::ng-deep .mdc-notched-outline__leading,
-.toolbar__search ::ng-deep .mdc-notched-outline__notch,
-.toolbar__search ::ng-deep .mdc-notched-outline__trailing {
-  border-radius: 999px !important;
-  border-color: rgba(17, 24, 39, 0.12) !important;
-  border-width: 1px !important;
-}
-
-/* remove a "emenda" do notch que deixa a borda falhada */
-.toolbar__search ::ng-deep .mdc-notched-outline__notch {
-  border-left: 0 !important;
-  border-right: 0 !important;
-}
-
-/* FOCUS: só muda a borda do outline (sem box-shadow) */
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__leading,
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__notch,
-.toolbar__search.mat-focused ::ng-deep .mdc-notched-outline__trailing {
-  border-color: rgba(168, 85, 247, 1) !important;
-  border-width: 2px !important;
-}
-
-/* GARANTE: nunca aplicar glow no foco */
-.toolbar__search.mat-focused ::ng-deep .mat-mdc-text-field-wrapper {
-  box-shadow: none !important;
-}
-
-
-/* ================= RESPONSIVO ================= */
-@media (max-width: 900px) {
-  .toolbar__search {
-    width: min(520px, 48vw);
-    margin-left: 16px;
-  }
-}
-
-@media (max-width: 760px) {
-  .toolbar__search {
-    display: none;
-  }
-}
-/* =========================================
-   FIX FINAL - BORDA PERFEITA NO SEARCH PILL
-   (cole NO FINAL do shell.scss)
-========================================= */
-
-/* 1) pill base */
 ::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
   border-radius: 999px !important;
   background: #fff !important;
   overflow: hidden !important;
 
-  /* borda “real” fica aqui */
-  border: 1px solid rgba(17, 24, 39, 0.12) !important;
+  border: 1px solid rgba(17, 24, 39, 0.12) !important; /* borda normal */
   box-shadow: none !important;
 }
 
-/* 2) desliga o outline do MDC (pra não ter emenda/risquinho) */
-::ng-deep .toolbar__search .mdc-notched-outline__leading,
-::ng-deep .toolbar__search .mdc-notched-outline__notch,
-::ng-deep .toolbar__search .mdc-notched-outline__trailing {
-  border-color: transparent !important;
-}
-
-/* 3) foco: borda roxa + glow só no pill */
-::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
-  border-color: rgba(168, 85, 247, 1) !important;
-  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12) !important;
-}
-
-/* 4) espaçamento interno / ícone mais pra dentro */
+/* altura + alinhamento interno */
 ::ng-deep .toolbar__search .mat-mdc-form-field-flex {
   height: 56px !important;
   align-items: center !important;
-  padding-left: 8px !important;
+  padding-left: 8px !important; /* respiro geral */
 }
 
+/* ícone prefix mais pra dentro */
 ::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
-  padding-left: 14px !important;  /* empurra o ícone pra dentro */
-  padding-right: 10px !important; /* respiro depois do ícone */
+  padding-left: 14px !important;
+  padding-right: 10px !important;
   margin: 0 !important;
+
   border: 0 !important;
+  outline: 0 !important;
   box-shadow: none !important;
+  background: transparent !important;
 }
 
 ::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix::before,
@@ -303,209 +204,68 @@ a.active {
   display: none !important;
 }
 
-/* ===== FIX: remove borda dupla do mat-form-field (fica só 1) ===== */
-
-/* desliga COMPLETAMENTE o outline do MDC (ele é a borda duplicada) */
-::ng-deep .toolbar__search .mdc-notched-outline {
-  display: none !important;
-}
-
-/* borda única no pill */
-::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
-  border-radius: 999px !important;
-  background: #fff !important;
-  overflow: hidden !important;
-
-  border: 1px solid rgba(17, 24, 39, 0.12) !important;
-  box-shadow: none !important;
-}
-
-/* foco: borda roxa + glow */
+/* foco: borda roxa + glow leve só no pill */
 ::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
   border-color: rgba(168, 85, 247, 1) !important;
   box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12) !important;
 }
 
-/* espaçamento/altura + ícone mais pra dentro */
-::ng-deep .toolbar__search .mat-mdc-form-field-flex {
-  height: 56px !important;
-  align-items: center !important;
-  padding-left: 12px !important;
-}
+/* ================= AJUDA (scrolla junto + tamanho certo + sem ripple bug) ================= */
 
-::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
-  padding-left: 14px !important;
-  padding-right: 10px !important;
-}
-
-/* garante que o botão vá pra direita */
-.pc-page {
-  position: relative;
-}
-
-/* botão ajuda */
-.help-fab {
-  position: sticky;
-  bottom: 24px;
-
-  /* direita */
-  margin-left: auto;     /* empurra pra direita */
-  margin-right: 24px;    /* distância da borda direita */
-
-  /* tamanho (pra cobrir “Ajuda”) */
-  height: 52px;
-  min-width: 128px;      /* força largura mínima */
-  padding: 0 22px;       /* dá “respiro” lateral */
-  border-radius: 18px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  background: rgba(98, 0, 238, 1) !important;
-  color: #fff !important;
-
-  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18);
-  z-index: 20;
-}
-
-.help-fab mat-icon {
-  color: #fff !important;
-}
-
-.help-fab { 
-  justify-self: end !important; 
-}
-
-/* garante que o botão NÃO fique fixo (se alguma regra antiga existir) */
-.help-fab {
-  position: static !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-}
-.help-row{
-  width: 100% !important;
-  display: flex !important;
-  justify-content: flex-end !important;
-  padding: 0 24px 24px !important;
-  margin-top: 18px !important;
-
-  grid-column: 1 / -1 !important;
-}
-
-.help-fab.mat-mdc-button,
-.help-fab{
-  height: 54px !important;
-  min-width: 170px !important;
-  padding: 0 22px !important;
-  border-radius: 18px !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-
-  font-size: 16px !important;
-  font-weight: 800 !important;
-
-  background: rgba(98, 0, 238, 1) !important;
-  color: #fff !important;
-
-  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18) !important;
-}
-
-.help-fab mat-icon{
-  color: #fff !important;
-  font-size: 20px !important;
-  width: 20px !important;
-  height: 20px !important;
-}
-
-/* AJUDA: força ser parte do fluxo (scrolla) e ficar na direita */
-.help-row,
-.help-fab {
-  position: static !important;
-  inset: auto !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-}
-
-.help-row {
-  width: 100% !important;
-  display: flex !important;
-  justify-content: flex-end !important;
-  padding: 16px 24px 24px !important;
-}
-
-.help-fab.mat-mdc-button,
-.help-fab {
-  height: 54px !important;
-  min-width: 170px !important;
-  padding: 0 22px !important;
-  border-radius: 18px !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-
-  font-size: 20px !important;
-  font-weight: 700 !important;
-
-  background: rgba(98, 0, 238, 1) !important;
-  color: #fff !important;
-
-  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18) !important;
-}
-
-.help-fab mat-icon {
-  font-size: 22px !important;
-  width: 20px !important;
-  height: 20px !important;
-  color: #fff !important;
-}
-
-/* ===== Ajuda (scrolla junto com o conteúdo) ===== */
+/* container do botão dentro do fluxo */
 .help-row {
   width: 100%;
   display: flex;
-  justify-content: flex-end;   /* vai pra direita */
-  padding: 18px 0 6px;
+  justify-content: flex-end;
+  padding: 18px 0 24px; /* deixa ele respirar */
   margin-top: 16px;
 
-  /* garante que NÃO fica fixo */
-  position: static !important;
+  /* garante que não vira fixed/sticky por acidente */
+  position: relative !important;
 }
 
+/* o botão em si (não pode ser static, senão o ripple vaza) */
+.help-fab.mat-mdc-button-base,
 .help-fab {
-  /* garante que NÃO fica fixo */
-  position: static !important;
+  position: relative !important;  /* mantém ripple preso */
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  top: auto !important;
+
+  height: 56px !important;
+  min-width: 170px !important;
+  padding: 0 22px !important;
+  border-radius: 18px !important;
 
   display: inline-flex !important;
   align-items: center !important;
-  gap: 10px;
+  justify-content: center !important;
+  gap: 10px !important;
 
-  padding: 12px 18px !important;
-  min-height: 44px;
-  border-radius: 999px !important;
-
-  background: rgba(168, 85, 247, 0.14) !important; /* lilás */
-  border: 1px solid rgba(98, 0, 238, 0.18) !important;
-
-  font-size: 15px !important;
-  font-weight: 400 !important; /* sem negrito */
+  font-size: 18px !important;
+  font-weight: 500 !important; /* sem negrito pesado */
   line-height: 1 !important;
 
-  color: rgba(98, 0, 238, 0.95) !important;
+  background: rgba(98, 0, 238, 1) !important;
+  color: #fff !important;
+
+  box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18) !important;
+
+  overflow: hidden !important; /* prende ripple/efeitos dentro do botão */
 }
 
+/* ícone branco e com tamanho ok */
 .help-fab mat-icon {
-  margin: 0 !important;
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  color: #fff !important;
+  font-size: 22px !important;
+  width: 22px !important;
+  height: 22px !important;
 }
+
+/* prende o ripple dentro e impede “bolona” vazando */
+.help-fab ::ng-deep .mat-mdc-button-persistent-ripple,
+.help-fab ::ng-deep .mdc-button__ripple {
+  border-radius: inherit !important;
+}
+
