@@ -102,7 +102,7 @@ export class Pets {
       size: 'G',
       species: 'Cachorro',
       status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-3.svg',
+      image: '/assets/images/pets/dog-3.png',
       isFav: false,
     },
     {
@@ -114,7 +114,7 @@ export class Pets {
       size: 'P',
       species: 'Cachorro',
       status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-4.svg',
+      image: '/assets/images/pets/dog-4.png',
       isFav: false,
     },
     {
@@ -126,19 +126,19 @@ export class Pets {
       size: 'M',
       species: 'Cachorro',
       status: 'ADOTADO',
-      image: '/assets/images/pets/dog-5.svg',
+      image: '/assets/images/pets/dog-5.png',
       isFav: false,
     },
     {
       id: 6,
       name: 'Theo',
-      breed: 'Vira-lata',
+      breed: 'SRD',
       age: '2 anos',
       gender: 'Macho',
       size: 'M',
       species: 'Cachorro',
       status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-6.svg',
+      image: '/assets/images/pets/dog-6.png',
       isFav: true,
     },
 
@@ -164,7 +164,7 @@ export class Pets {
       size: 'G',
       species: 'Gato',
       status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-2.svg',
+      image: '/assets/images/pets/cat-2.png',
       isFav: false,
     },
     {
@@ -176,7 +176,7 @@ export class Pets {
       size: 'P',
       species: 'Gato',
       status: 'ADOTADO',
-      image: '/assets/images/pets/cat-3.svg',
+      image: '/assets/images/pets/cat-3.png',
       isFav: true,
     },
     {
@@ -188,7 +188,7 @@ export class Pets {
       size: 'M',
       species: 'Gato',
       status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-4.svg',
+      image: '/assets/images/pets/cat-4.png',
       isFav: false,
     },
     {
@@ -200,7 +200,7 @@ export class Pets {
       size: 'P',
       species: 'Gato',
       status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-5.svg',
+      image: '/assets/images/pets/cat-5.png',
       isFav: false,
     },
     {
@@ -212,7 +212,7 @@ export class Pets {
       size: 'M',
       species: 'Gato',
       status: 'ADOTADO',
-      image: '/assets/images/pets/cat-6.svg',
+      image: '/assets/images/pets/cat-6.png',
       isFav: false,
     },
   ]);
