@@ -17,51 +17,107 @@
       </div>
 
       <h2 class="pd__name">{{ p.name }}</h2>
-      <p class="pd__sub">{{ p.species }} • {{ p.breed }}</p>
 
-      <div class="pd__info">
-        <div><mat-icon>cake</mat-icon> {{ p.age }}</div>
-        <div><mat-icon>{{ p.gender === 'Macho' ? 'male' : 'female' }}</mat-icon> {{ p.gender }}</div>
-        <div><mat-icon>pets</mat-icon> Porte {{ p.size }}</div>
+      <!-- espécie em linha separada (como no print) -->
+      <div class="pd__speciesLine">
+        <mat-icon>pets</mat-icon>
+        <span>{{ p.species }}</span>
       </div>
 
-      <mat-divider></mat-divider>
+      <!-- LISTA (Raça / Idade / Data / Peso / Cor) -->
+      <div class="pd__list" *ngIf="extraInfo() as e">
+        <div class="pd__row">
+          <div class="pd__ico">
+            <mat-icon>hourglass_empty</mat-icon>
+          </div>
+          <div class="pd__rowText">
+            <div class="pd__rowLabel">Raça</div>
+            <div class="pd__rowValue">{{ p.breed }}</div>
+          </div>
+        </div>
 
-      <div class="pd__tags">
-        <mat-chip-set>
-          <mat-chip>{{ p.species }}</mat-chip>
-          <mat-chip>{{ p.breed }}</mat-chip>
-          <mat-chip>Porte {{ p.size }}</mat-chip>
-          <mat-chip>{{ p.gender }}</mat-chip>
+        <div class="pd__row">
+          <div class="pd__ico">
+            <mat-icon>cake</mat-icon>
+          </div>
+          <div class="pd__rowText">
+            <div class="pd__rowLabel">Idade</div>
+            <div class="pd__rowValue">{{ p.age }}</div>
+          </div>
+        </div>
+
+        <div class="pd__row">
+          <div class="pd__ico">
+            <mat-icon>event</mat-icon>
+          </div>
+          <div class="pd__rowText">
+            <div class="pd__rowLabel">Data de Entrada</div>
+            <div class="pd__rowValue">{{ e.entryDate }}</div>
+          </div>
+        </div>
+
+        <div class="pd__row">
+          <div class="pd__ico">
+            <mat-icon>monitor_weight</mat-icon>
+          </div>
+          <div class="pd__rowText">
+            <div class="pd__rowLabel">Peso</div>
+            <div class="pd__rowValue">{{ e.weightKg }} kg</div>
+          </div>
+        </div>
+
+        <div class="pd__row">
+          <div class="pd__ico">
+            <mat-icon>palette</mat-icon>
+          </div>
+          <div class="pd__rowText">
+            <div class="pd__rowLabel">Cor</div>
+            <div class="pd__rowValue">{{ e.color }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Características (como no print) -->
+      <mat-card class="pd__box">
+        <h3 class="pd__boxTitle">Características</h3>
+
+        <mat-chip-set class="pd__chips">
+          @for (c of characteristics(); track c) {
+            <mat-chip>{{ c }}</mat-chip>
+          }
         </mat-chip-set>
-      </div>
+      </mat-card>
 
-      <!-- Ações rápidas (admin) - deixamos escondido por enquanto -->
-      <div class="pd__admin" *ngIf="false">
-        <h3>Ações Rápidas</h3>
-        <button mat-stroked-button>
-          <mat-icon>edit</mat-icon>
-          Editar Dados Cadastrais
-        </button>
-        <button mat-stroked-button color="warn">
-          <mat-icon>delete</mat-icon>
-          Deletar Pet
-        </button>
-      </div>
+      <!-- Ações rápidas (ADMIN) -->
+      <mat-card class="pd__box" *ngIf="isAdmin()">
+        <h3 class="pd__boxTitle">Ações Rápidas</h3>
+
+        <div class="pd__adminBtns">
+          <button mat-stroked-button type="button" (click)="editPet()">
+            <mat-icon>edit</mat-icon>
+            Editar Dados Cadastrais
+          </button>
+
+          <button mat-stroked-button color="warn" type="button" (click)="deletePet()">
+            <mat-icon>delete</mat-icon>
+            Deletar Pet
+          </button>
+        </div>
+      </mat-card>
     </mat-card>
 
     <!-- COL DIREITA -->
     <mat-card class="pd__right">
       <div class="pd__tabs">
-        <button class="pd__tab pd__tab--active">
+        <button class="pd__tab pd__tab--active" type="button">
           <mat-icon>favorite</mat-icon>
           Adoção
         </button>
-        <button class="pd__tab" disabled>
+        <button class="pd__tab" type="button" disabled>
           <mat-icon>healing</mat-icon>
           Histórico
         </button>
-        <button class="pd__tab" disabled>
+        <button class="pd__tab" type="button" disabled>
           <mat-icon>vaccines</mat-icon>
           Cuidados
         </button>
