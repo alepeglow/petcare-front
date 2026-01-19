@@ -65,7 +65,9 @@
         </button>
 
         <!-- CTA -->
-        <button mat-button>
+        <button mat-button
+        routerLink="/pets"
+        [queryParams]="{ status: 'disponiveis' }">
           <mat-icon>favorite</mat-icon>
           Adote 💜
         </button>

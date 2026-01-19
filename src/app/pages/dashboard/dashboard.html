@@ -1,299 +1,252 @@
 <section class="dashboard">
   <!-- Hero (versão grande) -->
-<mat-card class="hero hero--xl">
-  <!-- pill/top tag -->
-  <div class="hero__pill">
-    <span class="hero__dot"></span>
-    <span>Sistema de Adoção Responsável</span>
-  </div>
+  <mat-card class="hero hero--xl">
+    <!-- pill/top tag -->
+    <div class="hero__pill">
+      <span class="hero__dot"></span>
+      <span>Sistema de Adoção Responsável</span>
+    </div>
 
-  <div class="hero__content">
-    <div class="hero__text">
-      <h1>
-        Encontre um novo melhor amigo <span class="hero__emoji">💜</span>
-      </h1>
+    <div class="hero__content">
+      <div class="hero__text">
+        <h1>Encontre um novo melhor amigo <span class="hero__emoji">💜</span></h1>
 
-      <p>
-        Conectamos pets que precisam de um lar com pessoas que querem dar todo
-        amor e carinho. Adote com responsabilidade e mude uma vida!
-      </p>
+        <p>
+          Conectamos pets que precisam de um lar com pessoas que querem dar todo amor e carinho.
+          Adote com responsabilidade e mude uma vida!
+        </p>
 
-      <div class="hero__actions hero__actions--xl">
-        <button mat-flat-button color="primary" class="hero__btn hero__btn--light" routerLink="/pets" [queryParams]="{ status: 'disponiveis' }">
-          Ver pets disponíveis
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
+        <div class="hero__actions hero__actions--xl">
+          <button
+            mat-flat-button
+            color="primary"
+            class="hero__btn hero__btn--light"
+            routerLink="/pets"
+            [queryParams]="{ status: 'disponiveis' }"
+          >
+            Ver pets disponíveis
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
 
-        <button mat-stroked-button class="hero__btn hero__btn--ghost" routerLink="/pets/novo">
-          Saiba mais
-        </button>
+          <button mat-stroked-button class="hero__btn hero__btn--ghost" routerLink="/pets/novo">
+            Saiba mais
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-</mat-card>
-
+  </mat-card>
 
   <!-- Metrics (estilo KPI) -->
-<div class="metrics">
-  <div class="metric metric--pets">
-    <div class="metric__top">
-      <div class="metric__icon">
-        <mat-icon>pets</mat-icon>
+  <div class="metrics">
+    <div class="metric metric--pets">
+      <div class="metric__top">
+        <div class="metric__icon">
+          <mat-icon>pets</mat-icon>
+        </div>
+
+        <div class="metric__trend">
+          <mat-icon>north</mat-icon>
+          <span>12%</span>
+        </div>
       </div>
 
-      <div class="metric__trend">
-        <mat-icon>north</mat-icon>
-        <span>12%</span>
-      </div>
+      <div class="metric__label">Total de Pets</div>
+      <div class="metric__value">12</div>
     </div>
 
-    <div class="metric__label">Total de Pets</div>
-    <div class="metric__value">248</div>
-  </div>
+    <div class="metric metric--available">
+      <div class="metric__top">
+        <div class="metric__icon">
+          <mat-icon>favorite</mat-icon>
+        </div>
 
-  <div class="metric metric--available">
-    <div class="metric__top">
-      <div class="metric__icon">
-        <mat-icon>favorite</mat-icon>
+        <div class="metric__trend">
+          <mat-icon>north</mat-icon>
+          <span>8%</span>
+        </div>
       </div>
 
-      <div class="metric__trend">
-        <mat-icon>north</mat-icon>
-        <span>8%</span>
-      </div>
+      <div class="metric__label">Disponíveis</div>
+      <div class="metric__value">8</div>
     </div>
 
-    <div class="metric__label">Disponíveis</div>
-    <div class="metric__value">87</div>
-  </div>
+    <div class="metric metric--adopted">
+      <div class="metric__top">
+        <div class="metric__icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
 
-  <div class="metric metric--adopted">
-    <div class="metric__top">
-      <div class="metric__icon">
-        <mat-icon>check_circle</mat-icon>
+        <div class="metric__trend">
+          <mat-icon>north</mat-icon>
+          <span>15%</span>
+        </div>
       </div>
 
-      <div class="metric__trend">
-        <mat-icon>north</mat-icon>
-        <span>15%</span>
-      </div>
+      <div class="metric__label">Adotados</div>
+      <div class="metric__value">4</div>
     </div>
 
-    <div class="metric__label">Adotados</div>
-    <div class="metric__value">161</div>
-  </div>
+    <div class="metric metric--tutores">
+      <div class="metric__top">
+        <div class="metric__icon">
+          <mat-icon>groups</mat-icon>
+        </div>
 
-  <div class="metric metric--tutores">
-    <div class="metric__top">
-      <div class="metric__icon">
-        <mat-icon>groups</mat-icon>
+        <div class="metric__trend">
+          <mat-icon>north</mat-icon>
+          <span>20%</span>
+        </div>
       </div>
 
-      <div class="metric__trend">
-        <mat-icon>north</mat-icon>
-        <span>20%</span>
-      </div>
+      <div class="metric__label">Total Tutores</div>
+      <div class="metric__value">10</div>
     </div>
 
-    <div class="metric__label">Total Tutores</div>
-    <div class="metric__value">142</div>
-  </div>
+    <!-- opcional: mantém "Cuidados registrados" -->
+    <div class="metric metric--care">
+      <div class="metric__top">
+        <div class="metric__icon">
+          <mat-icon>healing</mat-icon>
+        </div>
 
-  <!-- opcional: mantém "Cuidados registrados" -->
-  <div class="metric metric--care">
-    <div class="metric__top">
-      <div class="metric__icon">
-        <mat-icon>healing</mat-icon>
+        <div class="metric__trend">
+          <mat-icon>north</mat-icon>
+          <span>9%</span>
+        </div>
       </div>
 
-      <div class="metric__trend">
-        <mat-icon>north</mat-icon>
-        <span>9%</span>
-      </div>
+      <div class="metric__label">Cuidados registrados</div>
+      <div class="metric__value">15</div>
     </div>
-
-    <div class="metric__label">Cuidados registrados</div>
-    <div class="metric__value">412</div>
   </div>
-</div>
-
 
   <!-- Featured Pets -->
   <div class="section-head">
-  <div class="section-head__text">
-    <h2>Pets em destaque</h2>
-    <p>Conheça nossos pets mais queridos esperando por um lar.</p>
-  </div>
+    <div class="section-head__text">
+      <h2>Pets em destaque</h2>
+      <p>Conheça nossos pets mais queridos esperando por um lar.</p>
+    </div>
 
-  <button mat-button class="section-head__link" routerLink="/pets">
-    Ver todos
-    <mat-icon>chevron_right</mat-icon>
-  </button>
-</div>
+    <button mat-button class="section-head__link" routerLink="/pets">
+      Ver todos
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
 
   <div class="pets-grid">
+  @for (p of featuredPets; track p.id) {
     <mat-card class="pet">
       <div class="pet__media">
-        <img class="pet__img" src="/assets/images/pets/dog-1.png" alt="Thor" />
+        <img class="pet__img" [src]="p.image" [alt]="p.name" />
 
         <div class="pet__status">
           <mat-icon>check_circle</mat-icon>
           <span>Disponível</span>
         </div>
 
-        <button class="pet__fav" mat-icon-button aria-label="Favoritar">
-          <mat-icon>favorite_border</mat-icon>
+        <button
+          class="pet__fav"
+          mat-icon-button
+          type="button"
+          aria-label="Favoritar"
+          (click)="toggleFav(p.id)"
+        >
+          <mat-icon>{{ p.isFav ? 'favorite' : 'favorite_border' }}</mat-icon>
         </button>
       </div>
 
       <div class="pet__body">
-        <div class="pet__title">Thor</div>
-        <div class="pet__meta">Golden Retriever</div>
+        <div class="pet__title">{{ p.name }}</div>
+        <div class="pet__meta">{{ p.breed }}</div>
 
         <div class="pet__info">
-          <span><mat-icon>cake</mat-icon> 2 anos</span>
-          <span><mat-icon>male</mat-icon> Macho</span>
-          <span><mat-icon>pets</mat-icon> Porte M</span>
+          <span><mat-icon>cake</mat-icon> {{ p.age }}</span>
+          <span><mat-icon>{{ p.gender === 'Macho' ? 'male' : 'female' }}</mat-icon> {{ p.gender }}</span>
+          <span><mat-icon>pets</mat-icon> Porte {{ p.size }}</span>
         </div>
 
-        <button mat-button class="pet__adopt">
+        <button
+          mat-button
+          class="pet__adopt"
+          type="button"
+          [routerLink]="['/pets', p.id, 'adotar']"
+        >
           <mat-icon>favorite</mat-icon>
-          Adotar Thor
+          Adotar {{ p.name }}
         </button>
       </div>
     </mat-card>
+  }
+</div>
 
-    <mat-card class="pet">
-      <div class="pet__media">
-        <img class="pet__img" src="/assets/images/pets/cat-1.png" alt="Luna" />
-
-        <div class="pet__status">
-          <mat-icon>check_circle</mat-icon>
-          <span>Disponível</span>
-        </div>
-
-        <button class="pet__fav" mat-icon-button aria-label="Favoritar">
-          <mat-icon>favorite_border</mat-icon>
-        </button>
-      </div>
-
-      <div class="pet__body">
-        <div class="pet__title">Luna</div>
-        <div class="pet__meta">Gato Persa</div>
-
-        <div class="pet__info">
-          <span><mat-icon>cake</mat-icon> 1 ano</span>
-          <span><mat-icon>female</mat-icon> Fêmea</span>
-          <span><mat-icon>pets</mat-icon> Porte P</span>
-        </div>
-
-        <button mat-button class="pet__adopt">
-          <mat-icon>favorite</mat-icon>
-          Adotar Luna
-        </button>
-      </div>
-    </mat-card>
-
-    <mat-card class="pet">
-      <div class="pet__media">
-        <img class="pet__img" src="/assets/images/pets/dog-2.png" alt="Max" />
-
-        <div class="pet__status">
-          <mat-icon>check_circle</mat-icon>
-          <span>Disponível</span>
-        </div>
-
-        <button class="pet__fav" mat-icon-button aria-label="Favoritar">
-          <mat-icon>favorite_border</mat-icon>
-        </button>
-      </div>
-
-      <div class="pet__body">
-        <div class="pet__title">Max</div>
-        <div class="pet__meta">Beagle</div>
-
-        <div class="pet__info">
-          <span><mat-icon>cake</mat-icon> 6 meses</span>
-          <span><mat-icon>male</mat-icon> Macho</span>
-          <span><mat-icon>pets</mat-icon> Porte P</span>
-        </div>
-
-        <button mat-button class="pet__adopt">
-          <mat-icon>favorite</mat-icon>
-          Adotar Max
-        </button>
-      </div>
-    </mat-card>
-  </div>
 
   <!-- How it works -->
   <section class="how2">
-  <header class="how2__head">
-    <h2 class="how2__title">Como funciona</h2>
-    <p class="how2__subtitle">Processo simples e seguro em 3 passos</p>
-  </header>
+    <header class="how2__head">
+      <h2 class="how2__title">Como funciona</h2>
+      <p class="how2__subtitle">Processo simples e seguro em 3 passos</p>
+    </header>
 
-  <div class="how2__grid">
-    <article class="how2__item">
-      <span class="how2__step">1</span>
+    <div class="how2__grid">
+      <article class="how2__item">
+        <span class="how2__step">1</span>
 
-      <div class="how2__icon how2__icon--purple">
-        <mat-icon>person_add</mat-icon>
-      </div>
+        <div class="how2__icon how2__icon--purple">
+          <mat-icon>person_add</mat-icon>
+        </div>
 
-      <h3 class="how2__h3">Cadastrar Tutor</h3>
-      <p class="how2__p">
-        Registre os dados do futuro tutor com informações completas e documentação necessária
-        para garantir uma adoção responsável.
-      </p>
-    </article>
+        <h3 class="how2__h3">Cadastrar Tutor</h3>
+        <p class="how2__p">
+          Registre os dados do futuro tutor com informações completas e documentação necessária para
+          garantir uma adoção responsável.
+        </p>
+      </article>
 
-    <article class="how2__item">
-      <span class="how2__step">2</span>
+      <article class="how2__item">
+        <span class="how2__step">2</span>
 
-      <div class="how2__icon how2__icon--mix">
-        <mat-icon>pets</mat-icon>
-      </div>
+        <div class="how2__icon how2__icon--mix">
+          <mat-icon>pets</mat-icon>
+        </div>
 
-      <h3 class="how2__h3">Cadastrar Pet</h3>
-      <p class="how2__p">
-        Adicione o pet ao sistema com fotos, histórico médico, características e todas as
-        informações importantes para encontrar o lar perfeito.
-      </p>
-    </article>
+        <h3 class="how2__h3">Cadastrar Pet</h3>
+        <p class="how2__p">
+          Adicione o pet ao sistema com fotos, histórico médico, características e todas as
+          informações importantes para encontrar o lar perfeito.
+        </p>
+      </article>
 
-    <article class="how2__item">
-      <span class="how2__step">3</span>
+      <article class="how2__item">
+        <span class="how2__step">3</span>
 
-      <div class="how2__icon how2__icon--pink">
-        <mat-icon>handshake</mat-icon>
-      </div>
+        <div class="how2__icon how2__icon--pink">
+          <mat-icon>handshake</mat-icon>
+        </div>
 
-      <h3 class="how2__h3">Adotar &amp;<br />Acompanhar</h3>
-      <p class="how2__p">
-        Realize a adoção e mantenha o histórico completo. Caso necessário, gerencie devoluções
-        e acompanhe todo o processo.
-      </p>
-    </article>
-  </div>
-</section>
-
+        <h3 class="how2__h3">Adotar &amp;<br />Acompanhar</h3>
+        <p class="how2__p">
+          Realize a adoção e mantenha o histórico completo. Caso necessário, gerencie devoluções e
+          acompanhe todo o processo.
+        </p>
+      </article>
+    </div>
+  </section>
 
   <!-- CTA Histórico -->
-<section class="history-cta">
-  <div class="history-cta__icon">
-    <mat-icon>query_stats</mat-icon>
-  </div>
+  <section class="history-cta">
+    <div class="history-cta__icon">
+      <mat-icon>query_stats</mat-icon>
+    </div>
 
-  <div class="history-cta__text">
-    <h3 class="history-cta__title">Histórico Completo</h3>
-    <p class="history-cta__desc">
-      Acompanhe todas as adoções, cuidados médicos e histórico de cada pet em tempo real
-    </p>
-  </div>
+    <div class="history-cta__text">
+      <h3 class="history-cta__title">Histórico Completo</h3>
+      <p class="history-cta__desc">
+        Acompanhe todas as adoções, cuidados médicos e histórico de cada pet em tempo real
+      </p>
+    </div>
 
-  <button mat-raised-button class="history-cta__btn" routerLink="/historico">
-    Ver<br />Histórico
-  </button>
+    <button mat-raised-button class="history-cta__btn" routerLink="/historico">
+      Ver<br />Histórico
+    </button>
+  </section>
 </section>
-

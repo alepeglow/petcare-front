@@ -1,0 +1,9 @@
+<section style="padding: 20px;">
+  <h1>Detalhes do Pet</h1>
+  <p>ID: {{ id }}</p>
+
+  <button mat-button [routerLink]="['/pets', id, 'adotar']">
+    <mat-icon>favorite</mat-icon>
+    Ir para adoção
+  </button>
+</section>

@@ -5,23 +5,21 @@
       <p class="pets-subtitle">Encontre um pet usando filtros por espécie e status.</p>
     </div>
 
-    <button *ngIf="false" mat-flat-button  class="btn-new">
-  <mat-icon>add</mat-icon>
-  Novo Pet
-</button>
-
+    <button *ngIf="false" mat-flat-button class="btn-new">
+      <mat-icon>add</mat-icon>
+      Novo Pet
+    </button>
   </header>
 
   <div class="filters">
     <mat-form-field appearance="outline" class="filters__search">
       <mat-icon matPrefix>search</mat-icon>
       <input
-  matInput
-  placeholder="Buscar por nome ou raça..."
-  [value]="search()"
-  (input)="onSearchInput($event)"
-/>
-
+        matInput
+        placeholder="Buscar por nome ou raça..."
+        [value]="search()"
+        (input)="onSearchInput($event)"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="filters__species">
@@ -93,18 +91,21 @@
 
           <div class="pet__info">
             <span><mat-icon>cake</mat-icon> {{ pet.age }}</span>
-            <span><mat-icon>{{ pet.gender === 'Macho' ? 'male' : 'female' }}</mat-icon> {{ pet.gender }}</span>
+            <span
+              ><mat-icon>{{ pet.gender === 'Macho' ? 'male' : 'female' }}</mat-icon>
+              {{ pet.gender }}</span
+            >
             <span><mat-icon>pets</mat-icon> Porte {{ pet.size }}</span>
           </div>
 
           <div class="pet__actions">
-            <button mat-button class="pet__details">
+            <button mat-button class="pet__details" [routerLink]="['/pets', pet.id]">
               <mat-icon>visibility</mat-icon>
               Ver detalhes
             </button>
 
             @if (pet.status === 'DISPONIVEL') {
-              <button mat-button class="pet__adopt" (click)="adopt(pet.id)">
+              <button mat-button class="pet__adopt" [routerLink]="['/pets', pet.id, 'adotar']">
                 <mat-icon>favorite</mat-icon>
                 Adotar
               </button>

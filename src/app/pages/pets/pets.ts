@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +11,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
+
 
 type PetStatus = 'DISPONIVEL' | 'ADOTADO';
 type Species = 'Cachorro' | 'Gato';
@@ -33,7 +35,7 @@ type Pet = {
   standalone: true,
   imports: [
     CommonModule,
-
+    RouterLink,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
