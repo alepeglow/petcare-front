@@ -1,4 +1,6 @@
 import { CommonModule } from '@angular/common';
+import { PETS, Pet,Species } from '../pets/pets.data';
+
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterLink } from '@angular/router';
@@ -14,21 +16,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 
 
-type PetStatus = 'DISPONIVEL' | 'ADOTADO';
-type Species = 'Cachorro' | 'Gato';
 
-type Pet = {
-  id: number;
-  name: string;
-  breed: string;
-  age: string;
-  gender: 'Macho' | 'Fêmea';
-  size: 'P' | 'M' | 'G';
-  species: Species;
-  status: PetStatus;
-  image: string;
-  isFav: boolean;
-};
 
 @Component({
   selector: 'app-pets',
@@ -69,155 +57,8 @@ export class Pets {
   pageIndex = signal(0);
 
   // ✅ dados mock (depois troca pelo back)
-  pets = signal<Pet[]>([
-    // === Dogs ===
-    {
-      id: 1,
-      name: 'Thor',
-      breed: 'Golden Retriever',
-      age: '2 anos',
-      gender: 'Macho',
-      size: 'M',
-      species: 'Cachorro',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-1.png',
-      isFav: false,
-    },
-    {
-      id: 2,
-      name: 'Max',
-      breed: 'Beagle',
-      age: '6 meses',
-      gender: 'Macho',
-      size: 'P',
-      species: 'Cachorro',
-      status: 'ADOTADO',
-      image: '/assets/images/pets/dog-2.png',
-      isFav: true,
-    },
-    {
-      id: 3,
-      name: 'Mel',
-      breed: 'Labrador',
-      age: '3 anos',
-      gender: 'Fêmea',
-      size: 'G',
-      species: 'Cachorro',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-3.png',
-      isFav: false,
-    },
-    {
-      id: 4,
-      name: 'Bob',
-      breed: 'Shih Tzu',
-      age: '1 ano',
-      gender: 'Macho',
-      size: 'P',
-      species: 'Cachorro',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-4.png',
-      isFav: false,
-    },
-    {
-      id: 5,
-      name: 'Nina',
-      breed: 'Border Collie',
-      age: '4 anos',
-      gender: 'Fêmea',
-      size: 'M',
-      species: 'Cachorro',
-      status: 'ADOTADO',
-      image: '/assets/images/pets/dog-5.png',
-      isFav: false,
-    },
-    {
-      id: 6,
-      name: 'Theo',
-      breed: 'SRD',
-      age: '2 anos',
-      gender: 'Macho',
-      size: 'M',
-      species: 'Cachorro',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/dog-6.png',
-      isFav: true,
-    },
+ pets = signal<Pet[]>(PETS);
 
-    // === Cats ===
-    {
-      id: 7,
-      name: 'Luna',
-      breed: 'Gato Persa',
-      age: '1 ano',
-      gender: 'Fêmea',
-      size: 'P',
-      species: 'Gato',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-1.png',
-      isFav: false,
-    },
-    {
-      id: 8,
-      name: 'Simba',
-      breed: 'Maine Coon',
-      age: '2 anos',
-      gender: 'Macho',
-      size: 'G',
-      species: 'Gato',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-2.png',
-      isFav: false,
-    },
-    {
-      id: 9,
-      name: 'Mia',
-      breed: 'Siamês',
-      age: '1 ano',
-      gender: 'Fêmea',
-      size: 'P',
-      species: 'Gato',
-      status: 'ADOTADO',
-      image: '/assets/images/pets/cat-3.png',
-      isFav: true,
-    },
-    {
-      id: 10,
-      name: 'Frida',
-      breed: 'Angorá',
-      age: '3 anos',
-      gender: 'Fêmea',
-      size: 'M',
-      species: 'Gato',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-4.png',
-      isFav: false,
-    },
-    {
-      id: 11,
-      name: 'Oliver',
-      breed: 'SRD',
-      age: '8 meses',
-      gender: 'Macho',
-      size: 'P',
-      species: 'Gato',
-      status: 'DISPONIVEL',
-      image: '/assets/images/pets/cat-5.png',
-      isFav: false,
-    },
-    {
-      id: 12,
-      name: 'Amora',
-      breed: 'Ragdoll',
-      age: '2 anos',
-      gender: 'Fêmea',
-      size: 'M',
-      species: 'Gato',
-      status: 'ADOTADO',
-      image: '/assets/images/pets/cat-6.png',
-      isFav: false,
-    },
-  ]);
 
   // ✅ counts
   availableCount = computed(() => this.pets().filter(p => p.status === 'DISPONIVEL').length);

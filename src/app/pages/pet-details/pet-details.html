@@ -1,9 +1,119 @@
-<section style="padding: 20px;">
-  <h1>Detalhes do Pet</h1>
-  <p>ID: {{ id }}</p>
+<section class="pd" *ngIf="pet() as p; else notFound">
+  <div class="pd__crumbs">
+    <a routerLink="/pets">Pets</a>
+    <span>›</span>
+    <span>Detalhes do Pet</span>
+  </div>
 
-  <button mat-button [routerLink]="['/pets', id, 'adotar']">
-    <mat-icon>favorite</mat-icon>
-    Ir para adoção
-  </button>
+  <div class="pd__grid">
+    <!-- COL ESQUERDA -->
+    <mat-card class="pd__left">
+      <div class="pd__imgWrap">
+        <img class="pd__img" [src]="p.image" [alt]="p.name" />
+        <span class="pd__chip" [class.pd__chip--adopted]="p.status === 'ADOTADO'">
+          <mat-icon>{{ p.status === 'ADOTADO' ? 'verified' : 'check_circle' }}</mat-icon>
+          {{ p.status === 'ADOTADO' ? 'Adotado' : 'Disponível' }}
+        </span>
+      </div>
+
+      <h2 class="pd__name">{{ p.name }}</h2>
+      <p class="pd__sub">{{ p.species }} • {{ p.breed }}</p>
+
+      <div class="pd__info">
+        <div><mat-icon>cake</mat-icon> {{ p.age }}</div>
+        <div><mat-icon>{{ p.gender === 'Macho' ? 'male' : 'female' }}</mat-icon> {{ p.gender }}</div>
+        <div><mat-icon>pets</mat-icon> Porte {{ p.size }}</div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="pd__tags">
+        <mat-chip-set>
+          <mat-chip>{{ p.species }}</mat-chip>
+          <mat-chip>{{ p.breed }}</mat-chip>
+          <mat-chip>Porte {{ p.size }}</mat-chip>
+          <mat-chip>{{ p.gender }}</mat-chip>
+        </mat-chip-set>
+      </div>
+
+      <!-- Ações rápidas (admin) - deixamos escondido por enquanto -->
+      <div class="pd__admin" *ngIf="false">
+        <h3>Ações Rápidas</h3>
+        <button mat-stroked-button>
+          <mat-icon>edit</mat-icon>
+          Editar Dados Cadastrais
+        </button>
+        <button mat-stroked-button color="warn">
+          <mat-icon>delete</mat-icon>
+          Deletar Pet
+        </button>
+      </div>
+    </mat-card>
+
+    <!-- COL DIREITA -->
+    <mat-card class="pd__right">
+      <div class="pd__tabs">
+        <button class="pd__tab pd__tab--active">
+          <mat-icon>favorite</mat-icon>
+          Adoção
+        </button>
+        <button class="pd__tab" disabled>
+          <mat-icon>healing</mat-icon>
+          Histórico
+        </button>
+        <button class="pd__tab" disabled>
+          <mat-icon>vaccines</mat-icon>
+          Cuidados
+        </button>
+      </div>
+
+      <div class="pd__statusCard">
+        <h3>Status Atual</h3>
+        <p class="pd__muted">
+          Esse pet está {{ p.status === 'ADOTADO' ? 'adotado' : 'disponível para adoção' }}.
+        </p>
+
+        <div class="pd__statusRow">
+          <div class="pd__badge" [class.pd__badge--ok]="p.status === 'DISPONIVEL'">
+            <mat-icon>{{ p.status === 'ADOTADO' ? 'verified' : 'check_circle' }}</mat-icon>
+            <span>{{ p.status === 'ADOTADO' ? 'Adotado' : 'Disponível para Adoção' }}</span>
+          </div>
+
+          <div class="pd__tiny">
+            <div><span>Tempo no abrigo</span><strong>—</strong></div>
+            <div><span>Última atualização</span><strong>—</strong></div>
+          </div>
+        </div>
+
+        <div class="pd__note">
+          <mat-icon>info</mat-icon>
+          <div>
+            <strong>Informações importantes</strong>
+            <p>Ao adotar, você se compromete com os cuidados e bem-estar do pet.</p>
+          </div>
+        </div>
+      </div>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="pd__cta"
+        [disabled]="p.status === 'ADOTADO'"
+        [routerLink]="['/pets', p.id, 'adotar']"
+      >
+        <mat-icon>favorite</mat-icon>
+        Adotar {{ p.name }}
+      </button>
+    </mat-card>
+  </div>
 </section>
+
+<ng-template #notFound>
+  <section class="pd pd--empty">
+    <h2>Pet não encontrado 😿</h2>
+    <button mat-stroked-button routerLink="/pets">
+      <mat-icon>arrow_back</mat-icon>
+      Voltar para Pets
+    </button>
+  </section>
+</ng-template>
