@@ -3,18 +3,27 @@
   height: 100vh;
 }
 
-/* Container do sidenav precisa ocupar toda a altura do host */
+/* ✅ NÃO usa display:flex no mat-sidenav-container */
 .shell {
   height: 100%;
-  display: flex;
+  width: 100%;
+  display: block;
+  background: #f6f3ff; /* fundo único (menu + content) */
+}
+
+/* garante fundo único também nos elementos internos do Material */
+:host ::ng-deep .shell.mat-drawer-container,
+:host ::ng-deep .shell .mat-drawer-content,
+:host ::ng-deep .shell mat-sidenav-content {
+  background: #f6f3ff !important;
 }
 
 /* ================= SIDEBAR ================= */
 .sidenav {
   width: 280px;
   border-right: 1px solid rgba(0, 0, 0, 0.08);
-  position: relative;
   overflow-x: hidden;
+  background: #f6f3ff;
 }
 
 .brand {
@@ -57,53 +66,28 @@ a.active {
   padding-bottom: 10px;
 }
 
-.sidebar-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 12px 16px 16px;
-  opacity: 0.85;
-}
-
-.hint {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-}
-
 /* ================= CONTENT ================= */
-::ng-deep .shell mat-sidenav-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background: #fafafa;
-}
-
 .pc-content {
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* scroll fica no .pc-page */
+  min-height: 0;
 }
 
-/* Toolbar branca */
+/* Toolbar “lilás” suave (menos branco aparente) */
 .toolbar {
   flex: 0 0 auto;
-  position: relative;
   z-index: 10;
 
-  background: #fff !important;
+  background: rgba(246, 243, 255, 0.85) !important;
   color: #111827 !important;
-  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.06);
+  border-bottom: 1px solid rgba(98, 0, 238, 0.10);
+  backdrop-filter: blur(10px);
 }
 
-/* remove qualquer fundo/efeito do toolbar do Material */
 ::ng-deep .toolbar.mat-mdc-toolbar {
-  background: #fff !important;
-  background-color: #fff !important;
-  --mat-toolbar-container-background-color: #fff !important;
+  background: rgba(246, 243, 255, 0.85) !important;
+  --mat-toolbar-container-background-color: rgba(246, 243, 255, 0.85) !important;
 
   &::before,
   &::after {
@@ -113,17 +97,10 @@ a.active {
 
   .mat-mdc-toolbar-row {
     background: transparent !important;
-    background-color: transparent !important;
     padding: 0 16px;
     display: flex;
     align-items: center;
     min-height: 64px;
-
-    &::before,
-    &::after {
-      display: none !important;
-      content: none !important;
-    }
   }
 }
 
@@ -142,32 +119,33 @@ a.active {
   flex: 1 1 auto;
 }
 
-/* área que scrolla */
+/* ✅ área que scrolla (conteúdo) */
 .pc-page {
   flex: 1 1 auto;
+  min-height: 0;
   overflow: auto;
   padding: 20px;
-  min-height: 0;
 
-  max-width: 1180px;
   width: 100%;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+
+  background: #f6f3ff;
 }
 
 /* ================= SEARCH (PILL) ================= */
 .toolbar__search {
-  width: min(620px, 52vw);
+  width: min(720px, 56vw);
   margin-left: 28px;
 }
 
-/* tira subscript (hint/erro) */
 ::ng-deep .toolbar__search .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
 
-/* ✅ SOLUÇÃO “BORDER ÚNICA” (sem risco de emenda/risquinho) */
+/* remove outline duplicado */
 ::ng-deep .toolbar__search .mdc-notched-outline {
-  display: none !important; /* desliga a borda duplicada do MDC */
+  display: none !important;
 }
 
 ::ng-deep .toolbar__search .mat-mdc-text-field-wrapper {
@@ -175,87 +153,62 @@ a.active {
   background: #fff !important;
   overflow: hidden !important;
 
-  border: 1px solid rgba(17, 24, 39, 0.12) !important; /* borda normal */
+  border: 1px solid rgba(17, 24, 39, 0.12) !important;
   box-shadow: none !important;
 }
 
-/* altura + alinhamento interno */
 ::ng-deep .toolbar__search .mat-mdc-form-field-flex {
   height: 56px !important;
   align-items: center !important;
-  padding-left: 8px !important; /* respiro geral */
+  padding-left: 8px !important;
 }
 
-/* ícone prefix mais pra dentro */
 ::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix {
   padding-left: 14px !important;
   padding-right: 10px !important;
   margin: 0 !important;
-
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
   background: transparent !important;
 }
 
-::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix::before,
-::ng-deep .toolbar__search .mat-mdc-form-field-icon-prefix::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* foco: borda roxa + glow leve só no pill */
 ::ng-deep .toolbar__search.mat-focused .mat-mdc-text-field-wrapper {
   border-color: rgba(168, 85, 247, 1) !important;
   box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12) !important;
 }
 
-/* ================= AJUDA (scrolla junto + tamanho certo + sem ripple bug) ================= */
-
-/* container do botão dentro do fluxo */
+/* ================= AJUDA (fica visível enquanto scrolla no .pc-page) ================= */
+/* ✅ sticky DENTRO da área que scrolla (não é fixed na janela) */
 .help-row {
-  width: 100%;
+  position: sticky;
+  bottom: 18px;
+  z-index: 50;
+
   display: flex;
   justify-content: flex-end;
-  padding: 18px 0 24px; /* deixa ele respirar */
-  margin-top: 16px;
+  padding: 0 10px 10px;
 
-  /* garante que não vira fixed/sticky por acidente */
-  position: relative !important;
+  pointer-events: none;
 }
 
-/* o botão em si (não pode ser static, senão o ripple vaza) */
-.help-fab.mat-mdc-button-base,
 .help-fab {
-  position: relative !important;  /* mantém ripple preso */
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  top: auto !important;
+  pointer-events: auto;
 
-  height: 56px !important;
-  min-width: 170px !important;
-  padding: 0 22px !important;
-  border-radius: 18px !important;
+  height: 56px;
+  min-width: 170px;
+  padding: 0 22px;
+  border-radius: 18px;
 
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-
-  font-size: 18px !important;
-  font-weight: 500 !important; /* sem negrito pesado */
-  line-height: 1 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
   background: rgba(98, 0, 238, 1) !important;
   color: #fff !important;
-
   box-shadow: 0 10px 22px rgba(17, 24, 39, 0.18) !important;
 
-  overflow: hidden !important; /* prende ripple/efeitos dentro do botão */
+  overflow: hidden;
 }
 
-/* ícone branco e com tamanho ok */
 .help-fab mat-icon {
   color: #fff !important;
   font-size: 22px !important;
@@ -263,21 +216,21 @@ a.active {
   height: 22px !important;
 }
 
-/* prende o ripple dentro e impede “bolona” vazando */
-.help-fab ::ng-deep .mat-mdc-button-persistent-ripple,
-.help-fab ::ng-deep .mdc-button__ripple {
-  border-radius: inherit !important;
+:host ::ng-deep .help-fab .mdc-button__label {
+  font-size: 16px !important;
+  font-weight: 500 !important; /* sem negrito pesado */
 }
 
-/* FORÇA o Ajuda a ficar no fluxo do scroll do .pc-page */
-:host ::ng-deep .pc-page .help-row,
-:host ::ng-deep .pc-page .help-row .help-fab,
-:host ::ng-deep .pc-page .help-row .help-fab.mat-mdc-button-base {
-  position: relative !important;
-  inset: auto !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  transform: none !important;
+/* ================= RESPONSIVO ================= */
+@media (max-width: 900px) {
+  .toolbar__search {
+    width: min(520px, 48vw);
+    margin-left: 16px;
+  }
+}
+
+@media (max-width: 760px) {
+  .toolbar__search {
+    display: none;
+  }
 }

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6D28D9"/>
+      <stop offset="1" stop-color="#C084FC"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="38%" r="55%">
+      <stop offset="0" stop-color="#A855F7" stop-opacity="0.28"/>
+      <stop offset="0.55" stop-color="#A855F7" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#A855F7" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="18" flood-color="#111827" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="100%" height="100%" rx="60" fill="url(#bg)"/>
+  <rect width="100%" height="100%" rx="60" fill="url(#glow)"/>
+
+  <g filter="url(#soft)">
+    <rect x="70" y="90" width="760" height="610" rx="48" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.22)"/>
+    <path d="M450 210c-55 0-95 30-120 55-30-60-80-95-120-95l-20 110c-50 65-80 150-80 245 0 205 150 330 340 330s340-125 340-330c0-95-30-180-80-245l-20-110c-40 0-90 35-120 95-25-25-65-55-120-55zm-120 250c0-35 30-65 65-65s65 30 65 65-30 65-65 65-65-30-65-65zm175 0c0-35 30-65 65-65s65 30 65 65-30 65-65 65-65-30-65-65zm-55 210c-90 0-160-50-160-50s70 20 160 20 160-20 160-20-70 50-160 50z" fill="rgba(255,255,255,0.92)"/>
+  </g>
+
+  <text x="50%" y="770" text-anchor="middle" font-family="Inter,system-ui,Segoe UI,Roboto,Arial" font-size="58" font-weight="800" fill="rgba(255,255,255,0.96)">Theo</text>
+  <text x="50%" y="835" text-anchor="middle" font-family="Inter,system-ui,Segoe UI,Roboto,Arial" font-size="28" font-weight="600" fill="rgba(255,255,255,0.78)">Gato • imagem placeholder</text>
+</svg>

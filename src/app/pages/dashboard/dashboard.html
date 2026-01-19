@@ -19,7 +19,7 @@
       </p>
 
       <div class="hero__actions hero__actions--xl">
-        <button mat-flat-button color="primary" class="hero__btn hero__btn--light" routerLink="/pets">
+        <button mat-flat-button color="primary" class="hero__btn hero__btn--light" routerLink="/pets" [queryParams]="{ status: 'disponiveis' }">
           Ver pets disponíveis
           <mat-icon>arrow_forward</mat-icon>
         </button>
