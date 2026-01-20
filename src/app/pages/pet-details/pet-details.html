@@ -79,7 +79,6 @@
       <!-- Características -->
       <mat-card class="pd__box">
         <h3 class="pd__boxTitle">Características</h3>
-
         <mat-chip-set class="pd__chips">
           @for (t of p.traits; track t) {
             <mat-chip>{{ t }}</mat-chip>
@@ -87,6 +86,7 @@
         </mat-chip-set>
       </mat-card>
 
+      <!-- Ações rápidas (ADMIN) -->
       <mat-card class="pd__box" *ngIf="isAdmin()">
         <h3 class="pd__boxTitle">Ações Rápidas</h3>
 
@@ -139,7 +139,7 @@
         </button>
       </div>
 
-      <!-- ABA: ADOÇÃO -->
+      <!-- ================= ABA: ADOÇÃO ================= -->
       <div *ngIf="tab() === 'adocao'">
         <div class="pdR__hero">
           <div class="pdR__heroIcon" [class.pdR__heroIcon--adopted]="p.status === 'ADOTADO'">
@@ -148,13 +148,11 @@
 
           <div class="pdR__heroText">
             <h3 class="pdR__title">Status Atual</h3>
-            <p class="pdR__subtitle">
-              Este pet está {{ p.status === 'ADOTADO' ? 'adotado' : 'disponível para adoção' }}.
-            </p>
+            <p class="pdR__subtitle">Este pet está {{ p.status === 'ADOTADO' ? 'adotado' : 'disponível para adoção' }}.</p>
           </div>
         </div>
 
-        <div class="pdR__panel" *ngIf="meta() as m; else metaEmpty">
+        <div class="pdR__panel">
           <div class="pdR__grid">
             <div class="pdR__cell">
               <div class="pdR__label">Status</div>
@@ -166,12 +164,12 @@
 
             <div class="pdR__cell">
               <div class="pdR__label">Tempo no Abrigo</div>
-              <div class="pdR__value">{{ m.tempoNoAbrigo }}</div>
+              <div class="pdR__value">{{ meta()?.tempoNoAbrigo || '—' }}</div>
             </div>
 
             <div class="pdR__cell">
               <div class="pdR__label">Total de Adoções</div>
-              <div class="pdR__value">{{ m.totalAdocoes }}</div>
+              <div class="pdR__value">{{ meta()?.totalAdocoes ?? '—' }}</div>
             </div>
 
             <div class="pdR__cell">
@@ -180,23 +178,6 @@
             </div>
           </div>
         </div>
-
-        <ng-template #metaEmpty>
-          <div class="pdR__panel">
-            <div class="pdR__grid">
-              <div class="pdR__cell">
-                <div class="pdR__label">Status</div>
-                <div class="pdR__value pdR__statusLine">
-                  <span class="pdR__dot" [class.pdR__dot--adopted]="p.status === 'ADOTADO'"></span>
-                  {{ statusLongLabel() }}
-                </div>
-              </div>
-              <div class="pdR__cell"><div class="pdR__label">Tempo no Abrigo</div><div class="pdR__value">—</div></div>
-              <div class="pdR__cell"><div class="pdR__label">Total de Adoções</div><div class="pdR__value">—</div></div>
-              <div class="pdR__cell"><div class="pdR__label">Última Atualização</div><div class="pdR__value">{{ ultimaAtualizacao() }}</div></div>
-            </div>
-          </div>
-        </ng-template>
 
         <div class="pdR__infoBox">
           <div class="pdR__infoIcon"><mat-icon>info</mat-icon></div>
@@ -208,24 +189,18 @@
           </div>
         </div>
 
-        <button
-          mat-flat-button
-          class="pdR__cta"
-          type="button"
-          [disabled]="p.status === 'ADOTADO'"
-          (click)="goToAdopt()"
-        >
+        <button mat-flat-button class="pdR__cta" type="button" [disabled]="p.status === 'ADOTADO'" (click)="goToAdopt()">
           <mat-icon>favorite</mat-icon>
           Adotar {{ p.name }}
         </button>
       </div>
 
-      <!-- ABA: HISTÓRICO -->
+      <!-- ================= ABA: HISTÓRICO ================= -->
       <div *ngIf="tab() === 'historico'" class="pdH">
         <!-- cards resumo -->
         <div class="pdH__stats">
           <div class="pdH__statCard">
-            <div class="pdH__statTop">
+            <div>
               <div class="pdH__statLabel">Total de Eventos</div>
               <div class="pdH__statValue">{{ totalEvents() }}</div>
             </div>
@@ -233,19 +208,19 @@
           </div>
 
           <div class="pdH__statCard pdH__statCard--blue">
-            <div class="pdH__statTop">
+            <div>
               <div class="pdH__statLabel">Último Evento</div>
               <div class="pdH__statValue">{{ lastEvent() }}</div>
             </div>
-            <div class="pdH__statIcon"><mat-icon>schedule</mat-icon></div>
+            <div class="pdH__statIcon pdH__statIcon--blue"><mat-icon>schedule</mat-icon></div>
           </div>
 
-          <div class="pdH__statCard pdH__statCard--green">
-            <div class="pdH__statTop">
+          <div class="pdH__statCard pdH__statCard--health">
+            <div>
               <div class="pdH__statLabel">Saúde Atual</div>
-              <div class="pdH__statValue">{{ saudeAtual() }}</div>
+              <div class="pdH__statValue">{{ healthStatus() }}</div>
             </div>
-            <div class="pdH__statIcon"><mat-icon>check_circle</mat-icon></div>
+            <div class="pdH__statIcon pdH__statIcon--health"><mat-icon>verified</mat-icon></div>
           </div>
         </div>
 
@@ -253,11 +228,11 @@
         <div class="pdH__filters">
           <div class="pdH__filtersLabel">Filtrar por:</div>
 
-          <div class="pdH__filterRow">
+          <div class="pdH__filterBtns">
             <button
               type="button"
-              class="pdH__filter"
-              [class.pdH__filter--active]="historyFilter() === 'Todos'"
+              class="pdH__pill"
+              [class.pdH__pill--active]="historyFilter() === 'Todos'"
               (click)="setHistoryFilter('Todos')"
             >
               Todos
@@ -266,8 +241,8 @@
             @for (c of historyCategories; track c) {
               <button
                 type="button"
-                class="pdH__filter"
-                [class.pdH__filter--active]="historyFilter() === c"
+                class="pdH__pill"
+                [class.pdH__pill--active]="historyFilter() === c"
                 (click)="setHistoryFilter(c)"
               >
                 {{ c }}
@@ -277,32 +252,40 @@
         </div>
 
         <!-- timeline -->
-        <div class="pdH__timeline">
+        <div class="pdH__timeline" *ngIf="filteredHistory().length > 0; else emptyHistory">
           @for (ev of filteredHistory(); track ev.id) {
             <div class="pdH__item">
               <div class="pdH__rail">
-                <div class="pdH__dot">
+                <div class="pdH__iconCircle" [ngClass]="'pdH__iconCircle--' + categoryClass(ev.category)">
                   <mat-icon>{{ ev.icon }}</mat-icon>
                 </div>
+                <div class="pdH__line"></div>
               </div>
 
               <div class="pdH__card">
-  <div class="pdH__cardTop">
-    <div class="pdH__meta">
-      <div class="pdH__title">{{ ev.title }}</div>
-      <div class="pdH__date">{{ ev.dateTime }}</div>
-    </div>
+                <div class="pdH__cardHead">
+                  <div class="pdH__titleWrap">
+                    <div class="pdH__title">{{ ev.title }}</div>
+                    <div class="pdH__date">{{ ev.dateTime }}</div>
+                  </div>
 
-    <span class="pdH__badge" [class]="categoryBadgeClass(ev.category)">
-      {{ ev.category }}
-    </span>
-  </div>
+                  <span class="pdH__badge" [ngClass]="'pdH__badge--' + categoryClass(ev.category)">
+                    {{ ev.category }}
+                  </span>
+                </div>
 
-  <div class="pdH__desc">{{ ev.description }}</div>
-</div>
+                <div class="pdH__desc">{{ ev.description }}</div>
+              </div>
+            </div>
+          }
+        </div>
 
+        <ng-template #emptyHistory>
+          <div class="pdH__empty">Nenhum evento encontrado para esse filtro.</div>
+        </ng-template>
+      </div>
 
-      <!-- ABA: CUIDADOS (por enquanto) -->
+      <!-- ================= ABA: CUIDADOS ================= -->
       <div *ngIf="tab() === 'cuidados'" class="pdR__placeholder">
         <h3>Cuidados</h3>
         <p>Em breve: vacinas, vermífugos, consultas e observações.</p>

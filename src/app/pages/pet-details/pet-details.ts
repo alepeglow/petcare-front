@@ -1,3 +1,4 @@
+// src/app/pages/pet-details/pet-details.ts
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -9,7 +10,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 
 import { getPetById, PET_META, type Pet, type PetMeta } from '../pets/pets.data';
-import { getHistoryByPetId, type PetHistoryEvent, type PetHistoryCategory } from '../pets/pets-history.data';
+import {
+  getHistoryByPetId,
+  type PetHistoryCategory,
+  type PetHistoryEvent,
+} from '../pets/pets-history.data';
 
 type TabKey = 'adocao' | 'historico' | 'cuidados';
 type HistoryFilter = 'Todos' | PetHistoryCategory;
@@ -36,21 +41,31 @@ export class PetDetails {
   // 🔒 depois tu troca por auth real
   isAdmin = signal(false);
 
-  // Tabs
+  // ===== Tabs =====
   tab = signal<TabKey>('adocao');
   setTab(t: TabKey) {
     this.tab.set(t);
   }
 
-  // Estado base
+  // ===== ID da rota =====
   petId = signal<number>(0);
-  pet = signal<Pet | null>(null);
-  meta = signal<PetMeta | null>(null);
 
-  // ===== HISTÓRICO =====
-  historyCategories = ['Saúde', 'Adoção', 'Admin', 'Sistema', 'Clínica'] as const;
+  constructor() {
+    this.route.paramMap.subscribe((pm) => {
+      const id = Number(pm.get('id') ?? 0);
+      this.petId.set(Number.isFinite(id) ? id : 0);
+    });
+  }
 
+  // ===== Dados do Pet =====
+  pet = computed<Pet | null>(() => getPetById(this.petId()) ?? null);
+  meta = computed<PetMeta | null>(() => PET_META[this.petId()] ?? null);
+
+  // ===== Histórico =====
   history = computed<PetHistoryEvent[]>(() => getHistoryByPetId(this.petId()) ?? []);
+
+  // lista fixa (pra renderizar os botões)
+  historyCategories = ['Saúde', 'Adoção', 'Admin', 'Sistema', 'Clínica'] as const;
 
   historyFilter = signal<HistoryFilter>('Todos');
   setHistoryFilter(f: HistoryFilter) {
@@ -66,51 +81,41 @@ export class PetDetails {
 
   totalEvents = computed(() => this.history().length);
 
-  // assume que teu array já vem em ordem (mais recente primeiro)
+  // assume que o array vem com o MAIS RECENTE primeiro
   lastEvent = computed(() => this.history()[0]?.dateTime ?? '—');
 
-  // ✅ AQUI resolve teu problema: Última Atualização sempre igual ao último evento.
+  // ✅ “Última Atualização” = “Último Evento”
   ultimaAtualizacao = computed(() => this.lastEvent());
 
-  // “Saúde Atual” pro card do Histórico (simples e rápido, depois tu refina)
-  saudeAtual = computed(() => {
-    // regra básica (sem perder tempo): se existe histórico, considera “Saudável”
-    // depois: tu pode mudar pra detectar alertas, pendências, etc.
-    return this.history().length ? 'Saudável' : '—';
-  });
-
-  constructor() {
-    this.route.paramMap.subscribe((pm) => {
-      const id = Number(pm.get('id') ?? 0);
-      const safeId = Number.isFinite(id) ? id : 0;
-
-      this.petId.set(safeId);
-
-      const p = getPetById(safeId) ?? null;
-      this.pet.set(p);
-
-      this.meta.set(PET_META[safeId] ?? null);
-    });
-  }
+  // Card da aba Histórico
+  healthStatus = computed(() => (this.history().length ? 'Saudável' : '—'));
 
   // ===== Helpers Adoção =====
-  statusIsAdopted() {
-    return this.pet()?.status === 'ADOTADO';
+  statusIsAdopted = computed(() => this.pet()?.status === 'ADOTADO');
+
+  statusIcon = computed(() => (this.statusIsAdopted() ? 'verified' : 'check_circle'));
+  statusLabel = computed(() => (this.statusIsAdopted() ? 'Adotado' : 'Disponível'));
+  statusLongLabel = computed(() =>
+    this.statusIsAdopted() ? 'Adotado' : 'Disponível para Adoção'
+  );
+
+  // ===== Helpers Badge/Cores por categoria =====
+  // (use o que teu HTML estiver chamando: categoryClass(...) OU categoryBadgeClass(...))
+  categoryClass(cat: PetHistoryCategory): 'saude' | 'adocao' | 'admin' | 'sistema' | 'clinica' {
+    switch (cat) {
+      case 'Saúde':
+        return 'saude';
+      case 'Adoção':
+        return 'adocao';
+      case 'Admin':
+        return 'admin';
+      case 'Sistema':
+        return 'sistema';
+      case 'Clínica':
+        return 'clinica';
+    }
   }
 
-  statusIcon() {
-    return this.statusIsAdopted() ? 'verified' : 'check_circle';
-  }
-
-  statusLabel() {
-    return this.statusIsAdopted() ? 'Adotado' : 'Disponível';
-  }
-
-  statusLongLabel() {
-    return this.statusIsAdopted() ? 'Adotado' : 'Disponível para Adoção';
-  }
-
-  // ===== Helpers Histórico (badge/label) =====
   categoryBadgeClass(cat: PetHistoryCategory) {
     switch (cat) {
       case 'Saúde':
@@ -128,14 +133,14 @@ export class PetDetails {
     }
   }
 
-  // navegação
+  // ===== Navegação =====
   goToAdopt() {
     const id = this.petId();
     if (!id) return;
     this.router.navigate(['/pets', id, 'adotar']);
   }
 
-  // admin stubs
+  // ===== Admin stubs =====
   editPet() {
     console.log('Editar pet', this.petId());
   }
