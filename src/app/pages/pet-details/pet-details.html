@@ -18,18 +18,15 @@
 
       <h2 class="pd__name">{{ p.name }}</h2>
 
-      <!-- espécie em linha separada (como no print) -->
       <div class="pd__speciesLine">
-        <mat-icon>pets</mat-icon>
-        <span>{{ p.species }}</span>
+        <mat-icon class="pd__speciesIcon">pets</mat-icon>
+        <span class="pd__speciesText">{{ p.species }}</span>
       </div>
 
-      <!-- LISTA (Raça / Idade / Data / Peso / Cor) -->
-      <div class="pd__list" *ngIf="extraInfo() as e">
+      <!-- LISTA (Raça / Idade / Data / Peso / Cor / Sexo) -->
+      <div class="pd__list">
         <div class="pd__row">
-          <div class="pd__ico">
-            <mat-icon>hourglass_empty</mat-icon>
-          </div>
+          <div class="pd__ico"><mat-icon>biotech</mat-icon></div>
           <div class="pd__rowText">
             <div class="pd__rowLabel">Raça</div>
             <div class="pd__rowValue">{{ p.breed }}</div>
@@ -37,9 +34,7 @@
         </div>
 
         <div class="pd__row">
-          <div class="pd__ico">
-            <mat-icon>cake</mat-icon>
-          </div>
+          <div class="pd__ico"><mat-icon>cake</mat-icon></div>
           <div class="pd__rowText">
             <div class="pd__rowLabel">Idade</div>
             <div class="pd__rowValue">{{ p.age }}</div>
@@ -47,43 +42,47 @@
         </div>
 
         <div class="pd__row">
-          <div class="pd__ico">
-            <mat-icon>event</mat-icon>
-          </div>
+          <div class="pd__ico"><mat-icon>event</mat-icon></div>
           <div class="pd__rowText">
             <div class="pd__rowLabel">Data de Entrada</div>
-            <div class="pd__rowValue">{{ e.entryDate }}</div>
+            <div class="pd__rowValue">{{ p.entryDate }}</div>
           </div>
         </div>
 
         <div class="pd__row">
-          <div class="pd__ico">
-            <mat-icon>monitor_weight</mat-icon>
-          </div>
+          <div class="pd__ico"><mat-icon>monitor_weight</mat-icon></div>
           <div class="pd__rowText">
             <div class="pd__rowLabel">Peso</div>
-            <div class="pd__rowValue">{{ e.weightKg }} kg</div>
+            <div class="pd__rowValue">{{ p.weightKg }} kg</div>
+          </div>
+        </div>
+
+        <div class="pd__row">
+          <div class="pd__ico"><mat-icon>palette</mat-icon></div>
+          <div class="pd__rowText">
+            <div class="pd__rowLabel">Cor</div>
+            <div class="pd__rowValue">{{ p.color }}</div>
           </div>
         </div>
 
         <div class="pd__row">
           <div class="pd__ico">
-            <mat-icon>palette</mat-icon>
+            <mat-icon>{{ p.gender === 'Macho' ? 'male' : 'female' }}</mat-icon>
           </div>
           <div class="pd__rowText">
-            <div class="pd__rowLabel">Cor</div>
-            <div class="pd__rowValue">{{ e.color }}</div>
+            <div class="pd__rowLabel">Sexo</div>
+            <div class="pd__rowValue">{{ p.gender }}</div>
           </div>
         </div>
       </div>
 
-      <!-- Características (como no print) -->
+      <!-- Características -->
       <mat-card class="pd__box">
         <h3 class="pd__boxTitle">Características</h3>
 
         <mat-chip-set class="pd__chips">
-          @for (c of characteristics(); track c) {
-            <mat-chip>{{ c }}</mat-chip>
+          @for (t of p.traits; track t) {
+            <mat-chip>{{ t }}</mat-chip>
           }
         </mat-chip-set>
       </mat-card>
@@ -108,58 +107,131 @@
 
     <!-- COL DIREITA -->
     <mat-card class="pd__right">
-      <div class="pd__tabs">
-        <button class="pd__tab pd__tab--active" type="button">
+      <!-- Tabs -->
+      <div class="pdR__tabs">
+        <button
+          class="pdR__tab"
+          type="button"
+          [class.pdR__tab--active]="tab() === 'adocao'"
+          (click)="setTab('adocao')"
+        >
           <mat-icon>favorite</mat-icon>
           Adoção
         </button>
-        <button class="pd__tab" type="button" disabled>
-          <mat-icon>healing</mat-icon>
+
+        <button
+          class="pdR__tab"
+          type="button"
+          [class.pdR__tab--active]="tab() === 'historico'"
+          (click)="setTab('historico')"
+        >
+          <mat-icon>history</mat-icon>
           Histórico
         </button>
-        <button class="pd__tab" type="button" disabled>
-          <mat-icon>vaccines</mat-icon>
+
+        <button
+          class="pdR__tab"
+          type="button"
+          [class.pdR__tab--active]="tab() === 'cuidados'"
+          (click)="setTab('cuidados')"
+        >
+          <mat-icon>medical_services</mat-icon>
           Cuidados
         </button>
       </div>
 
-      <div class="pd__statusCard">
-        <h3>Status Atual</h3>
-        <p class="pd__muted">
-          Esse pet está {{ p.status === 'ADOTADO' ? 'adotado' : 'disponível para adoção' }}.
-        </p>
-
-        <div class="pd__statusRow">
-          <div class="pd__badge" [class.pd__badge--ok]="p.status === 'DISPONIVEL'">
+      <!-- ABA: ADOÇÃO -->
+      <div *ngIf="tab() === 'adocao'">
+        <div class="pdR__hero">
+          <div class="pdR__heroIcon" [class.pdR__heroIcon--adopted]="p.status === 'ADOTADO'">
             <mat-icon>{{ p.status === 'ADOTADO' ? 'verified' : 'check_circle' }}</mat-icon>
-            <span>{{ p.status === 'ADOTADO' ? 'Adotado' : 'Disponível para Adoção' }}</span>
           </div>
 
-          <div class="pd__tiny">
-            <div><span>Tempo no abrigo</span><strong>—</strong></div>
-            <div><span>Última atualização</span><strong>—</strong></div>
+          <div class="pdR__heroText">
+            <h3 class="pdR__title">Status Atual</h3>
+            <p class="pdR__subtitle">
+              Este pet está {{ p.status === 'ADOTADO' ? 'adotado' : 'disponível para adoção' }}.
+            </p>
           </div>
         </div>
 
-        <div class="pd__note">
-          <mat-icon>info</mat-icon>
-          <div>
-            <strong>Informações importantes</strong>
-            <p>Ao adotar, você se compromete com os cuidados e bem-estar do pet.</p>
+        <div class="pdR__panel" *ngIf="meta() as m; else metaEmpty">
+          <div class="pdR__grid">
+            <div class="pdR__cell">
+              <div class="pdR__label">Status</div>
+              <div class="pdR__value pdR__statusLine">
+                <span class="pdR__dot" [class.pdR__dot--adopted]="p.status === 'ADOTADO'"></span>
+                {{ statusLongLabel() }}
+              </div>
+            </div>
+
+            <div class="pdR__cell">
+              <div class="pdR__label">Tempo no Abrigo</div>
+              <div class="pdR__value">{{ m.tempoNoAbrigo }}</div>
+            </div>
+
+            <div class="pdR__cell">
+              <div class="pdR__label">Total de Adoções</div>
+              <div class="pdR__value">{{ m.totalAdocoes }}</div>
+            </div>
+
+            <div class="pdR__cell">
+              <div class="pdR__label">Última Atualização</div>
+              <div class="pdR__value">{{ m.ultimaAtualizacao }}</div>
+            </div>
           </div>
         </div>
+
+        <ng-template #metaEmpty>
+          <div class="pdR__panel">
+            <div class="pdR__grid">
+              <div class="pdR__cell">
+                <div class="pdR__label">Status</div>
+                <div class="pdR__value pdR__statusLine">
+                  <span class="pdR__dot" [class.pdR__dot--adopted]="p.status === 'ADOTADO'"></span>
+                  {{ statusLongLabel() }}
+                </div>
+              </div>
+              <div class="pdR__cell"><div class="pdR__label">Tempo no Abrigo</div><div class="pdR__value">—</div></div>
+              <div class="pdR__cell"><div class="pdR__label">Total de Adoções</div><div class="pdR__value">—</div></div>
+              <div class="pdR__cell"><div class="pdR__label">Última Atualização</div><div class="pdR__value">—</div></div>
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="pdR__infoBox">
+          <div class="pdR__infoIcon"><mat-icon>info</mat-icon></div>
+          <div class="pdR__infoText">
+            <div class="pdR__infoTitle">Informações Importantes</div>
+            <p class="pdR__infoDesc">
+              {{ meta()?.infoImportante || 'Ao adotar, você se compromete com os cuidados e bem-estar do pet.' }}
+            </p>
+          </div>
+        </div>
+
+        <button
+          mat-flat-button
+          class="pdR__cta"
+          type="button"
+          [disabled]="p.status === 'ADOTADO'"
+          (click)="goToAdopt()"
+        >
+          <mat-icon>favorite</mat-icon>
+          Adotar {{ p.name }}
+        </button>
       </div>
 
-      <button
-        mat-flat-button
-        color="primary"
-        class="pd__cta"
-        [disabled]="p.status === 'ADOTADO'"
-        [routerLink]="['/pets', p.id, 'adotar']"
-      >
-        <mat-icon>favorite</mat-icon>
-        Adotar {{ p.name }}
-      </button>
+      <!-- ABA: HISTÓRICO (placeholder por enquanto) -->
+      <div *ngIf="tab() === 'historico'" class="pdR__placeholder">
+        <h3>Histórico</h3>
+        <p>Em breve: timeline de adoções, devoluções e eventos importantes.</p>
+      </div>
+
+      <!-- ABA: CUIDADOS (placeholder por enquanto) -->
+      <div *ngIf="tab() === 'cuidados'" class="pdR__placeholder">
+        <h3>Cuidados</h3>
+        <p>Em breve: vacinas, vermífugos, consultas e observações.</p>
+      </div>
     </mat-card>
   </div>
 </section>

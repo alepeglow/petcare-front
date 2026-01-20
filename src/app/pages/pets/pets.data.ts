@@ -224,3 +224,97 @@ export const PETS: Pet[] = [
 export function getPetById(id: number): Pet | undefined {
   return PETS.find((p) => p.id === id);
 }
+export type PetMeta = {
+  tempoNoAbrigo: string;        // ex: "4 dias"
+  totalAdocoes: number;         // ex: 0, 1, 2...
+  ultimaAtualizacao: string;    // ex: "15/01/2025 14:30"
+  infoImportante: string;       // texto do card azul
+};
+
+export const PET_META: Record<number, PetMeta> = {
+  1: {
+    tempoNoAbrigo: '4 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '15/01/2025 14:30',
+    infoImportante:
+      'Thor é muito dócil e sociável. Ideal para famílias e passeios. Já está vacinado e pronto para um lar amoroso.',
+  },
+  2: {
+    tempoNoAbrigo: '12 dias',
+    totalAdocoes: 1,
+    ultimaAtualizacao: '20/01/2025 09:10',
+    infoImportante:
+      'Max é super carinhoso e adora brincar. Já foi adotado e está em acompanhamento pós-adoção.',
+  },
+  3: {
+    tempoNoAbrigo: '6 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '18/01/2025 16:20',
+    infoImportante:
+      'Bob é um labrador bem tranquilo e companheiro. Se dá bem com pessoas e gosta de rotina.',
+  },
+  4: {
+    tempoNoAbrigo: '2 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '19/01/2025 11:00',
+    infoImportante:
+      'Mel é pequenininha, muito afetuosa e ótima para apartamento. Precisa de passeios curtos e carinho.',
+  },
+  5: {
+    tempoNoAbrigo: '9 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '17/01/2025 10:45',
+    infoImportante:
+      'Loki é inteligente e ativo. Ideal para quem gosta de atividades e brincadeiras. Responde bem a comandos.',
+  },
+  6: {
+    tempoNoAbrigo: '18 dias',
+    totalAdocoes: 1,
+    ultimaAtualizacao: '16/01/2025 08:30',
+    infoImportante:
+      'Nina é muito querida e adaptável. Já foi adotada e está em fase de adaptação com a família.',
+  },
+  7: {
+    tempoNoAbrigo: '5 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '18/01/2025 13:15',
+    infoImportante:
+      'Luna é calma e gosta de ambientes tranquilos. Perfeita para quem quer companhia mais serena.',
+  },
+  8: {
+    tempoNoAbrigo: '7 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '17/01/2025 15:05',
+    infoImportante:
+      'Simba é grande, carinhoso e muito sociável. Ideal para quem curte gato presente e companheiro.',
+  },
+  9: {
+    tempoNoAbrigo: '3 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '19/01/2025 09:40',
+    infoImportante:
+      'Mia é curiosa e apegada ao tutor. Gosta de brincadeiras e de ficar por perto. Ótima companhia.',
+  },
+  10: {
+    tempoNoAbrigo: '10 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '16/01/2025 17:00',
+    infoImportante:
+      'Snow é elegante e tranquila. Curte carinho e um cantinho confortável. Boa para casas silenciosas.',
+  },
+  11: {
+    tempoNoAbrigo: '15 dias',
+    totalAdocoes: 1,
+    ultimaAtualizacao: '15/01/2025 12:10',
+    infoImportante:
+      'Pipoca já foi adotada e está em acompanhamento. É bem carinhosa e se adapta rápido.',
+  },
+  12: {
+    tempoNoAbrigo: '8 dias',
+    totalAdocoes: 0,
+    ultimaAtualizacao: '17/01/2025 14:55',
+    infoImportante:
+      'Theo é muito dócil e ama colo. Ideal para quem quer um gato super companheiro e carinhoso.',
+  },
+};
+
