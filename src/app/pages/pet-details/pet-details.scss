@@ -63,11 +63,11 @@
 }
 
 .pd__chip mat-icon {
-  color: #16a34a;
+  color: #16a34a !important;
 }
 
 .pd__chip--adopted mat-icon {
-  color: #6b7280;
+  color: #6b7280 !important;
 }
 
 .pd__name {
@@ -118,7 +118,7 @@
 }
 
 .pd__ico mat-icon {
-  color: #7c5cff;
+  color: #7c5cff !important;
 }
 
 .pd__rowLabel {
@@ -154,11 +154,12 @@
   gap: 12px;
 }
 
-/* chips “bolinhas” roxas (como teu print) */
+/* ✅ chips “bolinhas” roxas (garantido) */
 :host ::ng-deep .pd__chips .mat-mdc-chip {
   border-radius: 999px !important;
   border: 0 !important;
   background: rgba(124, 92, 255, 0.10) !important;
+  box-shadow: none !important;
 }
 
 :host ::ng-deep .pd__chips .mat-mdc-chip .mdc-evolution-chip__text-label {
@@ -225,8 +226,9 @@
   background: #7c5cff;
 }
 
+/* ===== ADOCAO ===== */
 .pdR__hero {
-  padding: 28px 26px 8px;
+  padding: 28px 26px 10px;
   display: grid;
   grid-template-columns: 86px 1fr;
   gap: 18px;
@@ -258,7 +260,7 @@
 }
 
 .pdR__title {
-  margin: 0 0 8px;
+  margin: 0 0 12px; /* ✅ mais espaço entre título e subtítulo */
   font-size: 32px;
   font-weight: 900;
 }
@@ -364,15 +366,17 @@
   line-height: 1.4;
 }
 
-/* CTA full width */
+/* CTA full width (garantido) */
 .pdR__cta {
   margin: 18px 26px 26px;
   height: 74px;
   border-radius: 18px;
   font-size: 18px;
   font-weight: 900;
-
   width: calc(100% - 52px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background: #7c5cff !important;
   color: #fff !important;
@@ -385,6 +389,198 @@
   gap: 10px;
 }
 
+/* ===== HISTORICO ===== */
+.pdH {
+  padding: 22px 26px 26px;
+}
+
+/* cards topo */
+.pdH__summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.pdH__card {
+  border-radius: 18px;
+  padding: 16px 16px;
+  border: 1px solid rgba(98, 0, 238, 0.10);
+  background: rgba(255, 255, 255, 0.55);
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  align-items: center;
+  gap: 12px;
+}
+
+.pdH__card--purple {
+  background: rgba(124, 92, 255, 0.07);
+}
+
+.pdH__card--blue {
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.pdH__card--green {
+  background: rgba(22, 163, 74, 0.08);
+}
+
+.pdH__kpiLabel {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.pdH__kpiValue {
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.pdH__kpiIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(124, 92, 255, 0.10);
+}
+
+.pdH__card--blue .pdH__kpiIcon { background: rgba(59, 130, 246, 0.12); }
+.pdH__card--green .pdH__kpiIcon { background: rgba(22, 163, 74, 0.12); }
+
+.pdH__kpiIcon mat-icon {
+  color: #7c5cff !important;
+}
+
+.pdH__card--blue .pdH__kpiIcon mat-icon { color: #2563eb !important; }
+.pdH__card--green .pdH__kpiIcon mat-icon { color: #16a34a !important; }
+
+/* filtros */
+.pdH__filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0 18px;
+  align-items: center;
+}
+
+.pdH__filtersLabel {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-right: 6px;
+  font-weight: 700;
+}
+
+.pdH__filterBtn {
+  border: 1px solid rgba(98, 0, 238, 0.12);
+  background: rgba(255, 255, 255, 0.60);
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.pdH__filterBtn--active {
+  background: rgba(124, 92, 255, 0.12);
+  border-color: rgba(124, 92, 255, 0.28);
+  color: #7c5cff;
+  opacity: 1;
+}
+
+/* timeline */
+.pdH__timeline {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding-left: 34px;
+}
+
+.pdH__timeline::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: rgba(124, 92, 255, 0.18);
+}
+
+.pdH__item {
+  position: relative;
+  border-radius: 18px;
+  padding: 16px 16px 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(98, 0, 238, 0.10);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 14px;
+}
+
+.pdH__dotIcon {
+  position: absolute;
+  left: -34px;
+  top: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.12);
+  border: 1px solid rgba(124, 92, 255, 0.18);
+  display: grid;
+  place-items: center;
+}
+
+.pdH__dotIcon mat-icon {
+  color: #7c5cff !important;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.pdH__title {
+  font-weight: 900;
+  margin: 0 0 6px;
+}
+
+.pdH__desc {
+  margin: 0;
+  opacity: 0.82;
+  line-height: 1.35;
+  font-size: 14px;
+}
+
+.pdH__date {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.65;
+  font-weight: 700;
+}
+
+.pdH__badge {
+  justify-self: end;
+  align-self: start;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(98, 0, 238, 0.12);
+  background: rgba(124, 92, 255, 0.10);
+  color: #7c5cff;
+}
+
+.pdH__badge--clinic { background: rgba(59, 130, 246, 0.10); color: #2563eb; border-color: rgba(59, 130, 246, 0.18); }
+.pdH__badge--health { background: rgba(22, 163, 74, 0.10); color: #16a34a; border-color: rgba(22, 163, 74, 0.18); }
+.pdH__badge--system { background: rgba(148, 163, 184, 0.18); color: #475569; border-color: rgba(148, 163, 184, 0.28); }
+.pdH__badge--admin  { background: rgba(168, 85, 247, 0.10); color: #7c3aed; border-color: rgba(168, 85, 247, 0.18); }
+.pdH__badge--adocao  { background: rgba(244, 63, 94, 0.10); color: #e11d48; border-color: rgba(244, 63, 94, 0.18); }
+
+/* ===== CUIDADOS ===== */
+.pdC {
+  padding: 22px 26px 26px;
+}
+
+/* placeholders */
 .pdR__placeholder {
   padding: 26px;
 }
@@ -393,4 +589,249 @@
   .pd__grid {
     grid-template-columns: 1fr;
   }
+
+  .pdH__summary {
+    grid-template-columns: 1fr;
+  }
 }
+
+/* ===== HISTÓRICO (aba da direita) ===== */
+.pdH {
+  padding: 22px 26px 26px;
+}
+
+.pdH__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.pdH__statCard {
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(98, 0, 238, 0.10);
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  align-items: center;
+  gap: 10px;
+}
+
+.pdH__statCard--blue {
+  background: rgba(235, 244, 255, 0.75);
+}
+
+.pdH__statCard--green {
+  background: rgba(236, 253, 245, 0.75);
+}
+
+.pdH__statLabel {
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.pdH__statValue {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.pdH__statIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(124, 92, 255, 0.10);
+  display: grid;
+  place-items: center;
+}
+
+.pdH__statIcon mat-icon {
+  color: #7c5cff;
+}
+
+.pdH__filters {
+  margin: 10px 0 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.pdH__filtersLabel {
+  font-size: 13px;
+  opacity: 0.75;
+  font-weight: 800;
+}
+
+.pdH__filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pdH__filter {
+  border: 1px solid rgba(98, 0, 238, 0.14);
+  background: rgba(255, 255, 255, 0.55);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.pdH__filter--active {
+  background: rgba(124, 92, 255, 0.14);
+  border-color: rgba(124, 92, 255, 0.35);
+  color: #7c5cff;
+}
+
+.pdH__timeline {
+  display: grid;
+  gap: 14px;
+  position: relative;
+}
+
+.pdH__item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.pdH__rail {
+  position: relative;
+  width: 44px;
+  display: grid;
+  justify-items: center;
+}
+
+.pdH__rail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: -14px;
+  width: 2px;
+  background: rgba(124, 92, 255, 0.18);
+}
+
+.pdH__dot {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  background: rgba(124, 92, 255, 0.12);
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.pdH__dot mat-icon {
+  color: #7c5cff;
+}
+
+.pdH__card {
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(98, 0, 238, 0.10);
+}
+
+.pdH__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.pdH__title {
+  font-weight: 900;
+}
+
+.pdH__badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 12px;
+  background: rgba(124, 92, 255, 0.10);
+  color: #7c5cff;
+  border: 1px solid rgba(124, 92, 255, 0.14);
+}
+
+.pdH__badge--saude {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.18);
+  color: #059669;
+}
+
+.pdH__badge--clinica {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.18);
+  color: #2563eb;
+}
+
+.pdH__badge--adocao {
+  background: rgba(244, 63, 94, 0.10);
+  border-color: rgba(244, 63, 94, 0.18);
+  color: #e11d48;
+}
+
+.pdH__badge--admin {
+  background: rgba(124, 92, 255, 0.10);
+  border-color: rgba(124, 92, 255, 0.18);
+  color: #7c5cff;
+}
+
+.pdH__badge--sistema {
+  background: rgba(107, 114, 128, 0.12);
+  border-color: rgba(107, 114, 128, 0.18);
+  color: #374151;
+}
+
+.pdH__desc {
+  opacity: 0.85;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.pdH__date {
+  font-size: 12px;
+  opacity: 0.7;
+  font-weight: 800;
+}
+
+/* responsivo */
+@media (max-width: 1100px) {
+  .pdH__stats {
+    grid-template-columns: 1fr;
+  }
+}
+.pdH__cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.pdH__meta {
+  display: grid;
+  gap: 6px;
+  min-width: 0; /* evita quebrar tudo */
+}
+
+.pdH__title {
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.pdH__desc {
+  margin-top: 10px;
+  opacity: 0.85;
+  line-height: 1.35;
+  max-width: 80ch;
+}
+
+/* evita a badge “empurrar” o layout */
+.pdH__badge {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+

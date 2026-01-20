@@ -23,7 +23,7 @@
         <span class="pd__speciesText">{{ p.species }}</span>
       </div>
 
-      <!-- LISTA (Raça / Idade / Data / Peso / Cor / Sexo) -->
+      <!-- LISTA -->
       <div class="pd__list">
         <div class="pd__row">
           <div class="pd__ico"><mat-icon>biotech</mat-icon></div>
@@ -87,7 +87,6 @@
         </mat-chip-set>
       </mat-card>
 
-      <!-- Ações rápidas (ADMIN) -->
       <mat-card class="pd__box" *ngIf="isAdmin()">
         <h3 class="pd__boxTitle">Ações Rápidas</h3>
 
@@ -177,7 +176,7 @@
 
             <div class="pdR__cell">
               <div class="pdR__label">Última Atualização</div>
-              <div class="pdR__value">{{ m.ultimaAtualizacao }}</div>
+              <div class="pdR__value">{{ ultimaAtualizacao() }}</div>
             </div>
           </div>
         </div>
@@ -194,7 +193,7 @@
               </div>
               <div class="pdR__cell"><div class="pdR__label">Tempo no Abrigo</div><div class="pdR__value">—</div></div>
               <div class="pdR__cell"><div class="pdR__label">Total de Adoções</div><div class="pdR__value">—</div></div>
-              <div class="pdR__cell"><div class="pdR__label">Última Atualização</div><div class="pdR__value">—</div></div>
+              <div class="pdR__cell"><div class="pdR__label">Última Atualização</div><div class="pdR__value">{{ ultimaAtualizacao() }}</div></div>
             </div>
           </div>
         </ng-template>
@@ -221,13 +220,89 @@
         </button>
       </div>
 
-      <!-- ABA: HISTÓRICO (placeholder por enquanto) -->
-      <div *ngIf="tab() === 'historico'" class="pdR__placeholder">
-        <h3>Histórico</h3>
-        <p>Em breve: timeline de adoções, devoluções e eventos importantes.</p>
-      </div>
+      <!-- ABA: HISTÓRICO -->
+      <div *ngIf="tab() === 'historico'" class="pdH">
+        <!-- cards resumo -->
+        <div class="pdH__stats">
+          <div class="pdH__statCard">
+            <div class="pdH__statTop">
+              <div class="pdH__statLabel">Total de Eventos</div>
+              <div class="pdH__statValue">{{ totalEvents() }}</div>
+            </div>
+            <div class="pdH__statIcon"><mat-icon>format_list_bulleted</mat-icon></div>
+          </div>
 
-      <!-- ABA: CUIDADOS (placeholder por enquanto) -->
+          <div class="pdH__statCard pdH__statCard--blue">
+            <div class="pdH__statTop">
+              <div class="pdH__statLabel">Último Evento</div>
+              <div class="pdH__statValue">{{ lastEvent() }}</div>
+            </div>
+            <div class="pdH__statIcon"><mat-icon>schedule</mat-icon></div>
+          </div>
+
+          <div class="pdH__statCard pdH__statCard--green">
+            <div class="pdH__statTop">
+              <div class="pdH__statLabel">Saúde Atual</div>
+              <div class="pdH__statValue">{{ saudeAtual() }}</div>
+            </div>
+            <div class="pdH__statIcon"><mat-icon>check_circle</mat-icon></div>
+          </div>
+        </div>
+
+        <!-- filtros -->
+        <div class="pdH__filters">
+          <div class="pdH__filtersLabel">Filtrar por:</div>
+
+          <div class="pdH__filterRow">
+            <button
+              type="button"
+              class="pdH__filter"
+              [class.pdH__filter--active]="historyFilter() === 'Todos'"
+              (click)="setHistoryFilter('Todos')"
+            >
+              Todos
+            </button>
+
+            @for (c of historyCategories; track c) {
+              <button
+                type="button"
+                class="pdH__filter"
+                [class.pdH__filter--active]="historyFilter() === c"
+                (click)="setHistoryFilter(c)"
+              >
+                {{ c }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- timeline -->
+        <div class="pdH__timeline">
+          @for (ev of filteredHistory(); track ev.id) {
+            <div class="pdH__item">
+              <div class="pdH__rail">
+                <div class="pdH__dot">
+                  <mat-icon>{{ ev.icon }}</mat-icon>
+                </div>
+              </div>
+
+              <div class="pdH__card">
+  <div class="pdH__cardTop">
+    <div class="pdH__meta">
+      <div class="pdH__title">{{ ev.title }}</div>
+      <div class="pdH__date">{{ ev.dateTime }}</div>
+    </div>
+
+    <span class="pdH__badge" [class]="categoryBadgeClass(ev.category)">
+      {{ ev.category }}
+    </span>
+  </div>
+
+  <div class="pdH__desc">{{ ev.description }}</div>
+</div>
+
+
+      <!-- ABA: CUIDADOS (por enquanto) -->
       <div *ngIf="tab() === 'cuidados'" class="pdR__placeholder">
         <h3>Cuidados</h3>
         <p>Em breve: vacinas, vermífugos, consultas e observações.</p>
