@@ -108,32 +108,17 @@
     <mat-card class="pd__right">
       <!-- Tabs -->
       <div class="pdR__tabs">
-        <button
-          class="pdR__tab"
-          type="button"
-          [class.pdR__tab--active]="tab() === 'adocao'"
-          (click)="setTab('adocao')"
-        >
+        <button class="pdR__tab" type="button" [class.pdR__tab--active]="tab() === 'adocao'" (click)="setTab('adocao')">
           <mat-icon>favorite</mat-icon>
           Adoção
         </button>
 
-        <button
-          class="pdR__tab"
-          type="button"
-          [class.pdR__tab--active]="tab() === 'historico'"
-          (click)="setTab('historico')"
-        >
+        <button class="pdR__tab" type="button" [class.pdR__tab--active]="tab() === 'historico'" (click)="setTab('historico')">
           <mat-icon>history</mat-icon>
           Histórico
         </button>
 
-        <button
-          class="pdR__tab"
-          type="button"
-          [class.pdR__tab--active]="tab() === 'cuidados'"
-          (click)="setTab('cuidados')"
-        >
+        <button class="pdR__tab" type="button" [class.pdR__tab--active]="tab() === 'cuidados'" (click)="setTab('cuidados')">
           <mat-icon>medical_services</mat-icon>
           Cuidados
         </button>
@@ -197,7 +182,6 @@
 
       <!-- ================= ABA: HISTÓRICO ================= -->
       <div *ngIf="tab() === 'historico'" class="pdH">
-        <!-- cards resumo -->
         <div class="pdH__stats">
           <div class="pdH__statCard">
             <div>
@@ -224,39 +208,27 @@
           </div>
         </div>
 
-        <!-- filtros -->
         <div class="pdH__filters">
           <div class="pdH__filtersLabel">Filtrar por:</div>
 
           <div class="pdH__filterBtns">
-            <button
-              type="button"
-              class="pdH__pill"
-              [class.pdH__pill--active]="historyFilter() === 'Todos'"
-              (click)="setHistoryFilter('Todos')"
-            >
+            <button type="button" class="pdH__pill" [class.pdH__pill--active]="historyFilter() === 'Todos'" (click)="setHistoryFilter('Todos')">
               Todos
             </button>
 
             @for (c of historyCategories; track c) {
-              <button
-                type="button"
-                class="pdH__pill"
-                [class.pdH__pill--active]="historyFilter() === c"
-                (click)="setHistoryFilter(c)"
-              >
+              <button type="button" class="pdH__pill" [class.pdH__pill--active]="historyFilter() === c" (click)="setHistoryFilter(c)">
                 {{ c }}
               </button>
             }
           </div>
         </div>
 
-        <!-- timeline -->
         <div class="pdH__timeline" *ngIf="filteredHistory().length > 0; else emptyHistory">
           @for (ev of filteredHistory(); track ev.id) {
             <div class="pdH__item">
               <div class="pdH__rail">
-                <div class="pdH__iconCircle" [ngClass]="'pdH__iconCircle--' + categoryClass(ev.category)">
+                <div class="pdH__iconCircle" [class]="'pdH__iconCircle--' + categoryClass(ev.category)">
                   <mat-icon>{{ ev.icon }}</mat-icon>
                 </div>
                 <div class="pdH__line"></div>
@@ -269,7 +241,7 @@
                     <div class="pdH__date">{{ ev.dateTime }}</div>
                   </div>
 
-                  <span class="pdH__badge" [ngClass]="'pdH__badge--' + categoryClass(ev.category)">
+                  <span class="pdH__badge" [class]="'pdH__badge--' + categoryClass(ev.category)">
                     {{ ev.category }}
                   </span>
                 </div>
@@ -286,9 +258,64 @@
       </div>
 
       <!-- ================= ABA: CUIDADOS ================= -->
-      <div *ngIf="tab() === 'cuidados'" class="pdR__placeholder">
-        <h3>Cuidados</h3>
-        <p>Em breve: vacinas, vermífugos, consultas e observações.</p>
+      <div *ngIf="tab() === 'cuidados'" class="pdC">
+        <div class="pdC__stats">
+          <div class="pdC__statCard">
+            <div>
+              <div class="pdC__statLabel">Total de Cuidados</div>
+              <div class="pdC__statValue">{{ totalCare() }}</div>
+            </div>
+            <div class="pdC__statIcon"><mat-icon>event_note</mat-icon></div>
+          </div>
+
+          <div class="pdC__statCard pdC__statCard--blue">
+            <div>
+              <div class="pdC__statLabel">Último Cuidado</div>
+              <div class="pdC__statValue">{{ lastCare() }}</div>
+            </div>
+            <div class="pdC__statIcon pdC__statIcon--blue"><mat-icon>schedule</mat-icon></div>
+          </div>
+        </div>
+
+        <div class="pdC__filters">
+          <div class="pdC__filtersLabel">Filtrar por:</div>
+
+          <div class="pdC__filterBtns">
+            <button type="button" class="pdC__pill" [class.pdC__pill--active]="careFilter() === 'Todos'" (click)="setCareFilter('Todos')">
+              Todos
+            </button>
+
+            @for (t of careTypes(); track t) {
+              <button type="button" class="pdC__pill" [class.pdC__pill--active]="careFilter() === t" (click)="setCareFilter(t)">
+                {{ carePillLabel(t) }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="pdC__list" *ngIf="filteredCare().length > 0; else emptyCare">
+          @for (c of filteredCare(); track c.id) {
+            <div class="pdC__item">
+              <div class="pdC__leftIcon" [class]="'pdC__leftIcon--' + careBadgeClass(c.type)">
+                <mat-icon>{{ c.icon }}</mat-icon>
+              </div>
+
+              <div class="pdC__main">
+                <div class="pdC__top">
+                  <div class="pdC__type">{{ carePillLabel(c.type) }}</div>
+                  <span class="pdC__badge" [class]="'pdC__badge--' + careBadgeClass(c.type)">{{ carePillLabel(c.type) }}</span>
+                </div>
+
+                <div class="pdC__desc" *ngIf="c.description">{{ c.description }}</div>
+                <div class="pdC__date">{{ c.date }}</div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <ng-template #emptyCare>
+          <div class="pdC__empty">Nenhum cuidado encontrado para esse filtro.</div>
+        </ng-template>
       </div>
     </mat-card>
   </div>
