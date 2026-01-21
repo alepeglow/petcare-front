@@ -5,7 +5,7 @@
       <p class="pets-subtitle">Encontre um pet usando filtros por espécie e status.</p>
     </div>
 
-    <button *ngIf="false" mat-flat-button class="btn-new">
+    <button *ngIf="isAdmin()" mat-flat-button class="btn-new"routerLink="/pets/novo">
       <mat-icon>add</mat-icon>
       Novo Pet
     </button>
@@ -105,7 +105,7 @@
             </button>
 
             @if (pet.status === 'DISPONIVEL') {
-              <button mat-button class="pet__adopt" [routerLink]="['/pets', pet.id, 'adotar']">
+              <button mat-flat-button (click)="adopt(pet.id)" [disabled]="adoptingId() === pet.id">
                 <mat-icon>favorite</mat-icon>
                 Adotar
               </button>

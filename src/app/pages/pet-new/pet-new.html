@@ -1,0 +1,67 @@
+<mat-card class="pn">
+  <h2 class="pn__title">Novo Pet</h2>
+
+  <div class="pn__grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput [(ngModel)]="model.name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Raça</mat-label>
+      <input matInput [(ngModel)]="model.breed" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Espécie</mat-label>
+      <mat-select [(ngModel)]="model.species">
+        <mat-option value="Cachorro">Cachorro</mat-option>
+        <mat-option value="Gato">Gato</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sexo</mat-label>
+      <mat-select [(ngModel)]="model.gender">
+        <mat-option value="Macho">Macho</mat-option>
+        <mat-option value="Fêmea">Fêmea</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Porte</mat-label>
+      <mat-select [(ngModel)]="model.size">
+        <mat-option value="P">P</mat-option>
+        <mat-option value="M">M</mat-option>
+        <mat-option value="G">G</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-form-field appearance="outline">
+  <mat-label>Data de Entrada</mat-label>
+  <input matInput type="date" [(ngModel)]="model.entryDate" name="entryDate" required />
+</mat-form-field>
+
+  <div class="pn__actions">
+  <button
+    mat-stroked-button
+    (click)="cancel()"
+    [disabled]="saving()"
+    style="color:#7C4DFF !important; border-color:#7C4DFF !important;"
+  >
+    Cancelar
+  </button>
+
+  <button
+    mat-flat-button
+    (click)="save()"
+    [disabled]="saving()"
+    style="background:#7C4DFF !important; color:#FFFFFF !important;"
+  >
+    <mat-icon style="color:#FFFFFF !important;">save</mat-icon>
+    {{ saving() ? 'Salvando...' : 'Salvar' }}
+  </button>
+</div>
+
+
+</mat-card>

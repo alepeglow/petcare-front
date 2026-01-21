@@ -1,1 +1,97 @@
-<p>tutores works!</p>
+<section class="tut-page">
+  <div class="tut-top">
+    <div class="tut-title">
+      <h1>Tutores</h1>
+      <p>Lista de tutores cadastrados no banco.</p>
+    </div>
+
+    <div class="tut-actions">
+      <button mat-stroked-button class="btn-reload" (click)="fetch()">
+        <mat-icon>refresh</mat-icon>
+        Atualizar
+      </button>
+    </div>
+  </div>
+
+  <div class="tut-stats">
+    <mat-card class="tut-statCard">
+      <div class="tut-statIcon">
+        <mat-icon>people</mat-icon>
+      </div>
+      <div>
+        <div class="tut-statLabel">Total de Tutores</div>
+        <div class="tut-statValue">{{ total() }}</div>
+      </div>
+    </mat-card>
+
+    
+  </div>
+
+  <mat-card class="tut-card">
+    <div class="tut-searchRow">
+      <mat-form-field appearance="outline" class="tut-search">
+        <mat-label>Buscar tutor</mat-label>
+        <input
+          matInput
+          placeholder="Nome, telefone, email ou endereço..."
+          (input)="onSearchInput($event)"
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <div class="tut-loading" *ngIf="loading()">
+        <mat-progress-spinner diameter="28" mode="indeterminate"></mat-progress-spinner>
+        <span>Carregando…</span>
+      </div>
+    </div>
+
+    <div class="tut-banner tut-banner--error" *ngIf="error()">
+      <mat-icon>error</mat-icon>
+      <span>Não foi possível carregar os tutores do servidor.</span>
+    </div>
+
+    <div class="tut-empty" *ngIf="!loading() && !error() && filtered().length === 0">
+      <mat-icon>person_off</mat-icon>
+      <div>
+        <b>Nenhum tutor encontrado.</b>
+        <div class="tut-emptySub">Tenta mudar o termo de busca.</div>
+      </div>
+    </div>
+
+    <div class="tut-list" *ngIf="!loading() && !error() && filtered().length > 0">
+      <mat-card class="tut-item" *ngFor="let t of filtered(); trackBy: trackById">
+        <div class="tut-itemTop">
+          <div class="tut-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <div class="tut-info">
+            <div class="tut-name">{{ t.nome }}</div>
+
+            <div class="tut-meta">
+              <span class="tut-chip">
+                <mat-icon>call</mat-icon>
+                {{ t.telefone }}
+              </span>
+
+              <span class="tut-chip">
+                <mat-icon>mail</mat-icon>
+                {{ t.email }}
+              </span>
+            </div>
+
+            <div class="tut-address">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ t.endereco }}</span>
+            </div>
+          </div>
+
+          <div class="tut-id">
+            <span>ID</span>
+            <b>#{{ t.id }}</b>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </mat-card>
+</section>

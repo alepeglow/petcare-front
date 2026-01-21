@@ -7,7 +7,7 @@ import { Cuidados } from './pages/cuidados/cuidados';
 import { Adocoes } from './pages/adocoes/adocoes';
 import { PetDetails } from './pages/pet-details/pet-details';
 import { PetAdopt } from './pages/pet-adopt/pet-adopt';
-
+import { PetNew } from './pages/pet-new/pet-new'; 
 
 export const routes: Routes = [
   {
@@ -16,13 +16,15 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: Dashboard },
+
       { path: 'pets', component: Pets },
+      { path: 'pets/novo', component: PetNew }, //  (tem que vir antes do :id)
       { path: 'pets/:id', component: PetDetails },
       { path: 'pets/:id/adotar', component: PetAdopt },
+
       { path: 'tutores', component: Tutores },
       { path: 'cuidados', component: Cuidados },
       { path: 'adocoes', component: Adocoes },
-
     ],
   },
 ];

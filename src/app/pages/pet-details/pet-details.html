@@ -1,4 +1,5 @@
-<section class="pd" *ngIf="pet() as p; else notFound">
+<section class="pd" *ngIf="pet() as p">
+
   <div class="pd__crumbs">
     <a routerLink="/pets">Pets</a>
     <span>›</span>
@@ -159,7 +160,8 @@
 
             <div class="pdR__cell">
               <div class="pdR__label">Última Atualização</div>
-              <div class="pdR__value">{{ ultimaAtualizacao() }}</div>
+              <div class="pdR__value">{{ formatDateBR(ultimaAtualizacao()) }}</div>
+
             </div>
           </div>
         </div>
@@ -258,75 +260,99 @@
       </div>
 
       <!-- ================= ABA: CUIDADOS ================= -->
-      <div *ngIf="tab() === 'cuidados'" class="pdC">
-        <div class="pdC__stats">
-          <div class="pdC__statCard">
-            <div>
-              <div class="pdC__statLabel">Total de Cuidados</div>
-              <div class="pdC__statValue">{{ totalCare() }}</div>
-            </div>
-            <div class="pdC__statIcon"><mat-icon>event_note</mat-icon></div>
-          </div>
-
-          <div class="pdC__statCard pdC__statCard--blue">
-            <div>
-              <div class="pdC__statLabel">Último Cuidado</div>
-              <div class="pdC__statValue">{{ lastCare() }}</div>
-            </div>
-            <div class="pdC__statIcon pdC__statIcon--blue"><mat-icon>schedule</mat-icon></div>
-          </div>
-        </div>
-
-        <div class="pdC__filters">
-          <div class="pdC__filtersLabel">Filtrar por:</div>
-
-          <div class="pdC__filterBtns">
-            <button type="button" class="pdC__pill" [class.pdC__pill--active]="careFilter() === 'Todos'" (click)="setCareFilter('Todos')">
-              Todos
-            </button>
-
-            @for (t of careTypes(); track t) {
-              <button type="button" class="pdC__pill" [class.pdC__pill--active]="careFilter() === t" (click)="setCareFilter(t)">
-                {{ carePillLabel(t) }}
-              </button>
-            }
-          </div>
-        </div>
-
-        <div class="pdC__list" *ngIf="filteredCare().length > 0; else emptyCare">
-          @for (c of filteredCare(); track c.id) {
-            <div class="pdC__item">
-              <div class="pdC__leftIcon" [class]="'pdC__leftIcon--' + careBadgeClass(c.type)">
-                <mat-icon>{{ c.icon }}</mat-icon>
-              </div>
-
-              <div class="pdC__main">
-                <div class="pdC__top">
-                  <div class="pdC__type">{{ carePillLabel(c.type) }}</div>
-                  <span class="pdC__badge" [class]="'pdC__badge--' + careBadgeClass(c.type)">{{ carePillLabel(c.type) }}</span>
-                </div>
-
-                <div class="pdC__desc" *ngIf="c.description">{{ c.description }}</div>
-                <div class="pdC__date">{{ c.date }}</div>
-              </div>
-            </div>
-          }
-        </div>
-
-        <ng-template #emptyCare>
-          <div class="pdC__empty">Nenhum cuidado encontrado para esse filtro.</div>
-        </ng-template>
+<div *ngIf="tab() === 'cuidados'" class="pdC">
+  <div class="pdC__stats">
+    <div class="pdC__statCard">
+      <div>
+        <div class="pdC__statLabel">Total de Cuidados</div>
+        <div class="pdC__statValue">{{ totalCare() }}</div>
       </div>
-    </mat-card>
+      <div class="pdC__statIcon"><mat-icon>event_note</mat-icon></div>
+    </div>
+
+    <div class="pdC__statCard pdC__statCard--blue">
+      <div>
+        <div class="pdC__statLabel">Último Cuidado</div>
+        <div class="pdC__statValue">{{ formatDateBR(lastCare()) }}</div>
+
+      </div>
+      <div class="pdC__statIcon pdC__statIcon--blue"><mat-icon>schedule</mat-icon></div>
+    </div>
   </div>
+
+  <!-- aviso opcional quando caiu no mock -->
+  <div class="pdC__empty" *ngIf="cuidadosError()">
+    Não foi possível carregar do servidor. Mostrando dados locais (mock).
+  </div>
+
+  <div class="pdC__filters">
+    <div class="pdC__filtersLabel">Filtrar por:</div>
+
+    <div class="pdC__filterBtns">
+      <button
+        type="button"
+        class="pdC__pill"
+        [class.pdC__pill--active]="careFilter() === 'Todos'"
+        (click)="setCareFilter('Todos')"
+      >
+        Todos
+      </button>
+
+      @for (t of careTypes(); track t) {
+        <button
+          type="button"
+          class="pdC__pill"
+          [class.pdC__pill--active]="careFilter() === t"
+          (click)="setCareFilter(t)"
+        >
+          {{ carePillLabel(t) }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="pdC__empty" *ngIf="cuidadosLoading()">
+    Carregando cuidados…
+  </div>
+
+  <!-- LISTA -->
+  <div class="pdC__list" *ngIf="!cuidadosLoading() && filteredCare().length > 0; else emptyCare">
+    @for (c of filteredCare(); track c.id) {
+      <div class="pdC__item">
+        <div class="pdC__leftIcon" [class]="'pdC__leftIcon--' + careBadgeClass(c.type)">
+          <mat-icon>{{ c.icon }}</mat-icon>
+        </div>
+
+        <div class="pdC__main">
+          <div class="pdC__top">
+            <div class="pdC__type">{{ carePillLabel(c.type) }}</div>
+            <span class="pdC__badge" [class]="'pdC__badge--' + careBadgeClass(c.type)">
+              {{ carePillLabel(c.type) }}
+            </span>
+          </div>
+
+          <div class="pdC__desc" *ngIf="c.description">{{ c.description }}</div>
+          <div class="pdC__date">{{ c.date }}</div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- EMPTY -->
+  <ng-template #emptyCare>
+    <div class="pdC__empty" *ngIf="!cuidadosLoading()">
+      Nenhum cuidado encontrado para esse filtro.
+    </div>
+  </ng-template>
+</div>
+
+
+<section class="pd pd--empty" *ngIf="!pet()">
+  <h2>Pet não encontrado 😿</h2>
+  <button mat-stroked-button routerLink="/pets">
+    <mat-icon>arrow_back</mat-icon>
+    Voltar para Pets
+  </button>
 </section>
 
-<ng-template #notFound>
-  <section class="pd pd--empty">
-    <h2>Pet não encontrado 😿</h2>
-    <button mat-stroked-button routerLink="/pets">
-      <mat-icon>arrow_back</mat-icon>
-      Voltar para Pets
-    </button>
-  </section>
-</ng-template>

@@ -1,0 +1,43 @@
+.pn {
+  max-width: 760px;
+  margin: 16px auto;
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.pn__title {
+  margin: 0 0 12px;
+}
+
+.pn__grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pn__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+@media (max-width: 720px) {
+  .pn__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Botão SALVAR (mat-flat-button) */
+.pn__btnSave.mat-mdc-unelevated-button {
+  --mdc-filled-button-container-color: #7C4DFF;
+  --mdc-filled-button-label-text-color: #fff;
+  --mdc-filled-button-icon-color: #fff;
+}
+
+/* Botão CANCELAR (mat-stroked-button) */
+.pn__btnCancel.mat-mdc-outlined-button {
+  --mdc-outlined-button-label-text-color: #7C4DFF;
+  --mdc-outlined-button-outline-color: #7C4DFF;
+  --mdc-outlined-button-icon-color: #7C4DFF;
+}

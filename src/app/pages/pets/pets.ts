@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { PETS, Pet,Species } from '../pets/pets.data';
-
+import { PETS, Pet, Species } from '../pets/pets.data';
+import { Router } from '@angular/router';
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+
+import { finalize } from 'rxjs/operators';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,9 +16,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
-
-
-
+import { PetsService } from '../../core/services/pets.service';
+import { PetsStore } from '../../core/state/pets.store';
 
 @Component({
   selector: 'app-pets',
@@ -39,11 +40,22 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 })
 export class Pets {
   private route = inject(ActivatedRoute);
+  private petsService = inject(PetsService);
+  private petsStore = inject(PetsStore);
+  private router = inject(Router);
 
-  onSearchInput(ev: Event) {
-    const value = (ev.target as HTMLInputElement).value ?? '';
-    this.search.set(value);
-  }
+goNewPet() {
+  this.router.navigate(['/pets/novo']);
+}
+  // tutor fixo pra demo (tutor 1)
+  private readonly DEMO_TUTOR_ID = 1;
+
+  //admin
+  isAdmin = signal(true);
+
+
+  // desabilita o botão enquanto chama o back
+  adoptingId = signal<number | null>(null);
 
   // ✅ UI state (signals)
   search = signal('');
@@ -56,13 +68,17 @@ export class Pets {
   pageSize = signal(9);
   pageIndex = signal(0);
 
-  // ✅ dados mock (depois troca pelo back)
- pets = signal<Pet[]>(PETS);
+  // ✅ fonte de dados: store (começa com o mock lá dentro)
+  pets = this.petsStore.pets;
 
+  onSearchInput(ev: Event) {
+    const value = (ev.target as HTMLInputElement).value ?? '';
+    this.search.set(value);
+  }
 
   // ✅ counts
-  availableCount = computed(() => this.pets().filter(p => p.status === 'DISPONIVEL').length);
-  adoptedCount = computed(() => this.pets().filter(p => p.status === 'ADOTADO').length);
+  availableCount = computed(() => this.pets().filter((p) => p.status === 'DISPONIVEL').length);
+  adoptedCount = computed(() => this.pets().filter((p) => p.status === 'ADOTADO').length);
 
   // ✅ filtrado (100% reativo)
   filtered = computed(() => {
@@ -72,13 +88,13 @@ export class Pets {
 
     let list = this.pets();
 
-    if (tab === 'disponiveis') list = list.filter(p => p.status === 'DISPONIVEL');
-    if (tab === 'adotados') list = list.filter(p => p.status === 'ADOTADO');
+    if (tab === 'disponiveis') list = list.filter((p) => p.status === 'DISPONIVEL');
+    if (tab === 'adotados') list = list.filter((p) => p.status === 'ADOTADO');
 
-    if (sp !== 'ALL') list = list.filter(p => p.species === sp);
+    if (sp !== 'ALL') list = list.filter((p) => p.species === sp);
 
     if (q) {
-      list = list.filter(p => (p.name + ' ' + p.breed).toLowerCase().includes(q));
+      list = list.filter((p) => (p.name + ' ' + p.breed).toLowerCase().includes(q));
     }
 
     return list;
@@ -95,7 +111,7 @@ export class Pets {
 
   constructor() {
     // ✅ lê query param: /pets?status=disponiveis
-    this.route.queryParamMap.subscribe(qp => {
+    this.route.queryParamMap.subscribe((qp) => {
       const status = qp.get('status');
       if (status === 'disponiveis') this.statusTab.set('disponiveis');
       else if (status === 'adotados') this.statusTab.set('adotados');
@@ -123,12 +139,44 @@ export class Pets {
   }
 
   toggleFav(id: number) {
-    this.pets.update(list => list.map(p => (p.id === id ? { ...p, isFav: !p.isFav } : p)));
+    this.pets.update((list) => list.map((p) => (p.id === id ? { ...p, isFav: !p.isFav } : p)));
   }
 
+  // ✅ Adotar: chama o BACK e atualiza o store
+  // Se o back falhar (ex: pet já adotado no banco), sincroniza status com o back.
   adopt(id: number) {
-    this.pets.update(list =>
-      list.map(p => (p.id === id && p.status === 'DISPONIVEL' ? { ...p, status: 'ADOTADO' } : p))
-    );
+    const pet = this.petsStore.getById(id);
+    if (!pet || pet.status !== 'DISPONIVEL') return;
+
+    // evita clique duplo
+    if (this.adoptingId() === id) return;
+
+    this.adoptingId.set(id);
+
+    this.petsService
+      .adotar(id, this.DEMO_TUTOR_ID)
+      .pipe(finalize(() => this.adoptingId.set(null))) // ✅ destrava SEMPRE
+      .subscribe({
+        next: () => {
+          // ✅ sucesso
+          this.petsStore.setStatus(id, 'ADOTADO');
+        },
+        error: (err: any) => {
+          console.error(err);
+
+          // ✅ se falhar, tenta sincronizar com o status REAL do back
+          this.petsService.getById(id).subscribe({
+            next: (dto: any) => {
+              if (dto?.status) {
+                // dto.status deve ser 'DISPONIVEL' ou 'ADOTADO'
+                this.petsStore.setStatus(id, dto.status);
+              }
+            },
+            error: () => {
+              // se até isso falhar, só deixa destravado (finalize já cuidou)
+            },
+          });
+        },
+      });
   }
 }
