@@ -63,7 +63,8 @@ export class Tutores {
     this.loading.set(true);
     this.error.set(false);
 
-    this.tutoresService.list().subscribe({
+    this.tutoresService.getAll()
+.subscribe({
       next: (list) => {
         this.tutores.set(list ?? []);
         this.loading.set(false);

@@ -4,18 +4,47 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_BASE_URL } from '../api.config';
 
+export type PetApi = {
+  id: number;
+  nome: string;
+  especie: string;
+  status: string;
+  raca?: string | null;
+  idade?: number | null;
+  data_entrada?: string | null;
+
+  // <- ESSA é a chave que está vindo do banco/back
+  id_tutor?: number | null;
+};
+
+
 @Injectable({ providedIn: 'root' })
 export class PetsService {
   private http = inject(HttpClient);
 
-  // listar
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(`${API_BASE_URL}/pets`);
+  // listar todos
+  getAll(): Observable<PetApi[]> {
+    return this.http.get<PetApi[]>(`${API_BASE_URL}/pets`);
+  }
+
+  // ✅ alias (pra tua tela que chama listAll)
+  listAll(): Observable<PetApi[]> {
+    return this.getAll();
+  }
+
+  // ✅ listar adotados
+  getAdotados(): Observable<PetApi[]> {
+    return this.http.get<PetApi[]>(`${API_BASE_URL}/pets/adotados`);
+  }
+
+  // ✅ alias (pra tua tela que chama listAdotados)
+  listAdotados(): Observable<PetApi[]> {
+    return this.getAdotados();
   }
 
   // buscar por id
-  getById(id: number): Observable<any> {
-    return this.http.get<any>(`${API_BASE_URL}/pets/${id}`);
+  getById(id: number): Observable<PetApi> {
+    return this.http.get<PetApi>(`${API_BASE_URL}/pets/${id}`);
   }
 
   // criar

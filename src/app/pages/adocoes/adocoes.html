@@ -1,1 +1,90 @@
-<p>adocoes works!</p>
+<!-- src/app/pages/adocoes/adocoes.html -->
+
+<div class="page">
+  <!-- Header -->
+  <div class="page__header">
+    <div>
+      <h1>Adoções</h1>
+      <p class="muted">Pets adotados e ações de devolução.</p>
+    </div>
+
+    <button class="btn btn--ghost" type="button" (click)="reload()">
+      <span class="icon">↻</span>
+      Atualizar
+    </button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat__icon">✓</div>
+      <div class="stat__content">
+        <div class="stat__label">Pets adotados</div>
+        <div class="stat__value">{{ filtered?.length ?? 0 }}</div>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="stat__icon">↩</div>
+      <div class="stat__content">
+        <div class="stat__label">Ação</div>
+        <div class="stat__value">Devolver</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search">
+    <input
+      type="text"
+      placeholder="Buscar (pet, raça, tutor...)"
+      [(ngModel)]="q"
+      (input)="applyFilter()"
+      aria-label="Buscar"
+    />
+    <span class="search__icon" aria-hidden="true">🔎</span>
+  </div>
+
+  <!-- List -->
+  <div class="list" *ngIf="filtered?.length; else empty">
+    <div class="item" *ngFor="let p of filtered">
+      <div class="item__left">
+        <div class="avatar" aria-hidden="true">🐾</div>
+
+        <div class="info">
+          <div class="title">
+            <strong>{{ p.nome }}</strong>
+            <span class="dot">•</span>
+            <span class="chip">{{ p.raca }}</span>
+          </div>
+
+          <div class="meta">
+            <span class="pill">{{ p.especie }}</span>
+            <span class="muted">Tutor: {{ p.tutorNome || '-' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="item__actions">
+        <button class="btn btn--outline" type="button" (click)="verDetalhes(p)">
+          Ver
+        </button>
+
+        <button class="btn btn--primary" type="button" (click)="devolver(p)">
+          Devolver
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty -->
+  <ng-template #empty>
+    <div class="empty">
+      <div class="empty__icon" aria-hidden="true">🫶</div>
+      <div class="empty__title">Nenhum pet adotado por aqui</div>
+      <div class="muted">
+        Quando houver adoções, elas vão aparecer nesta lista.
+      </div>
+    </div>
+  </ng-template>
+</div>
