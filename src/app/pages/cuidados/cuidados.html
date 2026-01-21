@@ -1,1 +1,84 @@
-<p>cuidados works!</p>
+<section class="cui">
+  <div class="cui__top">
+    <mat-card class="cui__stat">
+      <div class="cui__statIcon"><mat-icon>calendar_month</mat-icon></div>
+      <div>
+        <div class="cui__statLabel">Total de Cuidados</div>
+        <div class="cui__statValue">{{ totalCare() }}</div>
+      </div>
+    </mat-card>
+
+    <mat-card class="cui__stat cui__stat--blue">
+      <div class="cui__statIcon"><mat-icon>schedule</mat-icon></div>
+      <div>
+        <div class="cui__statLabel">Último Cuidado</div>
+        <div class="cui__statValue">{{ lastCareLabel() }}</div>
+      </div>
+    </mat-card>
+  </div>
+
+  <mat-card class="cui__filters">
+    <mat-form-field appearance="outline" class="cui__search">
+      <mat-label>Buscar (pet, tipo, descrição...)</mat-label>
+      <input matInput (input)="onSearchInput($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="cui__chips">
+      <mat-chip-option [selected]="careFilter() === 'Todos'" (click)="setCareFilter('Todos')">
+        Todos
+      </mat-chip-option>
+
+      @for (t of careTypes(); track t) {
+        <mat-chip-option [selected]="careFilter() === t" (click)="setCareFilter(t)">
+          {{ carePillLabel(t) }}
+        </mat-chip-option>
+      }
+    </div>
+  </mat-card>
+
+  @if (loading()) {
+    <div class="cui__loading">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  }
+
+  @if (!loading() && error()) {
+    <mat-card class="cui__empty">
+      <mat-icon>error_outline</mat-icon>
+      <div>
+        <b>Não consegui carregar os cuidados.</b>
+        <div class="muted">Confere o endpoint <code>/cuidados</code> e o CORS.</div>
+      </div>
+    </mat-card>
+  }
+
+  @if (!loading() && !error() && filtered().length === 0) {
+    <mat-card class="cui__empty">
+      <mat-icon>info</mat-icon>
+      <div>
+        <b>Nenhum cuidado encontrado.</b>
+        <div class="muted">Tenta mudar o filtro ou a busca.</div>
+      </div>
+    </mat-card>
+  }
+
+  <div class="cui__list">
+    @for (c of filtered(); track c.id) {
+      <mat-card class="cui__item" [routerLink]="['/pets', c.petId]">
+        <div class="cui__itemLeft">
+          <div class="cui__itemIcon"><mat-icon>{{ c.icon }}</mat-icon></div>
+          <div>
+            <div class="cui__itemTitle">
+              {{ carePillLabel(c.type) }} • {{ petNameById().get(c.petId) ?? ('Pet #' + c.petId) }}
+            </div>
+            <div class="cui__itemSub muted">
+              {{ formatDateBR(c.date) }} • {{ c.description || '—' }}
+            </div>
+          </div>
+        </div>
+        <mat-icon class="cui__chev">chevron_right</mat-icon>
+      </mat-card>
+    }
+  </div>
+</section>

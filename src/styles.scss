@@ -1,41 +1,128 @@
-
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
+// Angular Material (Material 3 theming)
 @use '@angular/material' as mat;
 
-html {
+@include mat.core();
+
+// ✅ Tema Material 3 (LIGHT) - tudo puxando pro lilás/roxo
+$pc-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$violet-palette,
+    tertiary: mat.$violet-palette,
+  ),
+  typography: (
+    // Se tu já usa Inter/Poppins no projeto, mantém aqui.
+    // Se não tiver carregado as fontes, ele cai pro fallback.
+    brand-family: 'Poppins',
+    plain-family: 'Inter',
+  ),
+  density: (scale: 0),
+
+));
+
+@include mat.all-component-themes($pc-theme);
+
+/* =========================================================
+   Tokens do PetCare
+========================================================= */
+:root {
+  --pc-primary: #7C4DFF;
+  --pc-primary-dark: #5E35B1;
+  --pc-secondary: #FF80AB;
+  --pc-accent: #2EE6D6;
+
+  --pc-bg: #F7F5FF;
+  --pc-surface: #FFFFFF;
+
+  --pc-text: #1F1B2E;
+  --pc-text-2: #5B556B;
+
+  // Se tu estiver usando system variables do M3 em alguns componentes:
+  --md-sys-color-primary: var(--pc-primary);
+  --md-sys-color-tertiary: var(--pc-primary);
+}
+
+/* =========================================================
+   Fix: garantir que NADA fique rosa (botões, inputs, foco)
+========================================================= */
+
+/* Botão preenchido (mat-flat-button / unelevated) */
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-raised-button.mat-primary {
+  --mdc-filled-button-container-color: var(--pc-primary);
+  --mdc-filled-button-label-text-color: #fff;
+}
+
+/* Botão contornado (mat-stroked-button / outlined) */
+.mat-mdc-outlined-button.mat-primary {
+  --mdc-outlined-button-outline-color: var(--pc-primary);
+  --mdc-outlined-button-label-text-color: var(--pc-primary);
+}
+
+/* Botão texto / ícone (quando usar color="primary") */
+.mat-mdc-button.mat-primary {
+  --mdc-text-button-label-text-color: var(--pc-primary);
+}
+.mat-mdc-icon-button.mat-primary {
+  --mdc-icon-button-icon-color: var(--pc-primary);
+}
+
+/* Ícone dentro do botão herda a cor do texto */
+.mat-mdc-button-base.mat-primary mat-icon {
+  color: inherit;
+}
+
+/* Form-field (outline + label + caret no foco) */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-focus-outline-color: var(--pc-primary);
+  --mdc-outlined-text-field-focus-label-text-color: var(--pc-primary);
+  --mdc-filled-text-field-caret-color: var(--pc-primary);
+}
+
+/* Select (setinha/ícone) no foco */
+.mat-mdc-form-field.mat-focused .mat-mdc-select-arrow {
+  color: var(--pc-primary);
+}
+
+/* Prefix/suffix (ícones dentro do input) no foco */
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-prefix,
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-suffix {
+  color: var(--pc-primary);
+}
+
+/* Tabs: texto + underline ativos no roxo */
+.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label,
+.mat-mdc-tab.mdc-tab--active .mdc-tab__icon {
+  color: var(--pc-primary);
+}
+.mat-mdc-tab-indicator__content--underline {
+  border-color: var(--pc-primary);
+}
+
+/* Chips selecionados (se algum ficar rosinha) */
+.mat-mdc-chip.mat-mdc-chip-selected,
+.mat-mdc-chip.mat-mdc-chip-highlighted {
+  --mdc-chip-selected-label-text-color: var(--pc-primary);
+  --mdc-chip-selected-container-color: rgba(124, 77, 255, 0.14);
+}
+
+/* =========================================================
+   Base do app (mantive teu CSS)
+========================================================= */
+
+html,
+body {
   height: 100%;
-  @include mat.theme((
-    color: (
-      primary: mat.$magenta-palette,
-      tertiary: mat.$violet-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+  margin: 0;
+  overflow: hidden; /* evita o body virar um segundo scroll */
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
   color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
-  margin: 0;
-  height: 100%;
+  background-color: var(--pc-bg);
+  color: var(--pc-text);
+  font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
 }
-/* You can add global styles to this file, and also import other style files */
 
 main {
   display: block !important;
@@ -43,13 +130,9 @@ main {
   justify-content: unset !important;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden; /* evita o body virar um segundo scroll */
+.how__card h3 {
+  margin-bottom: 10px !important;
 }
-
-.how__card h3 { margin-bottom: 10px !important; }
-.how__card p { line-height: 1.85 !important; }
-
-
+.how__card p {
+  line-height: 1.85 !important;
+}

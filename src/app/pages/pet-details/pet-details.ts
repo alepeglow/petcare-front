@@ -196,19 +196,22 @@ export class PetDetails {
   }
 
   private iconByCareType(t: CareType): string {
-    switch (t) {
-      case 'VACINA':
-        return 'vaccines';
-      case 'CONSULTA':
-        return 'medical_services';
-      case 'VERMIFUGO':
-        return 'medication';
-      case 'BANHO':
-        return 'shower';
-      case 'TOSA':
-        return 'content_cut';
-    }
+  switch (t) {
+    case 'VACINA':
+      return 'vaccines';
+    case 'CONSULTA':
+      return 'medical_services';
+    case 'VERMIFUGO':
+      return 'medication';
+    case 'BANHO':
+      return 'shower';
+    case 'TOSA':
+      return 'content_cut';
+    default:
+      return 'event'; // fallback
   }
+}
+
 
   /**
    * Mapeamento tolerante: aceita snake_case e camelCase,
@@ -301,38 +304,41 @@ export class PetDetails {
     return dated.length ? dated[0].date : '—';
   });
 
-  carePillLabel(t: CareType | 'Todos') {
-    switch (t) {
-      case 'Todos':
-        return 'Todos';
-      case 'VACINA':
-        return 'Vacina';
-      case 'CONSULTA':
-        return 'Consulta';
-      case 'VERMIFUGO':
-        return 'Vermífugo';
-      case 'BANHO':
-        return 'Banho';
-      case 'TOSA':
-        return 'Tosa';
-    }
-  }
-
-  // retorna sufixo usado no CSS: pdC__badge--{sufixo}
-  careBadgeClass(t: CareType) {
-    switch (t) {
-      case 'VACINA':
-        return 'vacina';
-      case 'CONSULTA':
-        return 'consulta';
-      case 'VERMIFUGO':
-        return 'vermifugo';
-      case 'BANHO':
-        return 'banho';
-      case 'TOSA':
-        return 'tosa';
-    }
+  carePillLabel(t: CareType | 'Todos'): string {
+  switch (t) {
+    case 'Todos':
+      return 'Todos';
+    case 'VACINA':
+      return 'Vacina';
+    case 'CONSULTA':
+      return 'Consulta';
+    case 'VERMIFUGO':
+      return 'Vermífugo';
+    case 'BANHO':
+      return 'Banho';
+    case 'TOSA':
+      return 'Tosa';
+    default:
+      return '—';
   }
 }
 
+  // retorna sufixo usado no CSS: pdC__badge--{sufixo}
+  careBadgeClass(t: CareType): string {
+  switch (t) {
+    case 'VACINA':
+      return 'vacina';
+    case 'CONSULTA':
+      return 'consulta';
+    case 'VERMIFUGO':
+      return 'vermifugo';
+    case 'BANHO':
+      return 'banho';
+    case 'TOSA':
+      return 'tosa';
+    default:
+      return 'default';
+  }
+}
+}
 
