@@ -50,7 +50,7 @@ export interface AdoptionRow {
   templateUrl: './adocoes.html',
   styleUrls: ['./adocoes.scss'],
 })
-export class AdocoesPage implements OnInit {
+export class Adocoes implements OnInit {
   private pets = inject(PetsService);
   private router = inject(Router);
 

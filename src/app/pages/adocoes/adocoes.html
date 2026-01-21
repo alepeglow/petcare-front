@@ -20,7 +20,8 @@
       <div class="stat__icon">✓</div>
       <div class="stat__content">
         <div class="stat__label">Pets adotados</div>
-        <div class="stat__value">{{ filtered?.length ?? 0 }}</div>
+        <div class="stat__value">{{ filtered.length }}</div>
+
       </div>
     </div>
 
@@ -46,7 +47,8 @@
   </div>
 
   <!-- List -->
-  <div class="list" *ngIf="filtered?.length; else empty">
+ <div class="list" *ngIf="filtered.length > 0; else empty">
+
     <div class="item" *ngFor="let p of filtered">
       <div class="item__left">
         <div class="avatar" aria-hidden="true">🐾</div>
